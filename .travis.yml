@@ -1,0 +1,9 @@
+language: csharp
+solution: temalab.sln
+mono: none
+dotnet: 3.0
+script:
+  - dotnet restore
+  - dotnet test
+
+
