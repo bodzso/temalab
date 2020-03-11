@@ -16,6 +16,8 @@ variables:
   appxPackageDir: '$(build.artifactStagingDirectory)\AppxPackages\\'
 
 steps:
+- checkout: self
+  lfs: true
 - task: NuGetToolInstaller@1
 
 - task: NuGetCommand@2
