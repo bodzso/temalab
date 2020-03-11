@@ -14,8 +14,12 @@
         <PasswordBox x:Name="passwordBox" PlaceholderText="Password" Width="300"/>
         <CheckBox x:Name="rememberMeCheck" Content="Remember me"/>
         <StackPanel Orientation="Horizontal" Spacing="20">
-            <Button x:Name="loginButton" Content="Login" Width="140" Background="Red"/>
-            <Button x:Name="registerButton" Content="Register" Width="140" Background="Red"/>
+            <HyperlinkButton x:Name="loginButton" Width="140" Background="Red" Click="Login">
+                <TextBlock Text="Login" Foreground="White"/>
+            </HyperlinkButton>
+            <HyperlinkButton x:Name="registerButton" Width="140" Background="Red" Click="ToRegisterPage">
+                <TextBlock Text="Register" Foreground="White"/>
+            </HyperlinkButton>
         </StackPanel>
     </StackPanel>
 </Page>
