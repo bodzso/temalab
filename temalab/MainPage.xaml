@@ -9,6 +9,6 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-
+        <HyperlinkButton Content="START" Foreground="White" Background="Red" Click="StartClick"/>
     </Grid>
 </Page>
