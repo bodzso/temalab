@@ -29,7 +29,7 @@ namespace temalab
 
         private void ToRegisterPage(object sender, RoutedEventArgs e)
         {
-            //TODO: Hajrá Barna
+            this.Frame.Navigate(typeof(RegisterPage));
         }
 
         private void Login(object sender, RoutedEventArgs e)
