@@ -10,8 +10,8 @@
 
     <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="15">
         <TextBlock Text="Login" FontSize="30" HorizontalAlignment="Left"/>
-        <TextBox x:Name="usernameBox" PlaceholderText="Username" Width="300"/>
-        <PasswordBox x:Name="passwordBox" PlaceholderText="Password" Width="300"/>
+        <TextBox x:Name="usernameBox" PlaceholderText="Username" Width="300" TextChanged="usernameBox_TextChanged"/>
+        <PasswordBox x:Name="passwordBox" PlaceholderText="Password" Width="300" PasswordChanged="passwordBox_PasswordChanged"/>
         <CheckBox x:Name="rememberMeCheck" Content="Remember me"/>
         <StackPanel Orientation="Horizontal" Spacing="20">
             <HyperlinkButton x:Name="loginButton" Width="140" Background="Red" Click="Login">

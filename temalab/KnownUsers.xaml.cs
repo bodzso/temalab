@@ -30,7 +30,7 @@ namespace temalab
 
         private void ToRegisterPage(object sender, RoutedEventArgs e)
         {
-            this.Frame.Navigate(typeof(RegisterPage));
+            this.Frame.Navigate(typeof(RegisterScreen));
         }
 
         private void ToLoginPage(object sender, RoutedEventArgs e)
