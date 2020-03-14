@@ -1,0 +1,24 @@
+﻿<Page
+    x:Class="temalab.FreshUserMainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:temalab"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <StackPanel Orientation="Vertical">
+        <StackPanel Orientation="Horizontal">
+            <NavigationView x:Name="navigation" PaneDisplayMode="Top" >
+                <NavigationView.MenuItems>
+                    <NavigationViewItem Content="Overview" x:Name="overview"/>
+                    <NavigationViewItem Content="Revenues" x:Name="revenues"/>
+                    <NavigationViewItem Content="Expenses" x:Name="expenses"/>
+                    <NavigationViewItem Content="Transactions" x:Name="transacions"/>
+                    <NavigationViewItem Content="More" x:Name="more"/>
+                </NavigationView.MenuItems>
+            </NavigationView>
+        </StackPanel>
+    </StackPanel>
+</Page>
