@@ -29,7 +29,7 @@ namespace temalab
 
         private void registerclick(object sender, RoutedEventArgs e)
         {
-            //codebehind register
+            this.Frame.Navigate(typeof(LoginScreen));
         }
 
         private void fnamebox_TextChanged(object sender, TextChangedEventArgs e)
