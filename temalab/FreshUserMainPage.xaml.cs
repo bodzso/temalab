@@ -26,5 +26,10 @@ namespace temalab
         {
             this.InitializeComponent();
         }
+
+        private void addRevenueButton_Click(object sender, RoutedEventArgs e)
+        {
+            //TODD
+        }
     }
 }

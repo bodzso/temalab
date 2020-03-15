@@ -10,15 +10,25 @@
 
     <StackPanel Orientation="Vertical">
         <StackPanel Orientation="Horizontal">
-            <NavigationView x:Name="navigation" PaneDisplayMode="Top" >
+            <NavigationView x:Name="navigation" PaneDisplayMode="Top" IsSettingsVisible="False"  IsBackButtonVisible="Collapsed" >
                 <NavigationView.MenuItems>
-                    <NavigationViewItem Content="Overview" x:Name="overview"/>
-                    <NavigationViewItem Content="Revenues" x:Name="revenues"/>
-                    <NavigationViewItem Content="Expenses" x:Name="expenses"/>
-                    <NavigationViewItem Content="Transactions" x:Name="transacions"/>
-                    <NavigationViewItem Content="More" x:Name="more"/>
+                    <NavigationViewItem Content="Overview" x:Name="overview" Width="100" />
+                    <NavigationViewItem Content="Revenues" x:Name="revenues" Width="100"/>
+                    <NavigationViewItem Content="Expenses" x:Name="expenses" Width="100" />
+                    <NavigationViewItem Content="Transactions" x:Name="transacions" Width="100"/>
                 </NavigationView.MenuItems>
             </NavigationView>
         </StackPanel>
+        <StackPanel Orientation="Vertical">
+            <Rectangle Height="250"/>
+        </StackPanel>
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+            <TextBox Text="Welcome!" FontSize="70" TextAlignment="Center" BorderThickness="0"/>
+            <TextBox Text="Before you continue" FontSize="40" TextAlignment="Center" BorderThickness="0" />
+            <TextBox Text="You have to add" FontSize="40" TextAlignment="Center" BorderThickness="0" />
+            <TextBox Text="revenue" FontSize="40" TextAlignment="Center" BorderThickness="0" />
+            <Button x:Name="addRevenueButton" Content="Add revenue" HorizontalAlignment="Center" Background="Red" Click="addRevenueButton_Click" Width="100"/>
+        </StackPanel>
     </StackPanel>
 </Page>
+     
