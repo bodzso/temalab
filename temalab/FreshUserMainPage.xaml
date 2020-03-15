@@ -10,13 +10,14 @@
 
     <StackPanel Orientation="Vertical">
         <StackPanel Orientation="Horizontal">
-            <NavigationView x:Name="navigation" PaneDisplayMode="Top" IsSettingsVisible="False"  IsBackButtonVisible="Collapsed" >
+            <NavigationView x:Name="navigation" PaneDisplayMode="Top" IsSettingsVisible="False"  IsBackButtonVisible="Collapsed">
                 <NavigationView.MenuItems>
                     <NavigationViewItem Content="Overview" x:Name="overview" Width="100" />
                     <NavigationViewItem Content="Revenues" x:Name="revenues" Width="100"/>
                     <NavigationViewItem Content="Expenses" x:Name="expenses" Width="100" />
                     <NavigationViewItem Content="Transactions" x:Name="transacions" Width="100"/>
                 </NavigationView.MenuItems>
+
             </NavigationView>
         </StackPanel>
         <StackPanel Orientation="Vertical">
