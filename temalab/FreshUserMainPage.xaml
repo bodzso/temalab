@@ -1,0 +1,38 @@
+﻿<Page
+    x:Class="temalab.FreshUserMainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:temalab"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <StackPanel>
+        <StackPanel>
+            <NavigationView x:Name="navigation" PaneDisplayMode="Top" IsSettingsVisible="False"  IsBackButtonVisible="Collapsed" Margin="0,0,0,0" BackgroundSizing="InnerBorderEdge">
+                <NavigationView.MenuItems>
+                    <NavigationViewItem Content="Overview" x:Name="overview"  Tag="Overview"/>
+                    <NavigationViewItem Content="Revenues" x:Name="revenues"  Tag="Revenues"/>
+                    <NavigationViewItem Content="Expenses" x:Name="expenses"  Tag="Expenses"/>
+                    <NavigationViewItem Content="Transactions" x:Name="transacions"  Tag="Transactions"/>
+                </NavigationView.MenuItems>
+                <NavigationView.PaneFooter>
+                    <NavigationViewItem Icon="Contact" Tag="User" />
+                </NavigationView.PaneFooter>
+
+            </NavigationView>
+        </StackPanel>
+        <StackPanel Orientation="Vertical">
+            <Rectangle Height="250"/>
+        </StackPanel>
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+            <TextBox Text="Welcome!" FontSize="70" TextAlignment="Center" BorderThickness="0"/>
+            <TextBox Text="Before you continue" FontSize="40" TextAlignment="Center" BorderThickness="0" />
+            <TextBox Text="You have to add" FontSize="40" TextAlignment="Center" BorderThickness="0" />
+            <TextBox Text="revenue" FontSize="40" TextAlignment="Center" BorderThickness="0" />
+            <Button x:Name="addRevenueButton" Content="Add revenue" HorizontalAlignment="Center" Background="Red" Click="addRevenueButton_Click" Width="100"/>
+        </StackPanel>
+    </StackPanel>
+</Page>
+     
