@@ -27,6 +27,35 @@ namespace temalab
             this.InitializeComponent();
         }
 
+        //Navigation:
+        private void NavigationView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
+        {
+            switch (((NavigationViewItem)args.SelectedItem).Tag.ToString())
+            {
+                case "Overview":
+                    //TODO
+                    break;
+
+                case "Revenues":
+                    //TODO
+                    break;
+
+                case "Expenses":
+                    //TODO
+                    break;
+
+                case "Transactions":
+                    //TODO
+                    break;
+
+                case "User":
+                    //TODO
+                    break;
+            }
+        }
+
+
+
         private void addRevenueButton_Click(object sender, RoutedEventArgs e)
         {
             //TODD

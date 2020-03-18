@@ -8,15 +8,18 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <StackPanel Orientation="Vertical">
-        <StackPanel Orientation="Horizontal">
-            <NavigationView x:Name="navigation" PaneDisplayMode="Top" IsSettingsVisible="False"  IsBackButtonVisible="Collapsed">
+    <StackPanel>
+        <StackPanel>
+            <NavigationView x:Name="navigation" PaneDisplayMode="Top" IsSettingsVisible="False"  IsBackButtonVisible="Collapsed" Margin="0,0,0,0" BackgroundSizing="InnerBorderEdge">
                 <NavigationView.MenuItems>
-                    <NavigationViewItem Content="Overview" x:Name="overview" Width="100" />
-                    <NavigationViewItem Content="Revenues" x:Name="revenues" Width="100"/>
-                    <NavigationViewItem Content="Expenses" x:Name="expenses" Width="100" />
-                    <NavigationViewItem Content="Transactions" x:Name="transacions" Width="100"/>
+                    <NavigationViewItem Content="Overview" x:Name="overview"  Tag="Overview"/>
+                    <NavigationViewItem Content="Revenues" x:Name="revenues"  Tag="Revenues"/>
+                    <NavigationViewItem Content="Expenses" x:Name="expenses"  Tag="Expenses"/>
+                    <NavigationViewItem Content="Transactions" x:Name="transacions"  Tag="Transactions"/>
                 </NavigationView.MenuItems>
+                <NavigationView.PaneFooter>
+                    <NavigationViewItem Icon="Contact" Tag="User" />
+                </NavigationView.PaneFooter>
 
             </NavigationView>
         </StackPanel>
