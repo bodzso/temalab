@@ -19,6 +19,13 @@ namespace WebApi.Helpers
             options.UseSqlServer(Configuration.GetConnectionString("WebApiDatabase"));
         }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<User>()
+                .Property(u => u.Balance)
+                .HasDefaultValue(0);
+        }
+
         public DbSet<User> Users { get; set; }
 
         public DbSet<Transaction> Transactions { get; set; }
