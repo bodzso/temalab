@@ -40,7 +40,7 @@ POST - http://localhost:60133/transactions
 ```json
 {
     "name":"Első kiadás",
-    "amount":500,
+    "amount":-500,
     "date":"2020-03-27T16:15:27.683829+01:00",
     "userId":1
 }
@@ -57,3 +57,22 @@ POST -  http://localhost:60133/categories
 }
 ```
 
+## Transaction custom endpoints
+
+transactions/user-transactions/{userId}
+
+transactions/user-revenues/{userId}
+
+transactions/user-expenses/{userId}
+
+transactions/pending
+
+transactions/pending/{userId}
+
+transactions/latest
+
+transactions/latest/{userId}
+
+## Category custom endpoints
+
+user-categories/{userId}
