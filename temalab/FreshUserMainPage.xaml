@@ -8,31 +8,12 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <StackPanel>
-        <StackPanel>
-            <NavigationView x:Name="navigation" PaneDisplayMode="Top" IsSettingsVisible="False"  IsBackButtonVisible="Collapsed" Margin="0,0,0,0" BackgroundSizing="InnerBorderEdge">
-                <NavigationView.MenuItems>
-                    <NavigationViewItem Content="Overview" x:Name="overview"  Tag="Overview"/>
-                    <NavigationViewItem Content="Revenues" x:Name="revenues"  Tag="Revenues"/>
-                    <NavigationViewItem Content="Expenses" x:Name="expenses"  Tag="Expenses"/>
-                    <NavigationViewItem Content="Transactions" x:Name="transacions"  Tag="Transactions"/>
-                </NavigationView.MenuItems>
-                <NavigationView.PaneFooter>
-                    <NavigationViewItem Icon="Contact" Tag="User" />
-                </NavigationView.PaneFooter>
-
-            </NavigationView>
-        </StackPanel>
-        <StackPanel Orientation="Vertical">
-            <Rectangle Height="250"/>
-        </StackPanel>
-        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-            <TextBox Text="Welcome!" FontSize="70" TextAlignment="Center" BorderThickness="0"/>
-            <TextBox Text="Before you continue" FontSize="40" TextAlignment="Center" BorderThickness="0" />
-            <TextBox Text="You have to add" FontSize="40" TextAlignment="Center" BorderThickness="0" />
-            <TextBox Text="revenue" FontSize="40" TextAlignment="Center" BorderThickness="0" />
-            <Button x:Name="addRevenueButton" Content="Add revenue" HorizontalAlignment="Center" Background="Red" Click="addRevenueButton_Click" Width="100"/>
-        </StackPanel>
+    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+        <RichTextBlock Margin="0,0,0,10">
+            <Paragraph TextAlignment="Center" FontSize="46">Welcome!</Paragraph>
+            <Paragraph FontSize="34">Before you continue you have to add revenue</Paragraph>
+        </RichTextBlock>
+        <Button x:Name="addRevenueButton" Content="Add revenue" HorizontalAlignment="Center" Click="addRevenueButton_Click" Width="100"/>
     </StackPanel>
 </Page>
      

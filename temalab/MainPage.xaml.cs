@@ -26,9 +26,5 @@ namespace temalab
         {
             this.InitializeComponent();
         }
-        private void StartClick(object sender, RoutedEventArgs e)
-        {
-            Frame.Navigate(typeof(KnownUsers));
-        }
     }
 }

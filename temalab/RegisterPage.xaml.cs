@@ -20,9 +20,11 @@ namespace temalab
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class RegisterScreen : Page
+    public sealed partial class RegisterPage : Page
     {
-        public RegisterScreen()
+        private Type prevPage;
+
+        public RegisterPage()
         {
             this.InitializeComponent();
         }
@@ -32,29 +34,14 @@ namespace temalab
             this.Frame.Navigate(typeof(FreshUserMainPage));
         }
 
-        private void fnamebox_TextChanged(object sender, TextChangedEventArgs e)
+        protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            //TODO
+            prevPage = (Type)e.Parameter;
         }
 
-        private void lnamebox_TextChanged(object sender, TextChangedEventArgs e)
+        private void backBtn_Click(object sender, RoutedEventArgs e)
         {
-            //TODO
-        }
-
-        private void usernam_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            //TODO
-        }
-
-        private void email_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            //TODO
-        }
-
-        private void passw_PasswordChanged(object sender, RoutedEventArgs e)
-        {
-            //TODO
+            this.Frame.Navigate(prevPage);
         }
     }
 }

@@ -1,5 +1,5 @@
 ﻿<Page
-    x:Class="temalab.KnownUsers"
+    x:Class="temalab.LoginAsPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:temalab"
@@ -12,14 +12,8 @@
         <TextBlock Text="Login as" FontSize="30" HorizontalAlignment="Left"/>
         <ListBox x:Name="knownUsersList" ItemsSource="{x:Bind Path=knownUsers}"/>
         <StackPanel Orientation="Horizontal" Width="300" Spacing="20">
-            <HyperlinkButton Width="140" HorizontalAlignment="Left" Click="ToLoginPage"
-                         Background="Red" Foreground="White">
-                <TextBlock Text="Im not here"/>
-            </HyperlinkButton>
-            <HyperlinkButton Width="140" HorizontalAlignment="Right" Click="ToRegisterPage"
-                         Background="Red" Foreground="White">
-                <TextBlock Text="Register"/>
-            </HyperlinkButton>
+            <Button Content="Login" Width="140" HorizontalAlignment="Left" Click="ToLoginPage"/>
+            <Button Content="Register" Width="140" HorizontalAlignment="Right" Click="ToRegisterPage"/>
         </StackPanel>
         <!-- ami innentől jön lehet csak az után kellene megjelenjen, hogy kiválasztottuk melyik felh
         jelentkezik be-->

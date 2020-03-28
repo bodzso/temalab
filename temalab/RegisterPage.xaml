@@ -1,0 +1,30 @@
+﻿<Page
+    x:Class="temalab.RegisterPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:temalab"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Button x:Name="backBtn" Style="{StaticResource NavigationBackButtonNormalStyle}" Click="backBtn_Click"/>
+        <StackPanel Grid.Row="1" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="15">
+            <TextBlock Text="Register" FontSize="30" HorizontalAlignment="Left"/>
+            <StackPanel Orientation="Horizontal" Spacing="10">
+                <TextBox x:Name="firstName" PlaceholderText="First name" Width="150"/>
+                <TextBox x:Name="lastName" PlaceholderText="Last name" Width="150"/>
+            </StackPanel>
+            <TextBox x:Name="username" PlaceholderText="Username" Width="310"/>
+            <TextBox x:Name="email" PlaceholderText="Email address" Width="310"/>
+            <PasswordBox x:Name="password" PlaceholderText="Enter password" Width="310"/>
+            <Button Content="Register" x:Name="registerbutton" Width="140" HorizontalAlignment="Left" Click="registerclick"/>
+        </StackPanel>
+    </Grid>
+</Page>

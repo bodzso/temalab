@@ -20,31 +20,22 @@ namespace temalab
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class LoginScreen : Page
+    public sealed partial class LoginAsPage : Page
     {
-        public LoginScreen()
+        public List<string> knownUsers { get; set; } = new List<string>(); //Ide kell majd belerakni azokat a felhasználókat, akiket már megegyeztünk lokálisan
+        public LoginAsPage()
         {
             this.InitializeComponent();
         }
 
         private void ToRegisterPage(object sender, RoutedEventArgs e)
         {
-            this.Frame.Navigate(typeof(RegisterScreen));
+            this.Frame.Navigate(typeof(RegisterPage), typeof(LoginAsPage));
         }
 
-        private void Login(object sender, RoutedEventArgs e)
+        private void ToLoginPage(object sender, RoutedEventArgs e)
         {
-            //Codebehind login
-        }
-
-        private void usernameBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            //TODO
-        }
-
-        private void passwordBox_PasswordChanged(object sender, RoutedEventArgs e)
-        {
-            //TODO
+            this.Frame.Navigate(typeof(LoginPage));
         }
     }
 }
