@@ -22,6 +22,9 @@ namespace temalab
     /// </summary>
     sealed partial class App : Application
     {
+        public string currentUsername { get; set; }
+        public string currentToken { get; set; }
+
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
