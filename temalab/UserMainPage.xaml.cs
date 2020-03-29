@@ -22,9 +22,21 @@ namespace temalab
     /// </summary>
     public sealed partial class UserMainPage : Page
     {
+        public static int Balance { get; set; } = 5000;
+        public string BalanceString { get; set; } = $"{Balance} Ft";
         public UserMainPage()
         {
             this.InitializeComponent();
+        }
+
+        private void PlusButton_Click(object sender, RoutedEventArgs e)
+        {
+            //TODO
+        }
+
+        private void MinuButton_Click(object sender, RoutedEventArgs e)
+        {
+            //TODO
         }
     }
 }

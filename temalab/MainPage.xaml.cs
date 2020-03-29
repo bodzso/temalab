@@ -26,5 +26,10 @@ namespace temalab
         {
             this.InitializeComponent();
         }
+
+        private void SwitchToOverview(object sender, TappedRoutedEventArgs e)
+        {
+            contentFrame.Navigate(typeof(UserMainPage));
+        }
     }
 }

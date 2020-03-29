@@ -6,14 +6,15 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Background="White"
+    Foreground="Black">
 
     <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="15" Width="300">
         <TextBlock Text="Login as" FontSize="30" HorizontalAlignment="Left"/>
         <ListBox x:Name="knownUsersList" ItemsSource="{x:Bind Path=knownUsers}"/>
         <StackPanel Orientation="Horizontal" Width="300" Spacing="20">
-            <Button Content="Login" Width="140" HorizontalAlignment="Left" Click="ToLoginPage"/>
-            <Button Content="Register" Width="140" HorizontalAlignment="Right" Click="ToRegisterPage"/>
+            <Button Content="Login" Width="140" HorizontalAlignment="Left" Click="ToLoginPage" Background="Blue"/>
+            <Button Content="Register" Width="140" HorizontalAlignment="Right" Click="ToRegisterPage" Background="LightGray" Foreground="Black"/>
         </StackPanel>
         <!-- ami innentől jön lehet csak az után kellene megjelenjen, hogy kiválasztottuk melyik felh
         jelentkezik be-->
