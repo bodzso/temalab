@@ -6,14 +6,15 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Background="White">
 
-    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-        <RichTextBlock Margin="0,0,0,10">
+    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Background="White">
+        <RichTextBlock Margin="0,0,0,10" Foreground="Black">
             <Paragraph TextAlignment="Center" FontSize="46">Welcome!</Paragraph>
             <Paragraph FontSize="34">Before you continue you have to add revenue</Paragraph>
         </RichTextBlock>
-        <Button x:Name="addRevenueButton" Content="Add revenue" HorizontalAlignment="Center" Click="addRevenueButton_Click" Width="100"/>
+        <Button x:Name="addRevenueButton" Content="Add revenue" HorizontalAlignment="Center" 
+                Click="addRevenueButton_Click" Width="100" Background="Blue"  Foreground="White"/>
     </StackPanel>
 </Page>
      

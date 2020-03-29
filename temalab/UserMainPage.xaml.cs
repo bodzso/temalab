@@ -22,9 +22,28 @@ namespace temalab
     /// </summary>
     public sealed partial class UserMainPage : Page
     {
+        public static int Balance { get; set; } = 5000;
+        public string BalanceString { get; set; } = $"{Balance} Ft";
+        public List<int> latestTransactions { get; set; } //majd átírni Transaction osztályra
+
+        //csak hogy látszódjon valami
+        public string Price { get; set; } = "5000";
+        public string Date { get; set; } = "2020.03.29.";
+        public string Time { get; set; } = "16:57";
+
         public UserMainPage()
         {
             this.InitializeComponent();
+        }
+
+        private void PlusButton_Click(object sender, RoutedEventArgs e)
+        {
+            //TODO
+        }
+
+        private void MinuButton_Click(object sender, RoutedEventArgs e)
+        {
+            //TODO
         }
     }
 }
