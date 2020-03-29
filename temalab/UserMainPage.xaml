@@ -5,6 +5,7 @@
     xmlns:local="using:temalab"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     mc:Ignorable="d"
     Background="White"
     Foreground="Black">
@@ -22,6 +23,26 @@
                 VerticalAlignment="Stretch" x:Name="minusButton" Click="MinuButton_Click">
                 <Image Source="Assets\Buttons\minus.png" Margin="-10,-10,-11,-11"/>
             </Button>
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" Spacing="20">
+            <Rectangle Width="444" Height="421" Fill="Gray"/>
+            <StackPanel Orientation="Vertical">
+                <TextBlock Text="Latest transactions:" FontSize="20"/>
+                <controls:DataGrid x:Name="latestTransactionsDataGrid">
+                    <controls:DataGrid.Columns>
+                        <controls:DataGridTextColumn
+                            Header="Price"
+                            Binding="{x:Bind Price}"/>
+                        <controls:DataGridTextColumn
+                            Header="Date"
+                            />
+                        <controls:DataGridTextColumn
+                            Header="Time"
+                            />
+                    </controls:DataGrid.Columns>
+                </controls:DataGrid>
+            </StackPanel>
         </StackPanel>
     </StackPanel>
 
