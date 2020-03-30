@@ -1,21 +1,18 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace WebApi.Entities
+namespace WebApi.Models.Transactions
 {
-    public class Transaction
+    public class TransactionModel
     {
         public int Id { get; set; }
-        [Required]
         public string Name { get; set; }
         public int Amount { get; set; }
-        [Required]
         public DateTime Date { get; set; }
         public string Description { get; set; }
-        [Required]
-        public int UserId { get; set; }
         public int? CategoryId { get; set; }
-        public User User { get; set; }
-        public Category Category { get; set; }
+        public string CategoryName { get; set; }
     }
 }

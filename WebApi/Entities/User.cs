@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace WebApi.Entities
@@ -18,5 +19,7 @@ namespace WebApi.Entities
         [Required]
         public byte[] PasswordSalt { get; set; }
         public int Balance { get; set; }
+        public ICollection<Transaction> Transactions { get; set; }
+        public ICollection<Category> Categories { get; set; }
     }
 }
