@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebApi.Entities;
@@ -25,14 +23,14 @@ namespace WebApi.Controllers
 
         // GET: Categories
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Category>>> GetCategories()
+        public async Task<IActionResult> GetCategories()
         {
-            return await _context.Categories.ToListAsync();
+            return Ok(await _context.Categories.Where(c => c.UserId == Convert.ToInt32(User.Identity.Name)).Select(d => new { d.Id, d.Name }).ToListAsync());
         }
 
         // GET: Categories/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Category>> GetCategory(int id)
+        public async Task<IActionResult> GetCategory(int id)
         {
             var category = await _context.Categories.FindAsync(id);
 
@@ -40,27 +38,34 @@ namespace WebApi.Controllers
             {
                 return NotFound();
             }
-
-            return category;
+            else if (Convert.ToInt32(User.Identity.Name) != category.UserId)
+            {
+                return Unauthorized();
+            }
+            return Ok(new { category.Id, category.Name });
         }
 
-        [HttpGet("user-categories/{id}")]
-        public async Task<ActionResult<IEnumerable<Category>>> GetUserCategories(int id)
+        [HttpPost]
+        public async Task<IActionResult> AddCategory(Category category)
         {
-            return await _context.Categories.Where(c => c.UserId == id).ToListAsync();
+            category.UserId = Convert.ToInt32(User.Identity.Name);
+            _context.Categories.Add(category);
+            await _context.SaveChangesAsync();
+            return Ok(category.Id);
         }
 
         // PUT: Categories/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutCategory(int id, Category category)
+        public async Task<IActionResult> UpdateCategory(int id, Category category)
         {
             if (id != category.Id)
             {
                 return BadRequest();
             }
 
+            category.UserId = Convert.ToInt32(User.Identity.Name);
             _context.Entry(category).State = EntityState.Modified;
 
             try
@@ -82,18 +87,6 @@ namespace WebApi.Controllers
             return NoContent();
         }
 
-        // POST: Categories
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
-        // more details see https://aka.ms/RazorPagesCRUD.
-        [HttpPost]
-        public async Task<ActionResult<Category>> PostCategory(Category category)
-        {
-            _context.Categories.Add(category);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction(nameof(GetCategory), new { id = category.Id }, category);
-        }
-
         // DELETE: Categories/5
         [HttpDelete("{id}")]
         public async Task<ActionResult<Category>> DeleteCategory(int id)
@@ -103,11 +96,15 @@ namespace WebApi.Controllers
             {
                 return NotFound();
             }
+            else if (Convert.ToInt32(User.Identity.Name) != category.UserId)
+            {
+                return Unauthorized();
+            }
 
             _context.Categories.Remove(category);
             await _context.SaveChangesAsync();
 
-            return category;
+            return Ok(new { category.Id, category.Name });
         }
 
         private bool CategoryExists(int id)
