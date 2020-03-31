@@ -6,6 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     Background="White"
     Foreground="Black">
 
@@ -24,8 +25,18 @@
             <Button Content="Add" Background="Gray" HorizontalAlignment="Center" Width="100"/>
     
         </StackPanel>
+        <Rectangle Height="50"/>
         <StackPanel>
-            
+            <TextBlock Text="Revenues:" FontSize="20"/>
+            <controls:DataGrid x:Name="revenuesGrid" IsReadOnly="True" >
+                
+                <controls:DataGrid.Columns>
+                    <controls:DataGridTextColumn Header="Name"/>
+                    <controls:DataGridTextColumn Header="Amount"/>
+                    <controls:DataGridTextColumn Header="Comment"/>
+                    <controls:DataGridTextColumn Header="Date"/>
+                </controls:DataGrid.Columns>
+            </controls:DataGrid>
         </StackPanel>
         
     </StackPanel>
