@@ -32,9 +32,14 @@ namespace temalab
             contentFrame.Navigate(typeof(UserMainPage));
         }
 
-        private void SwitchToRevenue(object sener, TappedRoutedEventArgs e)
+        private void SwitchToRevenue(object sender, TappedRoutedEventArgs e)
         {
             contentFrame.Navigate(typeof(RevenuesPage));
+        }
+        
+        private void SwitchToExpense(object sender, TappedRoutedEventArgs e)
+        {
+            contentFrame.Navigate(typeof(ExpensesPage));
         }
 
     }
