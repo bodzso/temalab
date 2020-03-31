@@ -13,6 +13,7 @@
     <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
         <StackPanel Orientation="Vertical" Width="260" HorizontalAlignment="Center" VerticalAlignment="Center">
             <TextBlock Text="Add new revenue" FontSize="30"/>
+            <Rectangle Height="10"/>
             <TextBlock Text="Name"/>
             <TextBox  x:Name="name" />
             <TextBlock Text="Amount"/>
@@ -33,8 +34,8 @@
                 <controls:DataGrid.Columns>
                     <controls:DataGridTextColumn Header="Name"/>
                     <controls:DataGridTextColumn Header="Amount"/>
-                    <controls:DataGridTextColumn Header="Comment"/>
-                    <controls:DataGridTextColumn Header="Date"/>
+                    <controls:DataGridTextColumn Header="Description"/>
+                    <controls:DataGridTextColumn Header="Due date"/>
                 </controls:DataGrid.Columns>
             </controls:DataGrid>
         </StackPanel>
