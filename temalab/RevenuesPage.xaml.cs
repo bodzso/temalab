@@ -22,6 +22,7 @@ namespace temalab
     /// </summary>
     public sealed partial class RevenuesPage : Page
     {
+
         public RevenuesPage()
         {
             this.InitializeComponent();
