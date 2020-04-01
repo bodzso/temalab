@@ -19,6 +19,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Windows.Web.Http;
+using Windows.Web.Http.Headers;
 
 namespace temalab
 {
@@ -158,6 +159,19 @@ namespace temalab
                 currentToken = token;
                 currentUserId = userId;
 
+                uri = new Uri("http://localhost:60133/transactions/latest");
+                httpClient.DefaultRequestHeaders.Authorization = new HttpCredentialsHeaderValue("Bearer", token);
+
+                httpResponseMessage = await httpClient.GetAsync(uri);
+                httpResponseMessage.EnsureSuccessStatusCode();
+                httpResponseBody = await httpResponseMessage.Content.ReadAsStringAsync();
+                
+                using (JsonDocument document = JsonDocument.Parse(httpResponseBody))
+                {
+                    if (document.RootElement.GetArrayLength() != 0)
+                        currentuserIsNew = false;
+                }
+                
                 return true;
             }
             catch (Exception ex)
