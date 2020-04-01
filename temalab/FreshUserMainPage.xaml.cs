@@ -29,7 +29,7 @@ namespace temalab
 
         private void addRevenueButton_Click(object sender, RoutedEventArgs e)
         {
-            //TODD
+            this.Frame.Navigate(typeof(RevenuesPage));
         }
     }
 }
