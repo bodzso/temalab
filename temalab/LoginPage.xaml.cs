@@ -74,6 +74,66 @@ namespace temalab
                 
                 Debug.WriteLine(token);
 
+                if(rememberMeCheck.IsChecked == true)
+                {
+                    var localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
+                    string rememberedUsers = (string)localSettings.Values["rememberedUsers"];
+
+                    if (string.IsNullOrEmpty(rememberedUsers))
+                    {
+                        using (var stream = new MemoryStream())
+                        {
+                            using (var writer = new Utf8JsonWriter(stream))
+                            {
+                                writer.WriteStartArray();
+                                writer.WriteStringValue(username.Text);
+                                writer.WriteEndArray();
+                            }
+
+                            rememberedUsers = Encoding.UTF8.GetString(stream.ToArray());
+                            localSettings.Values["rememberedUsers"] = rememberedUsers;
+                        }
+                    }
+                    else
+                    {                        
+                        using (JsonDocument document = JsonDocument.Parse(rememberedUsers))
+                        {
+                            var root = document.RootElement;
+                            using (var stream = new MemoryStream())
+                            {
+                                bool skip = false;
+                                using (var writer = new Utf8JsonWriter(stream))
+                                {
+                                    writer.WriteStartArray();
+
+                                    foreach (var value in root.EnumerateArray())
+                                    {
+                                        if (value.GetString() == username.Text)
+                                        {
+                                            skip = true;
+                                            break;
+                                        }
+
+                                        value.WriteTo(writer);
+                                    }
+
+                                    if (!skip)
+                                    {
+                                        writer.WriteStringValue(username.Text);
+                                        writer.WriteEndArray();
+                                    }
+                                }
+
+                                if (!skip)
+                                {
+                                    rememberedUsers = Encoding.UTF8.GetString(stream.ToArray());
+                                    localSettings.Values["rememberedUsers"] = rememberedUsers;
+                                }
+                            }
+                        }
+                    }
+                }
+
                 var app = ((App)Application.Current);
                 app.currentUsername = username.Text;
                 app.currentToken = token;
