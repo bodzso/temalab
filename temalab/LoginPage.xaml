@@ -6,25 +6,16 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Background="White"
-    Foreground="Black">
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="15">
         <TextBlock Text="Login" FontSize="30" HorizontalAlignment="Left"/>
-        <StackPanel Spacing="5">
-            <TextBlock Text="Username"/>
-            <TextBox x:Name="username" Width="300" Background="White" BorderBrush="Black" Foreground="Black"/>
-        </StackPanel>
-        <StackPanel Spacing="5">
-            <TextBlock Text="Password"/>
-            <PasswordBox x:Name="password" Background="White" Width="300" BorderBrush="Black" Foreground="Black"/>
-        </StackPanel>
-        <CheckBox x:Name="rememberMeCheck">
-            <TextBlock Text="Remember me" Foreground="Black"/>
-        </CheckBox>
+        <TextBox Header="Username" PlaceholderText="Enter username" x:Name="username" Width="300"/>
+        <PasswordBox Header="Password" PlaceholderText="Enter password" x:Name="password" Width="300"/>
+        <CheckBox x:Name="rememberMeCheck" Content="Remember me"/>
         <StackPanel Orientation="Horizontal" Spacing="20">
-            <Button Content="Login" x:Name="loginButton" Width="140" Click="Login" Background="Blue"/>
-            <Button Content="Register" x:Name="registerButton" Width="140" Click="ToRegisterPage" Background="Gray"/>
+            <Button Content="Login" x:Name="loginButton" Width="140" Click="Login"/>
+            <Button Content="Register" x:Name="registerButton" Width="140" Click="ToRegisterPage"/>
         </StackPanel>
     </StackPanel>
 </Page>
