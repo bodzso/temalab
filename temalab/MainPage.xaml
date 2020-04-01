@@ -14,7 +14,7 @@
                 <NavigationViewItem Content="Overview" x:Name="overview"  Tag="Overview" Tapped="SwitchToOverview"/>
                 <NavigationViewItem Content="Revenues" x:Name="revenues"  Tag="Revenues" Tapped="SwitchToRevenue"/>
                 <NavigationViewItem Content="Expenses" x:Name="expenses"  Tag="Expenses"  Tapped="SwitchToExpense"/>
-                <NavigationViewItem Content="Transactions" x:Name="transacions"  Tag="Transactions"/>
+                <NavigationViewItem Content="Transactions" x:Name="transacions"  Tag="Transactions" Tapped="SwitchToTransactionsList"/>
             </NavigationView.MenuItems>
             <NavigationView.PaneFooter>
                 <NavigationViewItem Icon="Contact" Tag="User" />
