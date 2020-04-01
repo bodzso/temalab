@@ -6,19 +6,20 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Background="White"
-    Foreground="Black">
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="15" Width="300">
         <TextBlock Text="Login as" FontSize="30" HorizontalAlignment="Left"/>
         <ListBox x:Name="knownUsersList" ItemsSource="{x:Bind Path=knownUsers}"/>
-        <StackPanel Orientation="Horizontal" Width="300" Spacing="20">
-            <Button Content="Login" Width="140" HorizontalAlignment="Left" Click="ToLoginPage" Background="Blue"/>
-            <Button Content="Register" Width="140" HorizontalAlignment="Right" Click="ToRegisterPage" Background="LightGray" Foreground="Black"/>
+        <StackPanel Spacing="10" Visibility="Collapsed">
+            <PasswordBox x:Name="passwordBox" PlaceholderText="Enter password" Visibility="Visible"/>
+            <Button x:Name="loginButton" Content="Login" Visibility="Visible"/>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Spacing="20">
+            <Button Content="Login" Width="140" Click="ToLoginPage"/>
+            <Button Content="Register" Width="140" Click="ToRegisterPage"/>
         </StackPanel>
         <!-- ami innentől jön lehet csak az után kellene megjelenjen, hogy kiválasztottuk melyik felh
         jelentkezik be-->
-        <PasswordBox x:Name="passwordBox" Width="300" PlaceholderText="Password" Visibility="Collapsed"/>
-        <Button x:Name="loginButton" Content="Login" Width="300" Background="Red" Visibility="Collapsed" Foreground="White"/>
     </StackPanel>
 </Page>
