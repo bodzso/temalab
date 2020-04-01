@@ -1,8 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Text;
+using System.Text.Json;
+using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
@@ -14,6 +18,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Windows.Web.Http;
 
 namespace temalab
 {
@@ -23,6 +28,8 @@ namespace temalab
     sealed partial class App : Application
     {
         public string currentUsername { get; set; }
+        public bool currentuserIsNew { get; set; } = true;
+        public int currentUserId { get; set; }
         public string currentToken { get; set; }
 
         /// <summary>
@@ -104,6 +111,60 @@ namespace temalab
             var deferral = e.SuspendingOperation.GetDeferral();
             //TODO: Save application state and stop any background activity
             deferral.Complete();
+        }
+
+        public async Task<bool> Login(string username, string password)
+        {
+            try
+            {
+                HttpClient httpClient = new HttpClient();
+                Uri uri = new Uri("http://localhost:60133/users/authenticate");
+
+                string json;
+                using (var stream = new MemoryStream())
+                {
+                    using (var writer = new Utf8JsonWriter(stream))
+                    {
+                        writer.WriteStartObject();
+                        writer.WriteString("username", username);
+                        writer.WriteString("password", password);
+                        writer.WriteEndObject();
+                    }
+
+                    json = Encoding.UTF8.GetString(stream.ToArray());
+                    Console.WriteLine(json);
+                }
+
+                HttpStringContent content = new HttpStringContent(json, Windows.Storage.Streams.UnicodeEncoding.Utf8, "application/json");
+
+                HttpResponseMessage httpResponseMessage = await httpClient.PostAsync(uri, content);
+                httpResponseMessage.EnsureSuccessStatusCode();
+                var httpResponseBody = await httpResponseMessage.Content.ReadAsStringAsync();
+                Debug.WriteLine(httpResponseBody);
+
+                string token;
+                int userId;
+                using (JsonDocument document = JsonDocument.Parse(httpResponseBody))
+                {
+                    var root = document.RootElement;
+
+                    token = root.GetProperty("token").GetString();
+                    userId = root.GetProperty("id").GetInt32();
+                }
+
+                Debug.WriteLine(token);
+
+                currentUsername = username;
+                currentToken = token;
+                currentUserId = userId;
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+                return false;
+            }
         }
     }
 }

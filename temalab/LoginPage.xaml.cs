@@ -39,42 +39,11 @@ namespace temalab
 
         private async void Login(object sender, RoutedEventArgs e)
         {
-            try
+            var app = ((App)Application.Current);
+
+            if(await app.Login(username.Text, password.Password))
             {
-                HttpClient httpClient = new HttpClient();
-                Uri uri = new Uri("http://localhost:60133/users/authenticate");
-
-                string json;
-                using (var stream = new MemoryStream())
-                {
-                    using (var writer = new Utf8JsonWriter(stream))
-                    {
-                        writer.WriteStartObject();
-                        writer.WriteString("username", username.Text);
-                        writer.WriteString("password", password.Password);
-                        writer.WriteEndObject();
-                    }
-
-                    json = Encoding.UTF8.GetString(stream.ToArray());
-                    Console.WriteLine(json);
-                }
-
-                HttpStringContent content = new HttpStringContent(json, Windows.Storage.Streams.UnicodeEncoding.Utf8, "application/json");
-
-                HttpResponseMessage httpResponseMessage = await httpClient.PostAsync(uri, content);
-                httpResponseMessage.EnsureSuccessStatusCode();
-                var httpResponseBody = await httpResponseMessage.Content.ReadAsStringAsync();
-                Debug.WriteLine(httpResponseBody);
-
-                string token;
-                using (JsonDocument document = JsonDocument.Parse(httpResponseBody))
-                {
-                    token = document.RootElement.GetProperty("token").GetString();
-                }
-                
-                Debug.WriteLine(token);
-
-                if(rememberMeCheck.IsChecked == true)
+                if (rememberMeCheck.IsChecked == true)
                 {
                     var localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
                     string rememberedUsers = (string)localSettings.Values["rememberedUsers"];
@@ -95,7 +64,7 @@ namespace temalab
                         }
                     }
                     else
-                    {                        
+                    {
                         using (JsonDocument document = JsonDocument.Parse(rememberedUsers))
                         {
                             var root = document.RootElement;
@@ -134,15 +103,7 @@ namespace temalab
                     }
                 }
 
-                var app = ((App)Application.Current);
-                app.currentUsername = username.Text;
-                app.currentToken = token;
-                
                 this.Frame.Navigate(typeof(MainPage));
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex);
             }
         }
     }
