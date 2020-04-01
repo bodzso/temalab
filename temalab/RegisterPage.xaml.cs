@@ -65,6 +65,8 @@ namespace temalab
                 HttpResponseMessage httpResponseMessage = await httpClient.PostAsync(uri, content);
                 httpResponseMessage.EnsureSuccessStatusCode();
                 var httpResponseBody = await httpResponseMessage.Content.ReadAsStringAsync();
+
+                this.Frame.Navigate(typeof(LoginPage));
                 Debug.WriteLine(httpResponseBody);
             }
             catch (Exception ex)
