@@ -42,5 +42,9 @@ namespace temalab
             contentFrame.Navigate(typeof(ExpensesPage));
         }
 
+        private void SwitchToTransactionsList(object sender, TappedRoutedEventArgs e)
+        {
+            contentFrame.Navigate(typeof(TransactionsPage));
+        }
     }
 }

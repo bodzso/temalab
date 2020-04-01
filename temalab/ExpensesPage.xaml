@@ -37,11 +37,13 @@
         <StackPanel>
             <TextBlock Text="Expenses:" FontSize="20"/>
             <controls:DataGrid x:Name="expensesGrid" IsReadOnly="True">
-                <controls:DataGridTextColumn Header="Name"/>
-                <controls:DataGridTextColumn Header="Cost"/>
-                <controls:DataGridTextColumn Header="Category"/>
-                <controls:DataGridTextColumn Header="Description"/>
-                <controls:DataGridTextColumn Header="Due date"/>
+                <controls:DataGrid.Columns>
+                    <controls:DataGridTextColumn Header="Name"/>
+                    <controls:DataGridTextColumn Header="Amount"/>
+                    <controls:DataGridTextColumn Header="Category"/>
+                    <controls:DataGridTextColumn Header="Description"/>
+                    <controls:DataGridTextColumn Header="Due date"/>
+                </controls:DataGrid.Columns>
             </controls:DataGrid>
         </StackPanel>
 
