@@ -16,13 +16,13 @@
 
         <Button x:Name="backBtn" Style="{StaticResource NavigationBackButtonNormalStyle}" Click="backBtn_Click"/>
         <StackPanel Grid.Row="1" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="10">
-            <TextBlock Text="Registration" FontSize="30" HorizontalAlignment="Left"/>
-            <TextBox Header="Username" x:Name="username" PlaceholderText="Username"/>
+            <TextBlock Style="{ThemeResource SubtitleTextBlockStyle}" Text="Registration" HorizontalAlignment="Left"/>
+            <TextBox Header="Username" x:Name="username" PlaceholderText="Username" Width="300"/>
             <TextBox Header="First Name" x:Name="firstName" PlaceholderText="First name"/>
             <TextBox Header="Last Name" x:Name="lastName" PlaceholderText="Last name"/>
-            <TextBox Header="E-mail Address" x:Name="email" PlaceholderText="Email address" Width="310"/>
-            <PasswordBox Header="Create a password" x:Name="password" PlaceholderText="Enter password" Width="310"/>
-            <Button Content="Register" x:Name="registerbutton" Width="140" HorizontalAlignment="Center" Click="registerclick"/>
+            <TextBox Header="E-mail Address" x:Name="email" PlaceholderText="Email address"/>
+            <PasswordBox Header="Create a password" x:Name="password" PlaceholderText="Enter password"/>
+            <Button Style="{ThemeResource AccentButtonStyle}" Content="Register" x:Name="registerbutton" HorizontalAlignment="Center" Click="registerclick" Width="100"/>
         </StackPanel>
     </Grid>
 </Page>
