@@ -11,7 +11,7 @@
     <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="10">
         <TextBlock Style="{ThemeResource SubheaderTextBlockStyle}" Text="Login" HorizontalAlignment="Left"/>
         <TextBox Header="Username" PlaceholderText="Enter username" x:Name="username" Width="300"/>
-        <PasswordBox Header="Password" PlaceholderText="Enter password" x:Name="password" Width="300"/>
+        <PasswordBox Header="Password" PlaceholderText="Enter password" x:Name="password" Width="300" KeyDown="password_KeyDown"/>
         <CheckBox x:Name="rememberMeCheck" Content="Remember me"/>
         <StackPanel Orientation="Horizontal" Spacing="20">
             <Button Style="{ThemeResource AccentButtonStyle}" Content="Login" x:Name="loginButton" Width="140" Click="Login"/>

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -105,6 +105,12 @@ namespace temalab
 
                 this.Frame.Navigate(typeof(MainPage));
             }
+        }
+
+        private void password_KeyDown(object sender, KeyRoutedEventArgs e)
+        {
+            if (e.Key == Windows.System.VirtualKey.Enter)
+                Login(sender, e);
         }
     }
 }
