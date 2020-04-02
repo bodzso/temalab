@@ -59,20 +59,14 @@ POST -  http://localhost:60133/categories
 
 ## Transaction custom endpoints
 
-transactions/user-transactions/{userId}
+transactions/revenues
 
-transactions/user-revenues/{userId}
-
-transactions/user-expenses/{userId}
+transactions/expenses
 
 transactions/pending
 
-transactions/pending/{userId}
-
 transactions/latest
-
-transactions/latest/{userId}
 
 ## Category custom endpoints
 
-user-categories/{userId}
+categories
