@@ -8,16 +8,13 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <NavigationView x:Name="navView" PaneDisplayMode="Top" Loaded="navView_Loaded" Header="Overview" ItemInvoked="navView_ItemInvoked" BackRequested="navView_BackRequested">
+    <NavigationView x:Name="navView" PaneDisplayMode="Left" Loaded="navView_Loaded" Header="Overview" ItemInvoked="navView_ItemInvoked" BackRequested="navView_BackRequested" IsPaneToggleButtonVisible="False">
         <NavigationView.MenuItems>
             <NavigationViewItem Content="Overview" x:Name="overview" Tag="overview"/>
             <NavigationViewItem Content="Revenues" x:Name="revenues" Tag="revenues"/>
             <NavigationViewItem Content="Expenses" x:Name="expenses" Tag="expenses"/>
             <NavigationViewItem Content="Transactions" x:Name="transacions" Tag="transactions"/>
         </NavigationView.MenuItems>
-        <NavigationView.PaneFooter>
-            <NavigationViewItem Icon="Contact" Tag="User" />
-        </NavigationView.PaneFooter>
         <Frame x:Name="contentFrame" NavigationFailed="contentFrame_NavigationFailed" Navigated="contentFrame_Navigated"/>
     </NavigationView>
 </Page>
