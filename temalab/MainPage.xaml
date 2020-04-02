@@ -6,22 +6,19 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Background="White">
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid>
-        <NavigationView x:Name="navigation" PaneDisplayMode="Top" IsSettingsVisible="False" >
-            <NavigationView.MenuItems>
-                <NavigationViewItem Content="Overview" x:Name="overview"  Tag="Overview" Tapped="SwitchToOverview"/>
-                <NavigationViewItem Content="Revenues" x:Name="revenues"  Tag="Revenues" Tapped="SwitchToRevenue"/>
-                <NavigationViewItem Content="Expenses" x:Name="expenses"  Tag="Expenses"  Tapped="SwitchToExpense"/>
-                <NavigationViewItem Content="Transactions" x:Name="transacions"  Tag="Transactions" Tapped="SwitchToTransactionsList"/>
-            </NavigationView.MenuItems>
-            <NavigationView.PaneFooter>
-                <NavigationViewItem Icon="Contact" Tag="User" />
-            </NavigationView.PaneFooter>
-            <Frame x:Name="contentFrame"/>
-        </NavigationView>
-        <!--<Frame x:Name="contentFrame"/>-->
-    </Grid>
+    <NavigationView x:Name="navView" PaneDisplayMode="Top" IsSettingsVisible="False" Loaded="navView_Loaded" >
+        <NavigationView.MenuItems>
+            <NavigationViewItem Content="Overview" x:Name="overview"  Tag="Overview" Tapped="SwitchToOverview"/>
+            <NavigationViewItem Content="Revenues" x:Name="revenues"  Tag="Revenues" Tapped="SwitchToRevenue"/>
+            <NavigationViewItem Content="Expenses" x:Name="expenses"  Tag="Expenses"  Tapped="SwitchToExpense"/>
+            <NavigationViewItem Content="Transactions" x:Name="transacions"  Tag="Transactions" Tapped="SwitchToTransactionsList"/>
+        </NavigationView.MenuItems>
+        <NavigationView.PaneFooter>
+            <NavigationViewItem Icon="Contact" Tag="User" />
+        </NavigationView.PaneFooter>
+        <Frame x:Name="contentFrame"/>
+    </NavigationView>
 </Page>
 
