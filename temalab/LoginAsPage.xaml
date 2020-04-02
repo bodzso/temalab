@@ -8,18 +8,24 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="15" Width="300">
-        <TextBlock Text="Login as" FontSize="30" HorizontalAlignment="Left"/>
-        <ListBox x:Name="knownUsersList" ItemsSource="{x:Bind Path=knownUsers}"/>
-        <StackPanel Spacing="10" Visibility="Collapsed">
-            <PasswordBox x:Name="passwordBox" PlaceholderText="Enter password" Visibility="Visible"/>
-            <Button x:Name="loginButton" Content="Login" Visibility="Visible"/>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Orientation="Horizontal">
+            <Button x:Name="backBtn" Style="{StaticResource NavigationBackButtonNormalStyle}" Click="ToLoginPage"/>
+            <TextBlock Style="{ThemeResource SubheaderTextBlockStyle}" VerticalAlignment="Stretch">Login Page</TextBlock>
         </StackPanel>
-        <StackPanel Orientation="Horizontal" Spacing="20">
-            <Button Content="Login" Width="140" Click="ToLoginPage"/>
-            <Button Content="Register" Width="140" Click="ToRegisterPage"/>
+        <StackPanel Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="15" Width="300">
+            <TextBlock Style="{ThemeResource SubheaderTextBlockStyle}" Text="Login as"  HorizontalAlignment="Left"/>
+            <ListBox x:Name="knownUsersList" ItemsSource="{x:Bind Path=knownUsers}"/>
+            <StackPanel Spacing="10" Visibility="Collapsed">
+                <PasswordBox Header="Password" x:Name="passwordBox" PlaceholderText="Enter password" Visibility="Visible"/>
+                <Button Style="{ThemeResource AccentButtonStyle}" x:Name="loginButton" Content="Login" Visibility="Visible" Width="100"/>
+            </StackPanel>
+            <Button Content="Register" Click="ToRegisterPage" Width="100"/>
         </StackPanel>
-        <!-- ami innentől jön lehet csak az után kellene megjelenjen, hogy kiválasztottuk melyik felh
-        jelentkezik be-->
-    </StackPanel>
+    </Grid>
 </Page>
