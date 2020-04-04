@@ -20,6 +20,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Windows.Web.Http;
 using Windows.Web.Http.Headers;
+using temalab.Models;
 
 namespace temalab
 {
@@ -28,10 +29,7 @@ namespace temalab
     /// </summary>
     sealed partial class App : Application
     {
-        public string currentUsername { get; set; }
-        public bool currentuserIsNew { get; set; } = true;
-        public int currentUserId { get; set; }
-        public string currentToken { get; set; }
+        public UserModel user { get; private set; }
 
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
@@ -143,34 +141,9 @@ namespace temalab
                 var httpResponseBody = await httpResponseMessage.Content.ReadAsStringAsync();
                 Debug.WriteLine(httpResponseBody);
 
-                string token;
-                int userId;
-                using (JsonDocument document = JsonDocument.Parse(httpResponseBody))
-                {
-                    var root = document.RootElement;
+                user = JsonSerializer.Deserialize<UserModel>(httpResponseBody);
 
-                    token = root.GetProperty("token").GetString();
-                    userId = root.GetProperty("id").GetInt32();
-                }
-
-                Debug.WriteLine(token);
-
-                currentUsername = username;
-                currentToken = token;
-                currentUserId = userId;
-
-                uri = new Uri("http://localhost:60133/transactions/latest");
-                httpClient.DefaultRequestHeaders.Authorization = new HttpCredentialsHeaderValue("Bearer", token);
-
-                httpResponseMessage = await httpClient.GetAsync(uri);
-                httpResponseMessage.EnsureSuccessStatusCode();
-                httpResponseBody = await httpResponseMessage.Content.ReadAsStringAsync();
-                
-                using (JsonDocument document = JsonDocument.Parse(httpResponseBody))
-                {
-                    if (document.RootElement.GetArrayLength() != 0)
-                        currentuserIsNew = false;
-                }
+                Debug.WriteLine(user.token);
                 
                 return true;
             }

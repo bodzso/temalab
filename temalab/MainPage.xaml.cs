@@ -83,7 +83,7 @@ namespace temalab
             }
             else if(navItemTag == "overview")
             {
-                _page = ((App)Application.Current).currentuserIsNew ? typeof(FreshUserMainPage) : typeof(UserMainPage);
+                _page = ((App)Application.Current).user.isNew ? typeof(FreshUserMainPage) : typeof(UserMainPage);
             }
             else
             {
