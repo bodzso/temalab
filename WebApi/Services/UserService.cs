@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using WebApi.Entities;
 using WebApi.Helpers;
+using Microsoft.EntityFrameworkCore;
 
 namespace WebApi.Services
 {
@@ -14,6 +15,7 @@ namespace WebApi.Services
         User Create(User user, string password);
         void Update(User user, string password = null);
         void Delete(int id);
+        bool isNew(int id);
     }
 
     public class UserService : IUserService
@@ -154,6 +156,11 @@ namespace WebApi.Services
             }
 
             return true;
+        }
+
+        public bool isNew(int id)
+        {
+            return GetById(id).Transactions.Count == 0;
         }
     }
 }
