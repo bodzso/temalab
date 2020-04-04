@@ -8,9 +8,9 @@ namespace WebApi.Entities
         public int Id { get; set; }
         [Required]
         public string Name { get; set; }
-        [Required]
         public int UserId { get; set; }
-        public User User { get; set; }
-        public ICollection<Transaction> Transactions { get; set; }
+
+        public virtual User User { get; set; }
+        public virtual ICollection<Transaction> Transactions { get; set; }
     }
 }

@@ -10,7 +10,9 @@ namespace WebApi.Helpers
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
             // connect to sqlite database
-            options.UseSqlite(Configuration.GetConnectionString("WebApiDatabase"));
+            options
+                .UseSqlite(Configuration.GetConnectionString("WebApiDatabase"))
+                .UseLazyLoadingProxies();
         }
     }
 }

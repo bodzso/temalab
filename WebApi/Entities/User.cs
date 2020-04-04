@@ -19,7 +19,8 @@ namespace WebApi.Entities
         [Required]
         public byte[] PasswordSalt { get; set; }
         public int Balance { get; set; }
-        public ICollection<Transaction> Transactions { get; set; }
-        public ICollection<Category> Categories { get; set; }
+
+        public virtual ICollection<Transaction> Transactions { get; set; }
+        public virtual ICollection<Category> Categories { get; set; }
     }
 }

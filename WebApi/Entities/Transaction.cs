@@ -12,10 +12,10 @@ namespace WebApi.Entities
         [Required]
         public DateTime Date { get; set; }
         public string Description { get; set; }
-        [Required]
         public int UserId { get; set; }
         public int? CategoryId { get; set; }
-        public User User { get; set; }
-        public Category Category { get; set; }
+
+        public virtual User User { get; set; }
+        public virtual Category Category { get; set; }
     }
 }
