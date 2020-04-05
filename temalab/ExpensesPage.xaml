@@ -6,46 +6,33 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Background="White"
-    Foreground="Black"
-    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls">
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    
+>
 
-
-    <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
-        <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Width="260"> 
-            <TextBlock Text="Add new expense" FontSize="30"/>
-            <Rectangle Height="10"/>
-            <TextBlock Text="Name"/>
-            <TextBox x:Name="name"/>
-            <TextBlock Text="Cost"/>
-            <TextBox x:Name="cost"/>
-            <TextBlock  Text="Category"/>
-            <ComboBox>
-                <ComboBoxItem Content="Category1"/>
-                <ComboBoxItem Content="Category2"/>
-                <ComboBoxItem Content="Category3"/>
-            </ComboBox>
-            <TextBlock Text="Description"/>
-            <TextBox x:Name="description"/>
-            <TextBlock Text="Due date"/>
-            <TextBox x:Name="dueDate"/>
-            <Rectangle Height="10"/>
-            <Button Content="Add" Background="Gray" HorizontalAlignment="Center" Width="100" />
-
-        </StackPanel>
-        <Rectangle Height="50"/>
-        <StackPanel>
-            <TextBlock Text="Expenses:" FontSize="20"/>
-            <controls:DataGrid x:Name="expensesGrid" IsReadOnly="True">
-                <controls:DataGrid.Columns>
-                    <controls:DataGridTextColumn Header="Name"/>
-                    <controls:DataGridTextColumn Header="Amount"/>
-                    <controls:DataGridTextColumn Header="Category"/>
-                    <controls:DataGridTextColumn Header="Description"/>
-                    <controls:DataGridTextColumn Header="Due date"/>
-                </controls:DataGrid.Columns>
-            </controls:DataGrid>
-        </StackPanel>
-
+    <StackPanel Spacing="10" Orientation="Vertical" Margin="10,10,10,10">
+        <TextBlock Style="{ThemeResource SubtitleTextBlockStyle}" Text="Add new expense"/>
+        <TextBlock Text="Name"/>
+        <TextBox x:Name="name" Width="200" HorizontalAlignment="Left"/>
+        <TextBlock Text="Cost"/>
+        <TextBox x:Name="cost" Width="200" HorizontalAlignment="Left"/>
+        <TextBlock Text="Category"/>
+        <ComboBox Width="200" HorizontalAlignment="Left"/>
+        <TextBlock Text="Description"/>
+        <TextBox x:Name="description" Width="200" HorizontalAlignment="Left"/>
+        <TextBlock Text="Due date"/>
+        <TextBox x:Name="dueDate" Width="200" HorizontalAlignment="Left"/>
+        <Button Style="{ThemeResource AccentButtonStyle}" Content="Add" Width="100"/>
+        <TextBlock Text="Expenses:" FontSize="20"/>
+        <controls:DataGrid x:Name="expensesGrid" IsReadOnly="True">
+            <controls:DataGrid.Columns>
+                <controls:DataGridTextColumn Header="Name"/>
+                <controls:DataGridTextColumn Header="Amount"/>
+                <controls:DataGridTextColumn Header="Category"/>
+                <controls:DataGridTextColumn Header="Description"/>
+                <controls:DataGridTextColumn Header="Date"/>
+            </controls:DataGrid.Columns>
+        </controls:DataGrid>
     </StackPanel>
 </Page>

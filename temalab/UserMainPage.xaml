@@ -7,61 +7,41 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     mc:Ignorable="d"
-    Background="White"
-    Foreground="Black">
-    <!-- Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"-->
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+    <StackPanel Orientation="Vertical" Margin="10,10,10,10" >
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Spacing="10">
-            <TextBlock Text="Balance:" FontSize="30" Width="125"/>
+            <TextBlock Text="Balance:" FontSize="30"/>
             <TextBlock Text="{x:Bind BalanceString}" FontSize="35" FontWeight="Bold" VerticalAlignment="Top"/>
-            <Button Background="Gray" Width="32" Height="32" x:Name="plusButton" Click="PlusButton_Click"
-                    Padding="5">
-                <TextBlock Text="+" FontSize="50" Margin="-8,-32,-5,-11"/>
+            <Button>
+                <SymbolIcon Symbol="Add"/>
             </Button>
-            <Button Background="Gray" Width="32" Height="32" HorizontalAlignment="Stretch" 
-                VerticalAlignment="Stretch" x:Name="minusButton" Click="MinuButton_Click"
-                    Padding="5">
-                <TextBlock Text="-" FontSize="50" Margin="-7,-32,-6,-10"/>
-                <!--<Image Source="Assets\Buttons\minus.png" Margin="-10,-10,-11,-11"/>-->
+            <Button>
+                <SymbolIcon Symbol="Remove"/>
             </Button>
         </StackPanel>
-
         <StackPanel Orientation="Horizontal" Spacing="20">
             <Rectangle Width="444" Height="421" Fill="Gray"/>
-            <StackPanel Orientation="Vertical">
-                <TextBlock Text="Latest transactions:" FontSize="20"/>
-                <controls:DataGrid x:Name="latestTransactionsDataGrid" Height="180" IsReadOnly="True">
+            <StackPanel Orientation="Vertical" Spacing="10">
+                <TextBlock Style="{ThemeResource SubtitleTextBlockStyle}" Text="Latest transactions:"/>
+                <controls:DataGrid x:Name="latestTransactionsDataGrid" IsReadOnly="True" CanUserReorderColumns="False">
                     <controls:DataGrid.Columns>
-                        <controls:DataGridTextColumn
-                            Header="Price"
-                            />
-                        <controls:DataGridTextColumn
-                            Header="Date"
-                            />
-                        <controls:DataGridTextColumn
-                            Header="Time"
-                            />
+                        <controls:DataGridTextColumn Header="Name"/>
+                        <controls:DataGridTextColumn Header="Amount"/>
+                        <controls:DataGridTextColumn Header="Category"/>
+                        <controls:DataGridTextColumn Header="Date"/>
                     </controls:DataGrid.Columns>
                 </controls:DataGrid>
-                
-                <TextBlock Text="Upcoming transactions:" FontSize="20"/>
-                <controls:DataGrid x:Name="upcomingTransactionsDataGrid" Height="180" IsReadOnly="True">
+                <TextBlock Style="{ThemeResource SubtitleTextBlockStyle}" Text="Upcoming transactions:"/>
+                <controls:DataGrid x:Name="upcomingTransactionsDataGrid" IsReadOnly="True" CanUserReorderColumns="False">
                     <controls:DataGrid.Columns>
-                        <controls:DataGridTextColumn
-                            Header="Price"
-                            />
-                        <controls:DataGridTextColumn
-                            Header="Date"
-                            />
-                        <controls:DataGridTextColumn
-                            Header="Time"
-                            />
+                        <controls:DataGridTextColumn Header="Name"/>
+                        <controls:DataGridTextColumn Header="Amount"/>
+                        <controls:DataGridTextColumn Header="Category"/>
+                        <controls:DataGridTextColumn Header="Date"/>
                     </controls:DataGrid.Columns>
                 </controls:DataGrid>
             </StackPanel>
         </StackPanel>
     </StackPanel>
-
-
 </Page>

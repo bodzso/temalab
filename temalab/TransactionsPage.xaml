@@ -7,19 +7,15 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     mc:Ignorable="d"
-    Background="White"
-    Foreground="Black">
-    <!--Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"-->
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
-        <TextBlock Text="Revenues and Expenses" FontSize="30"/>
-        <controls:DataGrid x:Name="TransactionsGrid" IsReadOnly="True">
-            <controls:DataGrid.Columns>
-                <controls:DataGridTextColumn Header="Name"/>
-                <controls:DataGridTextColumn Header="Amount"/>
-                <controls:DataGridTextColumn Header="Category"/>
-                <controls:DataGridTextColumn Header="Due date"/>
-            </controls:DataGrid.Columns>
-        </controls:DataGrid>
-    </StackPanel>
+    <controls:DataGrid x:Name="TransactionsGrid" IsReadOnly="True">
+        <controls:DataGrid.Columns>
+            <controls:DataGridTextColumn Header="Name"/>
+            <controls:DataGridTextColumn Header="Amount"/>
+            <controls:DataGridTextColumn Header="Category"/>
+            <controls:DataGridTextColumn Header="Description"/>
+            <controls:DataGridTextColumn Header="Date"/>
+        </controls:DataGrid.Columns>
+    </controls:DataGrid>
 </Page>
