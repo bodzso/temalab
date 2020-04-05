@@ -66,7 +66,8 @@ namespace WebApi.Controllers
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 Token = tokenString,
-                IsNew = _userService.isNew(user.Id)
+                IsNew = _userService.isNew(user.Id),
+                Balance = user.Balance
             });
         }
 
