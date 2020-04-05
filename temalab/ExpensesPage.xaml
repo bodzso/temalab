@@ -8,30 +8,41 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
-    
+     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
 >
+    <UserControl.Resources>
+        <local:NegateConverter x:Key="NegateConverter"/>
+    </UserControl.Resources>
 
     <StackPanel Spacing="10" Orientation="Vertical" Margin="10,10,10,10">
         <TextBlock Style="{ThemeResource SubtitleTextBlockStyle}" Text="Add new expense"/>
-        <TextBlock Text="Name"/>
-        <TextBox x:Name="name" Width="200" HorizontalAlignment="Left"/>
-        <TextBlock Text="Cost"/>
-        <TextBox x:Name="cost" Width="200" HorizontalAlignment="Left"/>
-        <TextBlock Text="Category"/>
-        <ComboBox Width="200" HorizontalAlignment="Left"/>
+        <StackPanel Spacing="4">
+            <TextBlock>Name<Run Foreground="Red">*</Run></TextBlock>
+            <TextBox x:Name="name" Width="200" HorizontalAlignment="Left"/>
+        </StackPanel>
+        <StackPanel Spacing="4">
+            <TextBlock>Cost<Run Foreground="Red">*</Run></TextBlock>
+            <muxc:NumberBox Minimum="1" Name="cost" Width="200" HorizontalAlignment="Left"/>
+        </StackPanel>
+        <StackPanel Spacing="4">
+            <TextBlock Text="Category"/>
+            <ComboBox Width="200" HorizontalAlignment="Left" x:Name="categComboBox" ItemsSource="{x:Bind categories}"/>
+        </StackPanel>
         <TextBlock Text="Description"/>
         <TextBox x:Name="description" Width="200" HorizontalAlignment="Left"/>
-        <TextBlock Text="Due date"/>
-        <TextBox x:Name="dueDate" Width="200" HorizontalAlignment="Left"/>
-        <Button Style="{ThemeResource AccentButtonStyle}" Content="Add" Width="100"/>
+        <StackPanel Orientation="Horizontal" Spacing="10">
+            <CalendarDatePicker Header="Due date" x:Name="dueDate" Width="200" HorizontalAlignment="Left"/>
+            <TimePicker x:Name="time" VerticalAlignment="Bottom" />
+        </StackPanel>
+        <Button Style="{ThemeResource AccentButtonStyle}" Content="Add" Width="100" Click="addButton_Click"/>
         <TextBlock Text="Expenses:" FontSize="20"/>
-        <controls:DataGrid x:Name="expensesGrid" IsReadOnly="True">
+        <controls:DataGrid x:Name="expensesGrid" IsReadOnly="True"  CanUserReorderColumns="False" AutoGenerateColumns="False">
             <controls:DataGrid.Columns>
-                <controls:DataGridTextColumn Header="Name"/>
-                <controls:DataGridTextColumn Header="Amount"/>
-                <controls:DataGridTextColumn Header="Category"/>
-                <controls:DataGridTextColumn Header="Description"/>
-                <controls:DataGridTextColumn Header="Date"/>
+                <controls:DataGridTextColumn Header="Name" Binding="{Binding name}"/>
+                <controls:DataGridTextColumn Header="Amount" Binding="{Binding amount, Converter={StaticResource NegateConverter}}"/>
+                <controls:DataGridTextColumn Header="Category" Binding="{Binding categoryName}"/>
+                <controls:DataGridTextColumn Header="Description" Binding="{Binding description}"/>
+                <controls:DataGridTextColumn Header="Date" Binding="{Binding date}"/>
             </controls:DataGrid.Columns>
         </controls:DataGrid>
     </StackPanel>
