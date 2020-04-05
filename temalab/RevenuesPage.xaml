@@ -7,39 +7,34 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
-    Background="White"
-    Foreground="Black">
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+>
 
-    <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
-        <StackPanel Orientation="Vertical" Width="260" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <TextBlock Text="Add new revenue" FontSize="30"/>
-            <Rectangle Height="10"/>
-            <TextBlock Text="Name"/>
-            <TextBox  x:Name="name" />
-            <TextBlock Text="Amount"/>
-            <TextBox x:Name="Amount" />
-            <TextBlock Text="Description "/>
-            <TextBox x:Name="description"/>
-            <TextBlock Text="Due Date"/>
-            <TextBox x:Name="duedate" />
-            <Rectangle Height="10"/>
-            <Button Content="Add" Background="Gray" HorizontalAlignment="Center" Width="100"/>
-    
+    <StackPanel Spacing="10" Orientation="Vertical" Margin="10,10,10,10">
+        <TextBlock Style="{ThemeResource SubtitleTextBlockStyle}" Text="Add new revenue"/>
+        <StackPanel Spacing="4">
+            <TextBlock>Name<Run Foreground="Red">*</Run></TextBlock>
+            <TextBox x:Name="name" Width="200" HorizontalAlignment="Left"/>
         </StackPanel>
-        <Rectangle Height="50"/>
-        <StackPanel>
-            <TextBlock Text="Revenues:" FontSize="20"/>
-            <controls:DataGrid x:Name="revenuesGrid" IsReadOnly="True" >
-                
-                <controls:DataGrid.Columns>
-                    <controls:DataGridTextColumn Header="Name"/>
-                    <controls:DataGridTextColumn Header="Amount"/>
-                    <controls:DataGridTextColumn Header="Description"/>
-                    <controls:DataGridTextColumn Header="Due date"/>
-                </controls:DataGrid.Columns>
-            </controls:DataGrid>
+        <StackPanel Spacing="4">
+            <TextBlock>Amount<Run Foreground="Red">*</Run></TextBlock>
+            <muxc:NumberBox Minimum="1" Name="amount" Width="200" HorizontalAlignment="Left"/>
         </StackPanel>
-        
+        <TextBox Header="Description" x:Name="description" Width="200" HorizontalAlignment="Left"/>
+        <StackPanel Orientation="Horizontal" Spacing="10">
+            <CalendarDatePicker Header="Due date" x:Name="dueDate" Width="200" HorizontalAlignment="Left"/>
+            <TimePicker x:Name="time" VerticalAlignment="Bottom" />
+        </StackPanel>
+        <Button Style="{ThemeResource AccentButtonStyle}" x:Name="addButton" Content="Add" HorizontalAlignment="Left" Width="100" Click="addButton_Click"/>
+        <TextBlock Style="{ThemeResource SubtitleTextBlockStyle}" Text="Revenues:"/>
+        <controls:DataGrid x:Name="revenuesGrid" IsReadOnly="True" CanUserReorderColumns="False" AutoGenerateColumns="False">
+            <controls:DataGrid.Columns>
+                <controls:DataGridTextColumn Header="Name" Binding="{Binding name}"/>
+                <controls:DataGridTextColumn Header="Amount" Binding="{Binding amount}"/>
+                <controls:DataGridTextColumn Header="Description" Binding="{Binding description}"/>
+                <controls:DataGridTextColumn Header="Date" Binding="{Binding date}"/>
+            </controls:DataGrid.Columns>
+        </controls:DataGrid>
     </StackPanel>
-    
 </Page>
