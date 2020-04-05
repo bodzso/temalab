@@ -17,6 +17,7 @@ using System.Text.Json.Serialization;
 using Windows.Web.Http;
 using System.Text;
 using System.Diagnostics;
+using temalab.Models;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -50,55 +51,19 @@ namespace temalab
 
                     if (string.IsNullOrEmpty(rememberedUsers))
                     {
-                        using (var stream = new MemoryStream())
-                        {
-                            using (var writer = new Utf8JsonWriter(stream))
-                            {
-                                writer.WriteStartArray();
-                                writer.WriteStringValue(username.Text);
-                                writer.WriteEndArray();
-                            }
-
-                            rememberedUsers = Encoding.UTF8.GetString(stream.ToArray());
-                            localSettings.Values["rememberedUsers"] = rememberedUsers;
-                        }
+                        var user = JsonSerializer.Serialize(new List<UserModel> { app.user });
+                        localSettings.Values["rememberedUsers"] = user;
                     }
                     else
                     {
-                        using (JsonDocument document = JsonDocument.Parse(rememberedUsers))
+                        var users = JsonSerializer.Deserialize<List<UserModel>>(rememberedUsers);
+
+                        if (users.Any(u => u.id == app.user.id))
+                            return;
+                        else
                         {
-                            var root = document.RootElement;
-                            using (var stream = new MemoryStream())
-                            {
-                                bool skip = false;
-                                using (var writer = new Utf8JsonWriter(stream))
-                                {
-                                    writer.WriteStartArray();
-
-                                    foreach (var value in root.EnumerateArray())
-                                    {
-                                        if (value.GetString() == username.Text)
-                                        {
-                                            skip = true;
-                                            break;
-                                        }
-
-                                        value.WriteTo(writer);
-                                    }
-
-                                    if (!skip)
-                                    {
-                                        writer.WriteStringValue(username.Text);
-                                        writer.WriteEndArray();
-                                    }
-                                }
-
-                                if (!skip)
-                                {
-                                    rememberedUsers = Encoding.UTF8.GetString(stream.ToArray());
-                                    localSettings.Values["rememberedUsers"] = rememberedUsers;
-                                }
-                            }
+                            users.Add(app.user);
+                            localSettings.Values["rememberedUsers"] = JsonSerializer.Serialize(users);
                         }
                     }
                 }
