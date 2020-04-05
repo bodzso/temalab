@@ -168,5 +168,21 @@ namespace temalab
                 return String.Empty;            
             }
         }
+
+        public async Task<string> PostJson(Uri uri, string json)
+        {
+            try
+            {
+                HttpStringContent content = new HttpStringContent(json, Windows.Storage.Streams.UnicodeEncoding.Utf8, "application/json");
+                HttpResponseMessage httpResponseMessage = await httpClient.PostAsync(uri, content);
+                httpResponseMessage.EnsureSuccessStatusCode();
+                return await httpResponseMessage.Content.ReadAsStringAsync();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+                return string.Empty;
+            }
+        }
     }
 }
