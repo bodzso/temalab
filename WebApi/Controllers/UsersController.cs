@@ -98,12 +98,27 @@ namespace WebApi.Controllers
             return Ok(model);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id:int}")]
         public IActionResult GetById(int id)
         {
             var user = _userService.GetById(id);
             var model = _mapper.Map<UserModel>(user);
             return Ok(model);
+        }
+
+        [HttpGet("{username}")]
+        public IActionResult GetByUsername(string username)
+        {
+            try
+            {
+                var user = _userService.GetByUsername(username);
+                var model = _mapper.Map<UserModel>(user);
+                return Ok(model);
+            }
+            catch (Exception)
+            {
+                return new NoContentResult();
+            } 
         }
 
         [HttpPut("{id}")]

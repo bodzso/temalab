@@ -16,6 +16,7 @@ namespace WebApi.Services
         void Update(User user, string password = null);
         void Delete(int id);
         bool isNew(int id);
+        User GetByUsername(string username);
     }
 
     public class UserService : IUserService
@@ -161,6 +162,11 @@ namespace WebApi.Services
         public bool isNew(int id)
         {
             return GetById(id).Transactions.Count == 0;
+        }
+
+        public User GetByUsername(string username)
+        {
+            return _context.Users.Single(u => u.Username == username);
         }
     }
 }
