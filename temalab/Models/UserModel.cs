@@ -9,8 +9,10 @@ namespace temalab.Models
         public string token { private get; set; }
         public bool isNew { private get; set; }
         public string email { get; set; }
+        public double balance { private get; set; }
 
         public string GetToken() => token;
         public bool GetIsNew() => isNew;
+        public double getBalance => balance;
     }
 }
