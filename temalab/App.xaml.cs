@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -30,6 +30,7 @@ namespace temalab
     sealed partial class App : Application
     {
         public UserModel user { get; private set; }
+        private HttpClient httpClient = new HttpClient();
 
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
@@ -116,7 +117,6 @@ namespace temalab
         {
             try
             {
-                HttpClient httpClient = new HttpClient();
                 Uri uri = new Uri("http://localhost:60133/users/authenticate");
 
                 string json;
@@ -131,7 +131,6 @@ namespace temalab
                     }
 
                     json = Encoding.UTF8.GetString(stream.ToArray());
-                    Console.WriteLine(json);
                 }
 
                 HttpStringContent content = new HttpStringContent(json, Windows.Storage.Streams.UnicodeEncoding.Utf8, "application/json");
@@ -142,8 +141,9 @@ namespace temalab
                 Debug.WriteLine(httpResponseBody);
 
                 user = JsonSerializer.Deserialize<UserModel>(httpResponseBody);
+                httpClient.DefaultRequestHeaders.Authorization = new HttpCredentialsHeaderValue("Bearer", user.GetToken());
 
-                Debug.WriteLine(user.token);
+                Debug.WriteLine(user.GetToken());
                 
                 return true;
             }
@@ -151,6 +151,21 @@ namespace temalab
             {
                 Debug.WriteLine(ex);
                 return false;
+            }
+        }
+
+        public async Task<String> GetJson(Uri uri)
+        {
+            try
+            {
+                HttpResponseMessage httpResponseMessage = await httpClient.GetAsync(uri);
+                httpResponseMessage.EnsureSuccessStatusCode();
+                return await httpResponseMessage.Content.ReadAsStringAsync();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+                return String.Empty;            
             }
         }
     }
