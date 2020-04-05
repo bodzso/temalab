@@ -113,6 +113,8 @@ namespace WebApi.Controllers
         {
             transaction.UserId = Convert.ToInt32(User.Identity.Name);
             _context.Transactions.Add(transaction);
+            var user = _context.Users.Find(transaction.UserId);
+            user.Balance += transaction.Amount;
             await _context.SaveChangesAsync();
             return Ok(transaction.Id);
         }
