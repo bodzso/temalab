@@ -1,4 +1,4 @@
-﻿namespace temalab.Models
+namespace temalab.Models
 {
     public class UserModel
     {
@@ -6,8 +6,11 @@
         public string username { get; set; }
         public string firstName { get; set; }
         public string lastName { get; set; }
-        public string token { get; set; }
-        public bool isNew { get; set; } = true;
+        public string token { private get; set; }
+        public bool isNew { private get; set; }
         public string email { get; set; }
+
+        public string GetToken() => token;
+        public bool GetIsNew() => isNew;
     }
 }
