@@ -6,7 +6,41 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+>
+    <Page.Resources>
+        <DataTemplate x:Key="UserListViewTemplate" x:DataType="local:KnownUser">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Ellipse x:Name="Ellipse"
+                    Grid.RowSpan="2"
+                    Width ="32"
+                    Height="32"
+                    Margin="6"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Center"
+                    Fill="{ThemeResource SystemControlBackgroundBaseMediumBrush}"/>
+                <TextBlock Grid.Column="1"
+                    Text="{x:Bind Name}"
+                    x:Phase="1"
+                    Style="{ThemeResource BaseTextBlockStyle}"
+                    Margin="12,6,0,0"/>
+                <TextBlock  Grid.Column="1"
+                    Grid.Row="1"
+                    Text="{x:Bind Username}"
+                    x:Phase="2"
+                    Style="{ThemeResource BodyTextBlockStyle}"
+                    Margin="12,0,0,6"/>
+            </Grid>
+        </DataTemplate>
+    </Page.Resources>
 
     <Grid>
         <Grid.RowDefinitions>
@@ -20,12 +54,12 @@
         </StackPanel>
         <StackPanel Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="15" Width="300">
             <TextBlock Style="{ThemeResource SubheaderTextBlockStyle}" Text="Login as"  HorizontalAlignment="Left"/>
-            <ListBox x:Name="knownUsersList" ItemsSource="{x:Bind Path=knownUsers}"/>
-            <StackPanel Spacing="10" Visibility="Collapsed">
-                <PasswordBox Header="Password" x:Name="passwordBox" PlaceholderText="Enter password" Visibility="Visible"/>
-                <Button Style="{ThemeResource AccentButtonStyle}" x:Name="loginButton" Content="Login" Visibility="Visible" Width="100"/>
-            </StackPanel>
+            <ListView SelectionChanged="knownUsersList_SelectionChanged" x:Name="knownUsersList" ItemTemplate="{StaticResource UserListViewTemplate}"/>
             <Button Content="Register" Click="ToRegisterPage" Width="100"/>
+            <StackPanel x:Name="controls" Spacing="10" Visibility="Collapsed">
+                <PasswordBox Header="Password" x:Name="password" PlaceholderText="Enter password" Visibility="Visible"/>
+                <Button Style="{ThemeResource AccentButtonStyle}" x:Name="loginButton" Content="Login" Visibility="Visible" Width="100" Click="loginButton_Click"/>
+            </StackPanel>
         </StackPanel>
     </Grid>
 </Page>

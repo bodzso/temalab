@@ -1,8 +1,9 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using temalab.Models;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -22,7 +23,8 @@ namespace temalab
     /// </summary>
     public sealed partial class LoginAsPage : Page
     {
-        public List<string> knownUsers { get; set; } = new List<string>(); //Ide kell majd belerakni azokat a felhasználókat, akiket már megegyeztünk lokálisan
+        private KnownUser _knownUser = new KnownUser();
+
         public LoginAsPage()
         {
             this.InitializeComponent();
@@ -36,6 +38,25 @@ namespace temalab
         private void ToLoginPage(object sender, RoutedEventArgs e)
         {
             this.Frame.Navigate(typeof(LoginPage));
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+
+            knownUsersList.ItemsSource = _knownUser.GetKnownUsers();
+        }
+
+        private void knownUsersList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            controls.Visibility = Visibility.Visible;
+        }
+
+        private async void loginButton_Click(object sender, RoutedEventArgs e)
+        {
+            var app = ((App)Application.Current);
+            if (await app.Login(((KnownUser)knownUsersList.SelectedItem).Username, password.Password))
+                this.Frame.Navigate(typeof(MainPage));
         }
     }
 }

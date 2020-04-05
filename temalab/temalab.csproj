@@ -125,6 +125,7 @@
     <Compile Include="FreshUserMainPage.xaml.cs">
       <DependentUpon>FreshUserMainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="KnownUser.cs" />
     <Compile Include="LoginAsPage.xaml.cs">
       <DependentUpon>LoginAsPage.xaml</DependentUpon>
     </Compile>
