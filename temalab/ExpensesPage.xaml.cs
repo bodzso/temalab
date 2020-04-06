@@ -100,9 +100,8 @@ namespace temalab
             {
                 var category = new CategoryModel() { name = input.Text };
                 var json = JsonSerializer.Serialize<CategoryModel>(category);
-                await app.PostJson(new Uri("http://localhost:60133/categories"), json);
-                categories = JsonSerializer.Deserialize<ObservableCollection<CategoryModel>>(await app.GetJson(new Uri("http://localhost:60133/categories")));
-                categComboBox.ItemsSource = categories;
+                category = JsonSerializer.Deserialize<CategoryModel>(await app.PostJson(new Uri("http://localhost:60133/categories"), json));
+                categories.Add(category);
             }
         }
     }
