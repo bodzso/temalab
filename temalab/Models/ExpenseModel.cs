@@ -8,7 +8,7 @@ namespace temalab.Models
 {
     public class ExpenseModel : TransactionModel
     {
-        public int categoryId { get; set; }
+        public int? categoryId { get; set; }
         public string categoryName { get; set; }
     }
 }

@@ -47,7 +47,15 @@ namespace temalab
 
         private async void addButton_Click(object sender, RoutedEventArgs e)
         {
-            var category = categories.Single(c => c.name == (string)categComboBox.SelectedValue);
+            CategoryModel category;
+            try
+            {
+                category = categories.Single(c => c.name == (string)categComboBox.SelectedValue);
+            }
+            catch (InvalidOperationException)
+            {
+                category = null;
+            }
 
             if (string.IsNullOrEmpty(name.Text) || string.IsNullOrEmpty(cost.Text))
                 return;
@@ -64,12 +72,12 @@ namespace temalab
                 dateTime = dueDate.Date.Value.Date;
             }
 
-            var expense = new ExpenseModel() { name = name.Text, amount = cost.Value * -1, categoryId = category.id, description = description.Text, date = dateTime };
+            var expense = new ExpenseModel() { name = name.Text, amount = cost.Value * -1, categoryId = category?.id, description = description.Text, date = dateTime };
             var json = JsonSerializer.Serialize(expense);
             var res = await app.PostJson(new Uri("http://localhost:60133/transactions"), json);
 
             if (!string.IsNullOrEmpty(res))
-                expense.categoryName = category.name;
+                expense.categoryName = category?.name;
                 expenses.Add(expense);
         }
     }

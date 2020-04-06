@@ -26,7 +26,7 @@
         </StackPanel>
         <StackPanel Spacing="4">
             <TextBlock Text="Category"/>
-            <ComboBox Width="200" HorizontalAlignment="Left" x:Name="categComboBox" ItemsSource="{x:Bind categories}"/>
+            <ComboBox Width="200" HorizontalAlignment="Left" x:Name="categComboBox"/>
         </StackPanel>
         <TextBlock Text="Description"/>
         <TextBox x:Name="description" Width="200" HorizontalAlignment="Left"/>
@@ -36,7 +36,8 @@
         </StackPanel>
         <Button Style="{ThemeResource AccentButtonStyle}" Content="Add" Width="100" Click="addButton_Click"/>
         <TextBlock Text="Expenses:" FontSize="20"/>
-        <controls:DataGrid x:Name="expensesGrid" IsReadOnly="True"  CanUserReorderColumns="False" AutoGenerateColumns="False">
+        <ScrollViewer>
+        <controls:DataGrid x:Name="expensesGrid" IsReadOnly="True"  CanUserReorderColumns="False" AutoGenerateColumns="False" Height="340">
             <controls:DataGrid.Columns>
                 <controls:DataGridTextColumn Header="Name" Binding="{Binding name}"/>
                 <controls:DataGridTextColumn Header="Amount" Binding="{Binding amount, Converter={StaticResource NegateConverter}}"/>
@@ -45,5 +46,6 @@
                 <controls:DataGridTextColumn Header="Date" Binding="{Binding date}"/>
             </controls:DataGrid.Columns>
         </controls:DataGrid>
+        </ScrollViewer>
     </StackPanel>
 </Page>
