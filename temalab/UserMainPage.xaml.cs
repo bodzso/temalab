@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Text.Json;
+using temalab.Models;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -24,7 +27,9 @@ namespace temalab
     {
         public static int Balance { get; set; } = 5000;
         public string BalanceString { get; set; } = $"{Balance} Ft";
-        public List<int> latestTransactions { get; set; } //majd átírni Transaction osztályra
+        public ObservableCollection<TransactionModel> latestTransactions = new ObservableCollection<TransactionModel>(); //majd átírni Transaction osztályra
+        public ObservableCollection<TransactionModel> upcomingTransactions = new ObservableCollection<TransactionModel>();
+        App app = (App)Application.Current;
 
         //csak hogy látszódjon valami
         public string Price { get; set; } = "5000";
@@ -34,6 +39,16 @@ namespace temalab
         public UserMainPage()
         {
             this.InitializeComponent();
+        }
+
+        protected async override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+
+            latestTransactions = JsonSerializer.Deserialize<ObservableCollection<TransactionModel>>(await app.GetJson(new Uri("http://localhost:60133/transactions/latest")));
+            latestTransactionsDataGrid.ItemsSource = latestTransactions;
+            upcomingTransactions = JsonSerializer.Deserialize<ObservableCollection<TransactionModel>>(await app.GetJson(new Uri("http://localhost:60133/transactions/pending")));
+            upcomingTransactionsDataGrid.ItemsSource = upcomingTransactions;
         }
 
         private void PlusButton_Click(object sender, RoutedEventArgs e)

@@ -69,7 +69,7 @@ namespace WebApi.Controllers
         [HttpGet("latest")]
         public async Task<ActionResult<IEnumerable<TransactionModel>>> GetLatestTransactions()
         {
-            return await _context.Transactions.Where(t => t.UserId == Convert.ToInt32(User.Identity.Name) && t.Date.CompareTo(DateTime.Now) < 0).OrderBy(t => t.Date).Take(10).Select(d => MapTransaction(d, d.Category.Name)).ToListAsync();
+            return await _context.Transactions.Where(t => t.UserId == Convert.ToInt32(User.Identity.Name) && t.Date.CompareTo(DateTime.Now) < 0).OrderByDescending(t => t.Date).Take(10).Select(d => MapTransaction(d, d.Category.Name)).ToListAsync();
         }
 
         // PUT: Transactions/5
