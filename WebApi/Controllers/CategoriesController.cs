@@ -51,7 +51,7 @@ namespace WebApi.Controllers
             category.UserId = Convert.ToInt32(User.Identity.Name);
             _context.Categories.Add(category);
             await _context.SaveChangesAsync();
-            return Ok(category.Id);
+            return Ok(new { category.Id, category.Name });
         }
 
         // PUT: Categories/5
