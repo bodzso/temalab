@@ -28,6 +28,7 @@ namespace temalab
     {
         public ObservableCollection<ExpenseModel> expenses = new ObservableCollection<ExpenseModel>();
         public ObservableCollection<CategoryModel> categories = new ObservableCollection<CategoryModel>();
+        App app = (App)Application.Current;
         public ExpensesPage()
         {
             this.InitializeComponent();
@@ -37,30 +38,25 @@ namespace temalab
         {
             base.OnNavigatedTo(e);
 
-            var app = (App)Application.Current;
             expenses = JsonSerializer.Deserialize<ObservableCollection<ExpenseModel>>(await app.GetJson(new Uri("http://localhost:60133/transactions/expenses")));
             expensesGrid.ItemsSource = expenses;
             categories = JsonSerializer.Deserialize<ObservableCollection<CategoryModel>>(await app.GetJson(new Uri("http://localhost:60133/categories")));
-            categComboBox.ItemsSource = categories.Select(c => c.name).ToList();
-            
+            categories.Add(new CategoryModel() { id = -1, name = "Uncategorized" });
+            categComboBox.ItemsSource = categories;
+
         }
 
         private async void addButton_Click(object sender, RoutedEventArgs e)
         {
-            CategoryModel category;
-            try
+            CategoryModel category = null;
+            if (categComboBox.SelectedValue != null && ((CategoryModel)categComboBox.SelectedValue).id != -1)
             {
-                category = categories.Single(c => c.name == (string)categComboBox.SelectedValue);
-            }
-            catch (InvalidOperationException)
-            {
-                category = null;
+                category = ((CategoryModel)categComboBox.SelectedValue);
             }
 
             if (string.IsNullOrEmpty(name.Text) || string.IsNullOrEmpty(cost.Text))
                 return;
 
-            var app = (App)Application.Current;
             var dateTime = DateTime.Now;
 
             if (dueDate.Date.HasValue && time.SelectedTime.HasValue)
@@ -78,7 +74,36 @@ namespace temalab
 
             if (!string.IsNullOrEmpty(res))
                 expense.categoryName = category?.name;
-                expenses.Add(expense);
+            expenses.Add(expense);
+
+            name.Text = "";
+            cost.Text = "";
+            categComboBox.SelectedValue = null;
+            description.Text = "";
+            dueDate.Date = null;
+            time.SelectedTime = null;
+        }
+
+        private async void addCategory_Click(object sender, RoutedEventArgs e)
+        {
+            TextBox input = new TextBox();
+            input.PlaceholderText = "Category name";
+            ContentDialog dialog = new ContentDialog
+            {
+                Title = "Add new category",
+                Content = input,
+                CloseButtonText = "Cancel",
+                PrimaryButtonText = "Add"
+            };
+
+            if (await dialog.ShowAsync() == ContentDialogResult.Primary && !String.IsNullOrEmpty(input.Text))
+            {
+                var category = new CategoryModel() { name = input.Text };
+                var json = JsonSerializer.Serialize<CategoryModel>(category);
+                await app.PostJson(new Uri("http://localhost:60133/categories"), json);
+                categories = JsonSerializer.Deserialize<ObservableCollection<CategoryModel>>(await app.GetJson(new Uri("http://localhost:60133/categories")));
+                categComboBox.ItemsSource = categories;
+            }
         }
     }
 

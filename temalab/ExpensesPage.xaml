@@ -26,7 +26,18 @@
         </StackPanel>
         <StackPanel Spacing="4">
             <TextBlock Text="Category"/>
-            <ComboBox Width="200" HorizontalAlignment="Left" x:Name="categComboBox"/>
+            <StackPanel Orientation="Horizontal" Spacing="4">
+                <ComboBox Width="200" HorizontalAlignment="Left" x:Name="categComboBox">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding name}"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+                <Button Click="addCategory_Click">
+                    <SymbolIcon Symbol="Add"/>
+                </Button>
+            </StackPanel>
         </StackPanel>
         <TextBlock Text="Description"/>
         <TextBox x:Name="description" Width="200" HorizontalAlignment="Left"/>
@@ -37,15 +48,15 @@
         <Button Style="{ThemeResource AccentButtonStyle}" Content="Add" Width="100" Click="addButton_Click"/>
         <TextBlock Text="Expenses:" FontSize="20"/>
         <ScrollViewer>
-        <controls:DataGrid x:Name="expensesGrid" IsReadOnly="True"  CanUserReorderColumns="False" AutoGenerateColumns="False" Height="340">
-            <controls:DataGrid.Columns>
-                <controls:DataGridTextColumn Header="Name" Binding="{Binding name}"/>
-                <controls:DataGridTextColumn Header="Amount" Binding="{Binding amount, Converter={StaticResource NegateConverter}}"/>
-                <controls:DataGridTextColumn Header="Category" Binding="{Binding categoryName}"/>
-                <controls:DataGridTextColumn Header="Description" Binding="{Binding description}"/>
-                <controls:DataGridTextColumn Header="Date" Binding="{Binding date}"/>
-            </controls:DataGrid.Columns>
-        </controls:DataGrid>
+            <controls:DataGrid x:Name="expensesGrid" IsReadOnly="True"  CanUserReorderColumns="False" AutoGenerateColumns="False" Height="340">
+                <controls:DataGrid.Columns>
+                    <controls:DataGridTextColumn Header="Name" Binding="{Binding name}"/>
+                    <controls:DataGridTextColumn Header="Amount" Binding="{Binding amount, Converter={StaticResource NegateConverter}}"/>
+                    <controls:DataGridTextColumn Header="Category" Binding="{Binding categoryName}"/>
+                    <controls:DataGridTextColumn Header="Description" Binding="{Binding description}"/>
+                    <controls:DataGridTextColumn Header="Date" Binding="{Binding date}"/>
+                </controls:DataGrid.Columns>
+            </controls:DataGrid>
         </ScrollViewer>
     </StackPanel>
 </Page>
