@@ -184,5 +184,11 @@ namespace temalab
                 return string.Empty;
             }
         }
+
+        public async Task UpdateUserBalance()
+        {
+            var res = await GeHttpContent(new Uri("http://localhost:60133/users/balance"));
+            user.balance = Convert.ToDouble(res);
+        }
     }
 }
