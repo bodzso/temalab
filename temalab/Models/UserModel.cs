@@ -13,6 +13,6 @@ namespace temalab.Models
 
         public string GetToken() => token;
         public bool GetIsNew() => isNew;
-        public double getBalance => balance;
+        public double GetBalance() => balance;
     }
 }
