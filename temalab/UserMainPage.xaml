@@ -1,4 +1,4 @@
-﻿<Page
+<Page
     x:Class="temalab.UserMainPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -13,10 +13,10 @@
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Spacing="10">
             <TextBlock Text="Balance:" FontSize="30"/>
             <TextBlock Text="{x:Bind BalanceString}" FontSize="35" FontWeight="Bold" VerticalAlignment="Top"/>
-            <Button>
+            <Button x:Name="PlusButton" Click="PlusButton_Click">
                 <SymbolIcon Symbol="Add"/>
             </Button>
-            <Button>
+            <Button x:Name="MinusButton" Click="MinusButton_Click">
                 <SymbolIcon Symbol="Remove"/>
             </Button>
         </StackPanel>

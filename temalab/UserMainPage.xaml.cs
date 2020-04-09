@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
@@ -53,12 +53,12 @@ namespace temalab
 
         private void PlusButton_Click(object sender, RoutedEventArgs e)
         {
-            //TODO
+            this.Frame.Navigate(typeof(RevenuesPage));
         }
 
-        private void MinuButton_Click(object sender, RoutedEventArgs e)
+        private void MinusButton_Click(object sender, RoutedEventArgs e)
         {
-            //TODO
+            this.Frame.Navigate(typeof(ExpensesPage));
         }
     }
 }
