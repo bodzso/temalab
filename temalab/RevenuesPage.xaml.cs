@@ -50,8 +50,14 @@ namespace temalab
             var app = (App)Application.Current;
             var dateTime = DateTime.Now;
 
-            if (dueDate.Date.HasValue && time.SelectedTime != null)
-                dateTime = dateTime.Date + time.Time;
+            if (dueDate.Date.HasValue && time.SelectedTime.HasValue)
+            {
+                dateTime = dueDate.Date.Value.Date + time.SelectedTime.Value;
+            }
+            else if (dueDate.Date.HasValue && !time.SelectedTime.HasValue)
+            {
+                dateTime = dueDate.Date.Value.Date;
+            }
 
             var transaction = new TransactionModel { name = name.Text, amount = amount.Value, description = description.Text, date =  dateTime};
 
