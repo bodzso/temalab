@@ -24,7 +24,7 @@
             <Rectangle Width="500" Height="500" Fill="Gray"/>
             <StackPanel Orientation="Vertical" Spacing="10">
                 <TextBlock Style="{ThemeResource SubtitleTextBlockStyle}" Text="Latest transactions:"/>
-                <controls:DataGrid x:Name="latestTransactionsDataGrid" IsReadOnly="True" CanUserReorderColumns="False" AutoGenerateColumns="False" Height="200">
+                <controls:DataGrid x:Name="latestTransactionsDataGrid" IsReadOnly="True" CanUserReorderColumns="False" AutoGenerateColumns="False" Height="200" CanUserSortColumns="True">
                     <controls:DataGrid.Columns>
                         <controls:DataGridTextColumn Header="Name" Binding="{Binding name}"/>
                         <controls:DataGridTextColumn Header="Amount" Binding="{Binding amount}"/>
@@ -33,7 +33,7 @@
                     </controls:DataGrid.Columns>
                 </controls:DataGrid>
                 <TextBlock Style="{ThemeResource SubtitleTextBlockStyle}" Text="Upcoming transactions:"/>
-                <controls:DataGrid x:Name="upcomingTransactionsDataGrid" IsReadOnly="True" CanUserReorderColumns="False" AutoGenerateColumns="False" Height="200">
+                <controls:DataGrid x:Name="upcomingTransactionsDataGrid" IsReadOnly="True" CanUserReorderColumns="False" AutoGenerateColumns="False" Height="200" CanUserSortColumns="True">
                     <controls:DataGrid.Columns>
                         <controls:DataGridTextColumn Header="Name" Binding="{Binding name}"/>
                         <controls:DataGridTextColumn Header="Amount" Binding="{Binding amount}"/>

@@ -9,7 +9,7 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <controls:DataGrid x:Name="TransactionsGrid" IsReadOnly="True">
+    <controls:DataGrid x:Name="TransactionsGrid" IsReadOnly="True" CanUserReorderColumns="False" CanUserSortColumns="True">
         <controls:DataGrid.Columns>
             <controls:DataGridTextColumn Header="Name"/>
             <controls:DataGridTextColumn Header="Amount"/>
