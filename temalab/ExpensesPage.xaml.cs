@@ -26,7 +26,7 @@ namespace temalab
     /// </summary>
     public sealed partial class ExpensesPage : Page
     {
-        public ObservableCollection<ExpenseModel> expenses = new ObservableCollection<ExpenseModel>();
+        public ObservableCollection<TransactionModel> expenses = new ObservableCollection<TransactionModel>();
         public ObservableCollection<CategoryModel> categories = new ObservableCollection<CategoryModel>();
         App app = (App)Application.Current;
         public ExpensesPage()
@@ -38,7 +38,7 @@ namespace temalab
         {
             base.OnNavigatedTo(e);
 
-            expenses = JsonSerializer.Deserialize<ObservableCollection<ExpenseModel>>(await app.GeHttpContent(new Uri("http://localhost:60133/transactions/expenses")));
+            expenses = JsonSerializer.Deserialize<ObservableCollection<TransactionModel>>(await app.GeHttpContent(new Uri("http://localhost:60133/transactions/expenses")));
             expensesGrid.ItemsSource = expenses;
             categories = JsonSerializer.Deserialize<ObservableCollection<CategoryModel>>(await app.GeHttpContent(new Uri("http://localhost:60133/categories")));
             categories.Add(new CategoryModel() { id = -1, name = "Uncategorized" });
@@ -68,7 +68,7 @@ namespace temalab
                 dateTime = dueDate.Date.Value.Date;
             }
 
-            var expense = new ExpenseModel() { name = name.Text, amount = cost.Value * -1, categoryId = category?.id, description = description.Text, date = dateTime };
+            var expense = new TransactionModel() { name = name.Text, amount = cost.Value * -1, categoryId = category?.id, description = description.Text, date = dateTime };
             var json = JsonSerializer.Serialize(expense);
             var res = await app.PostJson(new Uri("http://localhost:60133/transactions"), json);
 
