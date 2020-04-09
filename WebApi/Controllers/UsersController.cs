@@ -107,6 +107,12 @@ namespace WebApi.Controllers
             return Ok(model);
         }
 
+        [HttpGet("balance")]
+        public IActionResult GetBalance()
+        {   
+            return Ok(_userService.GetById(Convert.ToInt32(User.Identity.Name)).Balance);
+        }
+
         [HttpGet("{username}")]
         public IActionResult GetByUsername(string username)
         {
