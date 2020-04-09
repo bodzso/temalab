@@ -25,8 +25,6 @@ namespace temalab
     /// </summary>
     public sealed partial class UserMainPage : Page
     {
-        public static int Balance { get; set; } = 5000;
-        public string BalanceString { get; set; } = $"{Balance} Ft";
         public ObservableCollection<TransactionModel> latestTransactions = new ObservableCollection<TransactionModel>();
         public ObservableCollection<TransactionModel> upcomingTransactions = new ObservableCollection<TransactionModel>();
         App app = (App)Application.Current;
@@ -40,6 +38,8 @@ namespace temalab
         {
             base.OnNavigatedTo(e);
 
+            await app.UpdateUserBalance();
+            balanceValue.Text = Convert.ToString(app.user.GetBalance());
             latestTransactions = JsonSerializer.Deserialize<ObservableCollection<TransactionModel>>(await app.GeHttpContent(new Uri("http://localhost:60133/transactions/latest")));
             latestTransactionsDataGrid.ItemsSource = latestTransactions;
             upcomingTransactions = JsonSerializer.Deserialize<ObservableCollection<TransactionModel>>(await app.GeHttpContent(new Uri("http://localhost:60133/transactions/pending")));

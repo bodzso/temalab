@@ -10,21 +10,21 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <StackPanel Orientation="Vertical" Margin="10,10,10,10" >
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Spacing="10">
-            <TextBlock Text="Balance:" FontSize="30"/>
-            <TextBlock Text="{x:Bind BalanceString}" FontSize="35" FontWeight="Bold" VerticalAlignment="Top"/>
-            <Button x:Name="PlusButton" Click="PlusButton_Click">
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Spacing="10" Margin="0,0,0,10">
+            <TextBlock Style="{ThemeResource SubtitleTextBlockStyle}" Text="Balance:" VerticalAlignment="Bottom"/>
+            <TextBlock x:Name="balanceValue" Style="{ThemeResource TitleTextBlockStyle}" Text="5000" VerticalAlignment="Bottom"/>
+            <Button x:Name="PlusButton" Click="PlusButton_Click" VerticalAlignment="Bottom">
                 <SymbolIcon Symbol="Add"/>
             </Button>
-            <Button x:Name="MinusButton" Click="MinusButton_Click">
+            <Button x:Name="MinusButton" Click="MinusButton_Click" VerticalAlignment="Bottom">
                 <SymbolIcon Symbol="Remove"/>
             </Button>
         </StackPanel>
         <StackPanel Orientation="Horizontal" Spacing="20">
-            <Rectangle Width="444" Height="421" Fill="Gray"/>
+            <Rectangle Width="500" Height="500" Fill="Gray"/>
             <StackPanel Orientation="Vertical" Spacing="10">
                 <TextBlock Style="{ThemeResource SubtitleTextBlockStyle}" Text="Latest transactions:"/>
-                <controls:DataGrid x:Name="latestTransactionsDataGrid" IsReadOnly="True" CanUserReorderColumns="False" AutoGenerateColumns="False">
+                <controls:DataGrid x:Name="latestTransactionsDataGrid" IsReadOnly="True" CanUserReorderColumns="False" AutoGenerateColumns="False" Height="200">
                     <controls:DataGrid.Columns>
                         <controls:DataGridTextColumn Header="Name" Binding="{Binding name}"/>
                         <controls:DataGridTextColumn Header="Amount" Binding="{Binding amount}"/>
@@ -33,7 +33,7 @@
                     </controls:DataGrid.Columns>
                 </controls:DataGrid>
                 <TextBlock Style="{ThemeResource SubtitleTextBlockStyle}" Text="Upcoming transactions:"/>
-                <controls:DataGrid x:Name="upcomingTransactionsDataGrid" IsReadOnly="True" CanUserReorderColumns="False" AutoGenerateColumns="False">
+                <controls:DataGrid x:Name="upcomingTransactionsDataGrid" IsReadOnly="True" CanUserReorderColumns="False" AutoGenerateColumns="False" Height="200">
                     <controls:DataGrid.Columns>
                         <controls:DataGridTextColumn Header="Name" Binding="{Binding name}"/>
                         <controls:DataGridTextColumn Header="Amount" Binding="{Binding amount}"/>
