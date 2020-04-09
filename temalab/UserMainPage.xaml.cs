@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
@@ -27,14 +27,9 @@ namespace temalab
     {
         public static int Balance { get; set; } = 5000;
         public string BalanceString { get; set; } = $"{Balance} Ft";
-        public ObservableCollection<TransactionModel> latestTransactions = new ObservableCollection<TransactionModel>(); //majd átírni Transaction osztályra
+        public ObservableCollection<TransactionModel> latestTransactions = new ObservableCollection<TransactionModel>();
         public ObservableCollection<TransactionModel> upcomingTransactions = new ObservableCollection<TransactionModel>();
         App app = (App)Application.Current;
-
-        //csak hogy látszódjon valami
-        public string Price { get; set; } = "5000";
-        public string Date { get; set; } = "2020.03.29.";
-        public string Time { get; set; } = "16:57";
 
         public UserMainPage()
         {
