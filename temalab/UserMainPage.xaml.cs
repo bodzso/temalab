@@ -45,9 +45,9 @@ namespace temalab
         {
             base.OnNavigatedTo(e);
 
-            latestTransactions = JsonSerializer.Deserialize<ObservableCollection<TransactionModel>>(await app.GetJson(new Uri("http://localhost:60133/transactions/latest")));
+            latestTransactions = JsonSerializer.Deserialize<ObservableCollection<TransactionModel>>(await app.GeHttpContent(new Uri("http://localhost:60133/transactions/latest")));
             latestTransactionsDataGrid.ItemsSource = latestTransactions;
-            upcomingTransactions = JsonSerializer.Deserialize<ObservableCollection<TransactionModel>>(await app.GetJson(new Uri("http://localhost:60133/transactions/pending")));
+            upcomingTransactions = JsonSerializer.Deserialize<ObservableCollection<TransactionModel>>(await app.GeHttpContent(new Uri("http://localhost:60133/transactions/pending")));
             upcomingTransactionsDataGrid.ItemsSource = upcomingTransactions;
         }
 

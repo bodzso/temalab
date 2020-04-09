@@ -38,9 +38,9 @@ namespace temalab
         {
             base.OnNavigatedTo(e);
 
-            expenses = JsonSerializer.Deserialize<ObservableCollection<ExpenseModel>>(await app.GetJson(new Uri("http://localhost:60133/transactions/expenses")));
+            expenses = JsonSerializer.Deserialize<ObservableCollection<ExpenseModel>>(await app.GeHttpContent(new Uri("http://localhost:60133/transactions/expenses")));
             expensesGrid.ItemsSource = expenses;
-            categories = JsonSerializer.Deserialize<ObservableCollection<CategoryModel>>(await app.GetJson(new Uri("http://localhost:60133/categories")));
+            categories = JsonSerializer.Deserialize<ObservableCollection<CategoryModel>>(await app.GeHttpContent(new Uri("http://localhost:60133/categories")));
             categories.Add(new CategoryModel() { id = -1, name = "Uncategorized" });
             categComboBox.ItemsSource = categories;
 

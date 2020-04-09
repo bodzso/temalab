@@ -154,7 +154,7 @@ namespace temalab
             }
         }
 
-        public async Task<String> GetJson(Uri uri)
+        public async Task<String> GeHttpContent(Uri uri)
         {
             try
             {
