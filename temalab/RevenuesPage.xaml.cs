@@ -16,6 +16,7 @@ using Windows.UI.Xaml.Navigation;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Collections.ObjectModel;
+using Microsoft.Toolkit.Uwp.UI.Controls;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -69,6 +70,31 @@ namespace temalab
 
             if (app.user.GetIsNew())
                 app.user.isNew = false;
+        }
+
+        private void revenuesGrid_Sorting(object sender, Microsoft.Toolkit.Uwp.UI.Controls.DataGridColumnEventArgs e)
+        {
+            var column = e.Column.ClipboardContentBinding.Path.Path.ToString();
+            var pi = typeof(TransactionModel).GetProperty(column);
+
+            if (e.Column.SortDirection == null || e.Column.SortDirection == DataGridSortDirection.Descending)
+            {
+                revenuesGrid.ItemsSource = transactions.OrderBy(t => pi.GetValue(t));
+                e.Column.SortDirection = DataGridSortDirection.Ascending;
+            }
+            else
+            {
+                revenuesGrid.ItemsSource = transactions.OrderByDescending(t => pi.GetValue(t));
+                e.Column.SortDirection = DataGridSortDirection.Descending;
+            }
+
+            foreach (var c in revenuesGrid.Columns)
+            {
+                if (c.Header.ToString() != e.Column.Header.ToString())
+                {
+                    c.SortDirection = null;
+                }
+            }
         }
     }
 }

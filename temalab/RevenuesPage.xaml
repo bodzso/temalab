@@ -28,7 +28,7 @@
         </StackPanel>
         <Button Style="{ThemeResource AccentButtonStyle}" x:Name="addButton" Content="Add" HorizontalAlignment="Left" Width="100" Click="addButton_Click"/>
         <TextBlock Style="{ThemeResource SubtitleTextBlockStyle}" Text="Revenues:"/>
-        <controls:DataGrid x:Name="revenuesGrid" IsReadOnly="True" CanUserReorderColumns="False" AutoGenerateColumns="False" CanUserSortColumns="True">
+        <controls:DataGrid x:Name="revenuesGrid" IsReadOnly="True" CanUserReorderColumns="False" AutoGenerateColumns="False" CanUserSortColumns="True" Sorting="revenuesGrid_Sorting">
             <controls:DataGrid.Columns>
                 <controls:DataGridTextColumn Header="Name" Binding="{Binding name}"/>
                 <controls:DataGridTextColumn Header="Amount" Binding="{Binding amount}"/>

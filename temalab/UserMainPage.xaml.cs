@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Toolkit.Uwp.UI.Controls;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
@@ -54,6 +55,56 @@ namespace temalab
         private void MinusButton_Click(object sender, RoutedEventArgs e)
         {
             this.Frame.Navigate(typeof(ExpensesPage));
+        }
+
+        private void latestTransactionsDataGrid_Sorting(object sender, Microsoft.Toolkit.Uwp.UI.Controls.DataGridColumnEventArgs e)
+        {
+            var column = e.Column.ClipboardContentBinding.Path.Path.ToString();
+            var pi = typeof(TransactionModel).GetProperty(column);
+
+            if (e.Column.SortDirection == null || e.Column.SortDirection == DataGridSortDirection.Descending)
+            {
+                latestTransactionsDataGrid.ItemsSource = latestTransactions.OrderBy(t => pi.GetValue(t));
+                e.Column.SortDirection = DataGridSortDirection.Ascending;
+            }
+            else
+            {
+                latestTransactionsDataGrid.ItemsSource = latestTransactions.OrderByDescending(t => pi.GetValue(t));
+                e.Column.SortDirection = DataGridSortDirection.Descending;
+            }
+
+            foreach (var c in latestTransactionsDataGrid.Columns)
+            {
+                if (c.Header.ToString() != e.Column.Header.ToString())
+                {
+                    c.SortDirection = null;
+                }
+            }
+        }
+
+        private void upcomingTransactionsDataGrid_Sorting(object sender, DataGridColumnEventArgs e)
+        {
+            var column = e.Column.ClipboardContentBinding.Path.Path.ToString();
+            var pi = typeof(TransactionModel).GetProperty(column);
+
+            if (e.Column.SortDirection == null || e.Column.SortDirection == DataGridSortDirection.Descending)
+            {
+                upcomingTransactionsDataGrid.ItemsSource = upcomingTransactions.OrderBy(t => pi.GetValue(t));
+                e.Column.SortDirection = DataGridSortDirection.Ascending;
+            }
+            else
+            {
+                upcomingTransactionsDataGrid.ItemsSource = upcomingTransactions.OrderByDescending(t => pi.GetValue(t));
+                e.Column.SortDirection = DataGridSortDirection.Descending;
+            }
+
+            foreach (var c in upcomingTransactionsDataGrid.Columns)
+            {
+                if (c.Header.ToString() != e.Column.Header.ToString())
+                {
+                    c.SortDirection = null;
+                }
+            }
         }
     }
 }

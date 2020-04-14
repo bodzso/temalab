@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Toolkit.Uwp.UI.Controls;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
@@ -102,6 +103,31 @@ namespace temalab
                 var json = JsonSerializer.Serialize<CategoryModel>(category);
                 category = JsonSerializer.Deserialize<CategoryModel>(await app.PostJson(new Uri("http://localhost:60133/categories"), json));
                 categories.Add(category);
+            }
+        }
+
+        private void expensesGrid_Sorting(object sender, Microsoft.Toolkit.Uwp.UI.Controls.DataGridColumnEventArgs e)
+        {
+            var column = e.Column.ClipboardContentBinding.Path.Path.ToString();
+            var pi = typeof(TransactionModel).GetProperty(column);
+
+            if (e.Column.SortDirection == null || e.Column.SortDirection == DataGridSortDirection.Descending)
+            {
+                expensesGrid.ItemsSource = expenses.OrderBy(t => pi.GetValue(t));
+                e.Column.SortDirection = DataGridSortDirection.Ascending;
+            }
+            else
+            {
+                expensesGrid.ItemsSource = expenses.OrderByDescending(t => pi.GetValue(t));
+                e.Column.SortDirection = DataGridSortDirection.Descending;
+            }
+
+            foreach (var c in expensesGrid.Columns)
+            {
+                if (c.Header.ToString() != e.Column.Header.ToString())
+                {
+                    c.SortDirection = null;
+                }
             }
         }
     }

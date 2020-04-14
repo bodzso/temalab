@@ -48,7 +48,7 @@
         <Button Style="{ThemeResource AccentButtonStyle}" Content="Add" Width="100" Click="addButton_Click"/>
         <TextBlock Text="Expenses:" FontSize="20"/>
         <ScrollViewer>
-            <controls:DataGrid x:Name="expensesGrid" IsReadOnly="True"  CanUserReorderColumns="False" AutoGenerateColumns="False" Height="340" CanUserSortColumns="True">
+            <controls:DataGrid x:Name="expensesGrid" IsReadOnly="True"  CanUserReorderColumns="False" AutoGenerateColumns="False" Height="340" CanUserSortColumns="True" Sorting="expensesGrid_Sorting">
                 <controls:DataGrid.Columns>
                     <controls:DataGridTextColumn Header="Name" Binding="{Binding name}"/>
                     <controls:DataGridTextColumn Header="Amount" Binding="{Binding amount, Converter={StaticResource NegateConverter}}"/>
