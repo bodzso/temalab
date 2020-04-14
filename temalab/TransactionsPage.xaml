@@ -9,13 +9,13 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <controls:DataGrid x:Name="TransactionsGrid" IsReadOnly="True" CanUserReorderColumns="False" CanUserSortColumns="True">
+    <controls:DataGrid x:Name="TransactionsGrid" IsReadOnly="True" CanUserReorderColumns="False" CanUserSortColumns="True" Sorting="TransactionsGrid_Sorting" AutoGenerateColumns="False">
         <controls:DataGrid.Columns>
-            <controls:DataGridTextColumn Header="Name"/>
-            <controls:DataGridTextColumn Header="Amount"/>
-            <controls:DataGridTextColumn Header="Category"/>
-            <controls:DataGridTextColumn Header="Description"/>
-            <controls:DataGridTextColumn Header="Date"/>
+            <controls:DataGridTextColumn Header="Name" Binding="{Binding name}"/>
+            <controls:DataGridTextColumn Header="Amount" Binding="{Binding amount}"/>
+            <controls:DataGridTextColumn Header="Category" Binding="{Binding categoryName}"/>
+            <controls:DataGridTextColumn Header="Description" Binding="{Binding description}"/>
+            <controls:DataGridTextColumn Header="Date" Binding="{Binding date}"/>
         </controls:DataGrid.Columns>
     </controls:DataGrid>
 </Page>
