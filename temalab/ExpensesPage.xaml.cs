@@ -42,7 +42,6 @@ namespace temalab
             expenses = JsonSerializer.Deserialize<ObservableCollection<TransactionModel>>(await app.GeHttpContent(new Uri("http://localhost:60133/transactions/expenses")));
             expensesGrid.ItemsSource = expenses;
             categories = JsonSerializer.Deserialize<ObservableCollection<CategoryModel>>(await app.GeHttpContent(new Uri("http://localhost:60133/categories")));
-            categories.Add(new CategoryModel() { id = -1, name = "Uncategorized" });
             categComboBox.ItemsSource = categories;
 
         }
@@ -50,7 +49,7 @@ namespace temalab
         private async void addButton_Click(object sender, RoutedEventArgs e)
         {
             CategoryModel category = null;
-            if (categComboBox.SelectedValue != null && ((CategoryModel)categComboBox.SelectedValue).id != -1)
+            if (categComboBox.SelectedValue != null)
             {
                 category = ((CategoryModel)categComboBox.SelectedValue);
             }
