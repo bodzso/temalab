@@ -10,6 +10,7 @@ namespace temalab.Models
         public bool isNew { private get; set; }
         public string email { get; set; }
         public double balance { private get; set; }
+        public string password { get; set; }
 
         public string GetToken() => token;
         public bool GetIsNew() => isNew;

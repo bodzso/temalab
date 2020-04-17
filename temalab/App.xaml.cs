@@ -220,5 +220,17 @@ namespace temalab
                 return false;
             }
         }
+
+        public void Logout()
+        {
+            var localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
+            Frame rootFrame = Window.Current.Content as Frame;
+            user = null;
+
+            if (localSettings.Values["rememberedUsers"] == null)
+                rootFrame.Navigate(typeof(LoginPage));
+            else
+                rootFrame.Navigate(typeof(LoginAsPage));
+        }
     }
 }

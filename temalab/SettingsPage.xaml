@@ -8,7 +8,14 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid>
-
-    </Grid>
+    <StackPanel Margin="10" Spacing="10">
+        <TextBlock Style="{ThemeResource SubtitleTextBlockStyle}" Text="User data"/>
+        <TextBox x:Name="username" Header="Username" Text="{x:Bind app.user.username}" IsReadOnly="True" Width="200" HorizontalAlignment="Left"/>
+        <TextBox x:Name="firstName" Header="First Name" Text="{x:Bind app.user.firstName}" Width="200" HorizontalAlignment="Left"/>
+        <TextBox x:Name="lastName" Header="Last Name" Text="{x:Bind app.user.lastName}" Width="200" HorizontalAlignment="Left"/>
+        <TextBox x:Name="email" Header="E-mail Address" Text="{x:Bind app.user.email}" Width="200" HorizontalAlignment="Left"/>
+        <PasswordBox x:Name="password" Header="Password" PlaceholderText="Enter new password" Width="200" HorizontalAlignment="Left"/>
+        <Button x:Name="updateButton" Content="Update" Click="updateButton_Click"/>
+        <HyperlinkButton x:Name="logoutButton" Content="Logout from the application" Click="logoutButton_Click"/>
+    </StackPanel>
 </Page>
