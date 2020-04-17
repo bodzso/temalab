@@ -27,7 +27,8 @@ namespace temalab
     /// </summary>
     public sealed partial class RevenuesPage : Page
     {
-        public ObservableCollection<TransactionModel> transactions = new ObservableCollection<TransactionModel>();
+        public ObservableCollection<EditableTransactionModel> transactions = new ObservableCollection<EditableTransactionModel>();
+        App app = Application.Current as App;
 
         public RevenuesPage()
         {
@@ -39,7 +40,7 @@ namespace temalab
             base.OnNavigatedTo(e);
 
             var app = (App)Application.Current;
-            transactions = JsonSerializer.Deserialize<ObservableCollection<TransactionModel>>(await app.GeHttpContent(new Uri("http://localhost:60133/transactions/revenues")));
+            transactions = JsonSerializer.Deserialize<ObservableCollection<EditableTransactionModel>>(await app.GeHttpContent(new Uri("http://localhost:60133/transactions/revenues")));
             revenuesGrid.ItemsSource = transactions;
         }
 
@@ -60,13 +61,21 @@ namespace temalab
                 dateTime = dueDate.Date.Value.Date;
             }
 
-            var transaction = new TransactionModel { name = name.Text, amount = amount.Value, description = description.Text, date =  dateTime};
+            var transaction = new EditableTransactionModel { name = name.Text, amount = amount.Value, description = description.Text, date =  dateTime};
+            var options = new JsonSerializerOptions
+            {
+                IgnoreNullValues = true
+            };
 
-            var json = JsonSerializer.Serialize(transaction);
+            var json = JsonSerializer.Serialize(transaction, options);
             var res = await app.PostJson(new Uri("http://localhost:60133/transactions"), json);
             
             if(!string.IsNullOrEmpty(res))
+            {
+                transaction.id = Convert.ToInt32(res);
                 transactions.Add(transaction);
+            }
+               
 
             if (app.user.GetIsNew())
                 app.user.isNew = false;
@@ -75,7 +84,7 @@ namespace temalab
         private void revenuesGrid_Sorting(object sender, Microsoft.Toolkit.Uwp.UI.Controls.DataGridColumnEventArgs e)
         {
             var column = e.Column.ClipboardContentBinding.Path.Path.ToString();
-            var pi = typeof(TransactionModel).GetProperty(column);
+            var pi = typeof(EditableTransactionModel).GetProperty(column);
 
             if (e.Column.SortDirection == null || e.Column.SortDirection == DataGridSortDirection.Descending)
             {
@@ -94,6 +103,17 @@ namespace temalab
                 {
                     c.SortDirection = null;
                 }
+            }
+        }
+
+        private async void revenuesGrid_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
+        {
+            if (e.EditAction == DataGridEditAction.Commit)
+            {
+                var transaction = e.Row.DataContext as EditableTransactionModel;
+                
+                if (!await app.PutJson(new Uri("http://localhost:60133/transactions/" + transaction.id), JsonSerializer.Serialize(transaction)))
+                    e.Cancel = true;
             }
         }
     }

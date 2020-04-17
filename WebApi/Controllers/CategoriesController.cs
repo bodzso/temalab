@@ -25,7 +25,7 @@ namespace WebApi.Controllers
         [HttpGet]
         public async Task<IActionResult> GetCategories()
         {
-            return Ok(await _context.Categories.Where(c => c.UserId == Convert.ToInt32(User.Identity.Name)).Select(d => new { d.Id, d.Name }).ToListAsync());
+            return Ok(await _context.Categories.Where(c => c.UserId == Convert.ToInt32(User.Identity.Name)).Select(d => new { d.CategoryId, d.CategoryName }).ToListAsync());
         }
 
         // GET: Categories/5
@@ -42,7 +42,7 @@ namespace WebApi.Controllers
             {
                 return Unauthorized();
             }
-            return Ok(new { category.Id, category.Name });
+            return Ok(new { category.CategoryId, category.CategoryName });
         }
 
         [HttpPost]
@@ -51,7 +51,7 @@ namespace WebApi.Controllers
             category.UserId = Convert.ToInt32(User.Identity.Name);
             _context.Categories.Add(category);
             await _context.SaveChangesAsync();
-            return Ok(new { category.Id, category.Name });
+            return Ok(new { category.CategoryId, category.CategoryName });
         }
 
         // PUT: Categories/5
@@ -60,7 +60,7 @@ namespace WebApi.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateCategory(int id, Category category)
         {
-            if (id != category.Id)
+            if (id != category.CategoryId)
             {
                 return BadRequest();
             }
@@ -104,12 +104,12 @@ namespace WebApi.Controllers
             _context.Categories.Remove(category);
             await _context.SaveChangesAsync();
 
-            return Ok(new { category.Id, category.Name });
+            return Ok(new { category.CategoryId, category.CategoryName });
         }
 
         private bool CategoryExists(int id)
         {
-            return _context.Categories.Any(e => e.Id == id);
+            return _context.Categories.Any(e => e.CategoryId == id);
         }
     }
 }

@@ -8,12 +8,12 @@ namespace temalab.Models
 {
     public class TransactionModel
     {
-        public int id { get; set; }
-        public string name { get; set; }
+        public int? id { get; set; } = null;
+        public virtual string name { get; set; }
         public double amount { get; set; }
         public DateTime date { get; set; }
-        public string description { get; set; }
-        public int? categoryId { get; set; }
+        public virtual string description { get; set; }
+        public virtual int? categoryId { get; set; } = null;
         public string categoryName { get; set; }
     }
 }

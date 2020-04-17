@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using WebApi.Entities;
 using WebApi.Helpers;
 using WebApi.Models.Transactions;
+using AutoMapper;
 
 namespace WebApi.Controllers
 {
@@ -17,17 +18,19 @@ namespace WebApi.Controllers
     public class TransactionsController : ControllerBase
     {
         private readonly DataContext _context;
+        private IMapper _mapper;
 
-        public TransactionsController(DataContext context)
+        public TransactionsController(DataContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         // GET: Transactions
         [HttpGet]
         public async Task<ActionResult<IEnumerable<TransactionModel>>> GetTransactions()
         {
-            return Ok(await _context.Transactions.Where(t => t.UserId == Convert.ToInt32(User.Identity.Name)).Select(d => MapTransaction(d, d.Category.Name)).ToListAsync());
+            return Ok(await _context.Transactions.Where(t => t.UserId == Convert.ToInt32(User.Identity.Name)).Select(d => MapTransaction(d, d.Category.CategoryName)).ToListAsync());
         }
 
         // GET: Transactions/5
@@ -45,7 +48,7 @@ namespace WebApi.Controllers
                 return Unauthorized();
             }
 
-            return Ok(MapTransaction(transaction, transaction.Category?.Name));
+            return Ok(MapTransaction(transaction, transaction.Category?.CategoryName));
         }
 
         [HttpGet("revenues")]
@@ -54,7 +57,7 @@ namespace WebApi.Controllers
             return await _context.Transactions
                 .Where(t => t.UserId == Convert.ToInt32(User.Identity.Name) && t.Amount > 0)
                 .OrderByDescending(t => t.Date)
-                .Select(d => MapTransaction(d, d.Category.Name))
+                .Select(d => MapTransaction(d, d.Category.CategoryName))
                 .ToListAsync();
         }
 
@@ -64,7 +67,7 @@ namespace WebApi.Controllers
             return await _context.Transactions
                 .Where(t => t.UserId == Convert.ToInt32(User.Identity.Name) && t.Amount < 0)
                 .OrderByDescending(t => t.Date)
-                .Select(d => MapTransaction(d, d.Category.Name))
+                .Select(d => MapTransaction(d, d.Category.CategoryName))
                 .ToListAsync();
         }
 
@@ -74,7 +77,7 @@ namespace WebApi.Controllers
             return await _context.Transactions
                 .Where(t => t.UserId == Convert.ToInt32(User.Identity.Name) && t.Date.CompareTo(DateTime.Now) > 0)
                 .OrderBy(t => t.Date)
-                .Select(d => MapTransaction(d, d.Category.Name))
+                .Select(d => MapTransaction(d, d.Category.CategoryName))
                 .ToListAsync();
         }
 
@@ -85,7 +88,7 @@ namespace WebApi.Controllers
                 .Where(t => t.UserId == Convert.ToInt32(User.Identity.Name) && t.Date.CompareTo(DateTime.Now) < 0)
                 .OrderByDescending(t => t.Date)
                 .Take(10)
-                .Select(d => MapTransaction(d, d.Category.Name))
+                .Select(d => MapTransaction(d, d.Category.CategoryName))
                 .ToListAsync();
         }
 
@@ -126,8 +129,9 @@ namespace WebApi.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPost]
-        public async Task<ActionResult<Transaction>> AddTransaction(Transaction transaction)
+        public async Task<ActionResult<Transaction>> AddTransaction(CreateModel model)
         {
+            var transaction = _mapper.Map<Transaction>(model);
             transaction.UserId = Convert.ToInt32(User.Identity.Name);
             _context.Transactions.Add(transaction);
             

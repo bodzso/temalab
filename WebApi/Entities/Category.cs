@@ -5,9 +5,9 @@ namespace WebApi.Entities
 {
     public class Category
     {
-        public int Id { get; set; }
+        public int CategoryId { get; set; }
         [Required]
-        public string Name { get; set; }
+        public string CategoryName { get; set; }
         public int UserId { get; set; }
 
         public virtual User User { get; set; }

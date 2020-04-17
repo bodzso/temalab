@@ -139,6 +139,7 @@
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Models\CategoryModel.cs" />
+    <Compile Include="Models\EditableTransactionModel.cs" />
     <Compile Include="Models\TransactionModel.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

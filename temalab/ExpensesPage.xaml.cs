@@ -27,7 +27,7 @@ namespace temalab
     /// </summary>
     public sealed partial class ExpensesPage : Page
     {
-        public ObservableCollection<TransactionModel> expenses = new ObservableCollection<TransactionModel>();
+        public ObservableCollection<EditableTransactionModel> expenses = new ObservableCollection<EditableTransactionModel>();
         public ObservableCollection<CategoryModel> categories = new ObservableCollection<CategoryModel>();
         App app = (App)Application.Current;
         public ExpensesPage()
@@ -39,11 +39,11 @@ namespace temalab
         {
             base.OnNavigatedTo(e);
 
-            expenses = JsonSerializer.Deserialize<ObservableCollection<TransactionModel>>(await app.GeHttpContent(new Uri("http://localhost:60133/transactions/expenses")));
+            expenses = JsonSerializer.Deserialize<ObservableCollection<EditableTransactionModel>>(await app.GeHttpContent(new Uri("http://localhost:60133/transactions/expenses")));
             expensesGrid.ItemsSource = expenses;
             categories = JsonSerializer.Deserialize<ObservableCollection<CategoryModel>>(await app.GeHttpContent(new Uri("http://localhost:60133/categories")));
             categComboBox.ItemsSource = categories;
-
+            categoryColumn.ItemsSource = categories;
         }
 
         private async void addButton_Click(object sender, RoutedEventArgs e)
@@ -68,13 +68,15 @@ namespace temalab
                 dateTime = dueDate.Date.Value.Date;
             }
 
-            var expense = new TransactionModel() { name = name.Text, amount = cost.Value * -1, categoryId = category?.id, description = description.Text, date = dateTime };
+            var expense = new EditableTransactionModel() { name = name.Text, amount = cost.Value * -1, categoryId = category?.categoryId, description = description.Text, date = dateTime };
             var json = JsonSerializer.Serialize(expense);
             var res = await app.PostJson(new Uri("http://localhost:60133/transactions"), json);
 
-            if (!string.IsNullOrEmpty(res))
-                expense.categoryName = category?.name;
-            expenses.Add(expense);
+            if(!string.IsNullOrEmpty(res))
+            {
+                expense.id = Convert.ToInt32(res);
+                expenses.Add(expense);
+            }
 
             name.Text = "";
             cost.Text = "";
@@ -98,7 +100,7 @@ namespace temalab
 
             if (await dialog.ShowAsync() == ContentDialogResult.Primary && !String.IsNullOrEmpty(input.Text))
             {
-                var category = new CategoryModel() { name = input.Text };
+                var category = new CategoryModel() { categoryName = input.Text };
                 var json = JsonSerializer.Serialize<CategoryModel>(category);
                 category = JsonSerializer.Deserialize<CategoryModel>(await app.PostJson(new Uri("http://localhost:60133/categories"), json));
                 categories.Add(category);
@@ -108,7 +110,7 @@ namespace temalab
         private void expensesGrid_Sorting(object sender, Microsoft.Toolkit.Uwp.UI.Controls.DataGridColumnEventArgs e)
         {
             var column = e.Column.ClipboardContentBinding.Path.Path.ToString();
-            var pi = typeof(TransactionModel).GetProperty(column);
+            var pi = typeof(EditableTransactionModel).GetProperty(column);
 
             if (e.Column.SortDirection == null || e.Column.SortDirection == DataGridSortDirection.Descending)
             {
@@ -127,6 +129,17 @@ namespace temalab
                 {
                     c.SortDirection = null;
                 }
+            }
+        }
+
+        private async void expensesGrid_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
+        {
+            if (e.EditAction == DataGridEditAction.Commit)
+            {
+                var transaction = e.Row.DataContext as EditableTransactionModel;
+
+                if (!await app.PutJson(new Uri("http://localhost:60133/transactions/" + transaction.id), JsonSerializer.Serialize(transaction)))
+                    e.Cancel = true;
             }
         }
     }

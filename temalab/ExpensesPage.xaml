@@ -30,7 +30,7 @@
                 <ComboBox Width="200" HorizontalAlignment="Left" x:Name="categComboBox">
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding name}"/>
+                            <TextBlock Text="{Binding categoryName}"/>
                         </DataTemplate>
                     </ComboBox.ItemTemplate>
                 </ComboBox>
@@ -48,13 +48,17 @@
         <Button Style="{ThemeResource AccentButtonStyle}" Content="Add" Width="100" Click="addButton_Click"/>
         <TextBlock Text="Expenses:" FontSize="20"/>
         <ScrollViewer>
-            <controls:DataGrid x:Name="expensesGrid" IsReadOnly="True"  CanUserReorderColumns="False" AutoGenerateColumns="False" Height="340" CanUserSortColumns="True" Sorting="expensesGrid_Sorting">
+            <controls:DataGrid x:Name="expensesGrid" IsReadOnly="False"  CanUserReorderColumns="False" AutoGenerateColumns="False"
+                               Height="340" CanUserSortColumns="True" Sorting="expensesGrid_Sorting"
+                               RowEditEnding="expensesGrid_RowEditEnding">
                 <controls:DataGrid.Columns>
                     <controls:DataGridTextColumn Header="Name" Binding="{Binding name}"/>
-                    <controls:DataGridTextColumn Header="Amount" Binding="{Binding amount, Converter={StaticResource NegateConverter}}"/>
-                    <controls:DataGridTextColumn Header="Category" Binding="{Binding categoryName}"/>
+                    <controls:DataGridTextColumn Header="Amount" Binding="{Binding amount, Converter={StaticResource NegateConverter}}" IsReadOnly="True"/>
+                    <controls:DataGridComboBoxColumn x:Name="categoryColumn" Header="Category"
+                                                     Binding="{Binding categoryId}"
+                                                     DisplayMemberPath="categoryName"/>
                     <controls:DataGridTextColumn Header="Description" Binding="{Binding description}"/>
-                    <controls:DataGridTextColumn Header="Date" Binding="{Binding date}"/>
+                    <controls:DataGridTextColumn Header="Date" Binding="{Binding date}" IsReadOnly="True"/>
                 </controls:DataGrid.Columns>
             </controls:DataGrid>
         </ScrollViewer>

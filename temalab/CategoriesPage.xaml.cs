@@ -47,7 +47,7 @@ namespace temalab
 
         private async void addButton_Click(object sender, RoutedEventArgs e)
         {
-            var res = await app.PostJson(new Uri("http://localhost:60133/categories"), JsonSerializer.Serialize(new CategoryModel { name = categoryName.Text }));
+            var res = await app.PostJson(new Uri("http://localhost:60133/categories"), JsonSerializer.Serialize(new CategoryModel { categoryName = categoryName.Text }));
 
             if (!string.IsNullOrEmpty(res))
                 categories.Add(JsonSerializer.Deserialize<Category>(res));
@@ -55,16 +55,16 @@ namespace temalab
 
         private async void edit_Click(object sender, RoutedEventArgs e)
         {
-            categoryNameDialogInput.Text = currentCategory.name;
+            categoryNameDialogInput.Text = currentCategory.categoryName;
             var res = await categoryNameDialog.ShowAsync();
 
             if (res == ContentDialogResult.Primary)
             {
-                var httpRes = await app.PutJson(new Uri("http://localhost:60133/categories/" + currentCategory.id), JsonSerializer.Serialize(new Category { id = currentCategory.id, name = categoryNameDialogInput.Text }));
+                var httpRes = await app.PutJson(new Uri("http://localhost:60133/categories/" + currentCategory.categoryId), JsonSerializer.Serialize(new Category { categoryId = currentCategory.categoryId, categoryName = categoryNameDialogInput.Text }));
 
                 if (httpRes)
                 {
-                    currentCategory.name = categoryNameDialogInput.Text;
+                    currentCategory.categoryName = categoryNameDialogInput.Text;
                     int idx = categories.IndexOf(currentCategory);
                     categories.Remove(currentCategory);
                     categories.Insert(idx, currentCategory);
@@ -74,7 +74,7 @@ namespace temalab
 
         private async void remove_Click(object sender, RoutedEventArgs e)
         {
-            var result = await app.SendDeleteHttp(new Uri("http://localhost:60133/categories/" + currentCategory.id));
+            var result = await app.SendDeleteHttp(new Uri("http://localhost:60133/categories/" + currentCategory.categoryId));
 
             if (result)
                 categories.Remove(currentCategory);

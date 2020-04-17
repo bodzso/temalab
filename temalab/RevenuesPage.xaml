@@ -28,12 +28,14 @@
         </StackPanel>
         <Button Style="{ThemeResource AccentButtonStyle}" x:Name="addButton" Content="Add" HorizontalAlignment="Left" Width="100" Click="addButton_Click"/>
         <TextBlock Style="{ThemeResource SubtitleTextBlockStyle}" Text="Revenues:"/>
-        <controls:DataGrid x:Name="revenuesGrid" IsReadOnly="True" CanUserReorderColumns="False" AutoGenerateColumns="False" CanUserSortColumns="True" Sorting="revenuesGrid_Sorting">
+        <controls:DataGrid x:Name="revenuesGrid" IsReadOnly="False" CanUserReorderColumns="False" AutoGenerateColumns="False"
+                           CanUserSortColumns="True" Sorting="revenuesGrid_Sorting"
+                           RowEditEnding="revenuesGrid_RowEditEnding">
             <controls:DataGrid.Columns>
                 <controls:DataGridTextColumn Header="Name" Binding="{Binding name}"/>
-                <controls:DataGridTextColumn Header="Amount" Binding="{Binding amount}"/>
+                <controls:DataGridTextColumn Header="Amount" Binding="{Binding amount}" IsReadOnly="True"/>
                 <controls:DataGridTextColumn Header="Description" Binding="{Binding description}"/>
-                <controls:DataGridTextColumn Header="Date" Binding="{Binding date}"/>
+                <controls:DataGridTextColumn Header="Date" Binding="{Binding date}" IsReadOnly="True"/>
             </controls:DataGrid.Columns>
         </controls:DataGrid>
     </StackPanel>
