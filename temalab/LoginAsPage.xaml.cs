@@ -58,5 +58,11 @@ namespace temalab
             if (await app.Login(((KnownUser)knownUsersList.SelectedItem).Username, password.Password))
                 this.Frame.Navigate(typeof(MainPage));
         }
+
+        private void password_KeyDown(object sender, KeyRoutedEventArgs e)
+        {
+            if (e.Key == Windows.System.VirtualKey.Enter)
+                loginButton_Click(sender, e);
+        }
     }
 }

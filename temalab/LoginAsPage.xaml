@@ -57,7 +57,7 @@
             <ListView SelectionChanged="knownUsersList_SelectionChanged" x:Name="knownUsersList" ItemTemplate="{StaticResource UserListViewTemplate}"/>
             <Button Content="Register" Click="ToRegisterPage" Width="100"/>
             <StackPanel x:Name="controls" Spacing="10" Visibility="Collapsed">
-                <PasswordBox Header="Password" x:Name="password" PlaceholderText="Enter password" Visibility="Visible"/>
+                <PasswordBox Header="Password" x:Name="password" PlaceholderText="Enter password" Visibility="Visible" KeyDown="password_KeyDown"/>
                 <Button Style="{ThemeResource AccentButtonStyle}" x:Name="loginButton" Content="Login" Visibility="Visible" Width="100" Click="loginButton_Click"/>
             </StackPanel>
         </StackPanel>
