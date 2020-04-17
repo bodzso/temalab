@@ -14,6 +14,7 @@
             <NavigationViewItem Content="Revenues" x:Name="revenues" Tag="revenues"/>
             <NavigationViewItem Content="Expenses" x:Name="expenses" Tag="expenses"/>
             <NavigationViewItem Content="Transactions" x:Name="transacions" Tag="transactions"/>
+            <NavigationViewItem Content="Categories" x:Name="categories" Tag="categories"/>
         </NavigationView.MenuItems>
         <Frame x:Name="contentFrame" NavigationFailed="contentFrame_NavigationFailed" Navigated="contentFrame_Navigated"/>
     </NavigationView>
