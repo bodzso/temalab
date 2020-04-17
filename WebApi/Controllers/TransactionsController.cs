@@ -51,25 +51,42 @@ namespace WebApi.Controllers
         [HttpGet("revenues")]
         public async Task<ActionResult<IEnumerable<TransactionModel>>> GetRevenues()
         {
-            return await _context.Transactions.Where(t => t.UserId == Convert.ToInt32(User.Identity.Name) && t.Amount > 0).Select(d => MapTransaction(d, d.Category.Name)).ToListAsync();
+            return await _context.Transactions
+                .Where(t => t.UserId == Convert.ToInt32(User.Identity.Name) && t.Amount > 0)
+                .OrderByDescending(t => t.Date)
+                .Select(d => MapTransaction(d, d.Category.Name))
+                .ToListAsync();
         }
 
         [HttpGet("expenses")]
         public async Task<ActionResult<IEnumerable<TransactionModel>>> GetExpenses()
         {
-            return await _context.Transactions.Where(t => t.UserId == Convert.ToInt32(User.Identity.Name) && t.Amount < 0).Select(d => MapTransaction(d, d.Category.Name)).ToListAsync();
+            return await _context.Transactions
+                .Where(t => t.UserId == Convert.ToInt32(User.Identity.Name) && t.Amount < 0)
+                .OrderByDescending(t => t.Date)
+                .Select(d => MapTransaction(d, d.Category.Name))
+                .ToListAsync();
         }
 
         [HttpGet("pending")]
         public async Task<ActionResult<IEnumerable<TransactionModel>>> GetPendingTransactions()
         {
-            return await _context.Transactions.Where(t => t.UserId == Convert.ToInt32(User.Identity.Name) && t.Date.CompareTo(DateTime.Now) > 0).Select(d => MapTransaction(d, d.Category.Name)).ToListAsync();
+            return await _context.Transactions
+                .Where(t => t.UserId == Convert.ToInt32(User.Identity.Name) && t.Date.CompareTo(DateTime.Now) > 0)
+                .OrderBy(t => t.Date)
+                .Select(d => MapTransaction(d, d.Category.Name))
+                .ToListAsync();
         }
 
         [HttpGet("latest")]
         public async Task<ActionResult<IEnumerable<TransactionModel>>> GetLatestTransactions()
         {
-            return await _context.Transactions.Where(t => t.UserId == Convert.ToInt32(User.Identity.Name) && t.Date.CompareTo(DateTime.Now) < 0).OrderByDescending(t => t.Date).Take(10).Select(d => MapTransaction(d, d.Category.Name)).ToListAsync();
+            return await _context.Transactions
+                .Where(t => t.UserId == Convert.ToInt32(User.Identity.Name) && t.Date.CompareTo(DateTime.Now) < 0)
+                .OrderByDescending(t => t.Date)
+                .Take(10)
+                .Select(d => MapTransaction(d, d.Category.Name))
+                .ToListAsync();
         }
 
         // PUT: Transactions/5
