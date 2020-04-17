@@ -190,5 +190,35 @@ namespace temalab
             var res = await GeHttpContent(new Uri("http://localhost:60133/users/balance"));
             user.balance = Convert.ToDouble(res);
         }
+
+        public async Task<bool> PutJson(Uri uri, string json)
+        {
+            try
+            {
+                HttpStringContent content = new HttpStringContent(json, Windows.Storage.Streams.UnicodeEncoding.Utf8, "application/json");
+                HttpResponseMessage httpResponseMessage = await httpClient.PutAsync(uri, content);
+                httpResponseMessage.EnsureSuccessStatusCode();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+                return true;
+            }
+        }
+
+        public async Task<bool> SendDeleteHttp(Uri uri)
+        {
+            try
+            {
+                await httpClient.DeleteAsync(uri);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+                return false;
+            }
+        }
     }
 }
