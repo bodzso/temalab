@@ -8,7 +8,7 @@ namespace temalab.Models
 {
     public class CategoryModel
     {
-        public int categoryId { get; set; }
+        public int categoryId { get; set; } = -1;
         public string categoryName { get; set; }
     }
 }

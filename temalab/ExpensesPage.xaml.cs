@@ -42,6 +42,10 @@ namespace temalab
             expenses = JsonSerializer.Deserialize<ObservableCollection<EditableTransactionModel>>(await app.GeHttpContent(new Uri("http://localhost:60133/transactions/expenses")));
             expensesGrid.ItemsSource = expenses;
             categories = JsonSerializer.Deserialize<ObservableCollection<CategoryModel>>(await app.GeHttpContent(new Uri("http://localhost:60133/categories")));
+
+            // Add null category
+            categories.Insert(0, new CategoryModel());
+
             categComboBox.ItemsSource = categories;
             categoryColumn.ItemsSource = categories;
         }
@@ -137,6 +141,8 @@ namespace temalab
             if (e.EditAction == DataGridEditAction.Commit)
             {
                 var transaction = e.Row.DataContext as EditableTransactionModel;
+                if (transaction.categoryId == -1)
+                    transaction.categoryId = null;
 
                 if (!await app.PutJson(new Uri("http://localhost:60133/transactions/" + transaction.id), JsonSerializer.Serialize(transaction)))
                     e.Cancel = true;
