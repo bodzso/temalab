@@ -16,6 +16,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using WinRTXamlToolkit.Controls.DataVisualization.Charting;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -33,6 +34,7 @@ namespace temalab
         public UserMainPage()
         {
             this.InitializeComponent();
+            getChartData();
         }
 
         protected async override void OnNavigatedTo(NavigationEventArgs e)
@@ -106,5 +108,40 @@ namespace temalab
                 }
             }
         }
+
+
+        //piechart test datas:
+
+        public class Value
+        {
+            public string name { get; set; }
+            public int number { get; set; }
+        }
+
+        public void getChartData()
+        {
+            List<Value> values = new List<Value>();
+            values.Add(new Value()
+            {
+                name = "elso",
+                number = 50
+            });
+            values.Add(new Value()
+            {   
+                name = "masodik",
+                number = 75
+            });
+            values.Add(new Value()
+            {
+                name = "harmadik",
+                number = 25
+            });
+
+            (pieCh.Series[0] as PieSeries).ItemsSource = values;
+
+        }
+
+
+
     }
 }
