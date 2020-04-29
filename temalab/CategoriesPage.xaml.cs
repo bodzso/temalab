@@ -41,7 +41,7 @@ namespace temalab
         {
             base.OnNavigatedTo(e);
 
-            categories = JsonSerializer.Deserialize<ObservableCollection<Category>>(await app.GeHttpContent(new Uri("http://localhost:60133/categories")));
+            categories = JsonSerializer.Deserialize<ObservableCollection<Category>>(await app.GetHttpContent(new Uri("http://localhost:60133/categories")));
             categoriesListView.ItemsSource = categories;
         }
 

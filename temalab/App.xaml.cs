@@ -154,7 +154,7 @@ namespace temalab
             }
         }
 
-        public async Task<String> GeHttpContent(Uri uri)
+        public async Task<String> GetHttpContent(Uri uri)
         {
             try
             {
@@ -187,7 +187,7 @@ namespace temalab
 
         public async Task UpdateUserBalance()
         {
-            var res = await GeHttpContent(new Uri("http://localhost:60133/users/balance"));
+            var res = await GetHttpContent(new Uri("http://localhost:60133/users/balance"));
             user.balance = Convert.ToDouble(res);
         }
 

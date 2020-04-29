@@ -40,7 +40,7 @@ namespace temalab
             base.OnNavigatedTo(e);
 
             var app = (App)Application.Current;
-            transactions = JsonSerializer.Deserialize<ObservableCollection<EditableTransactionModel>>(await app.GeHttpContent(new Uri("http://localhost:60133/transactions/revenues")));
+            transactions = JsonSerializer.Deserialize<ObservableCollection<EditableTransactionModel>>(await app.GetHttpContent(new Uri("http://localhost:60133/transactions/revenues")));
             revenuesGrid.ItemsSource = transactions;
         }
 

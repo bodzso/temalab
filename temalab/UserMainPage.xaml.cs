@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -31,10 +32,12 @@ namespace temalab
         public ObservableCollection<TransactionModel> upcomingTransactions = new ObservableCollection<TransactionModel>();
         App app = (App)Application.Current;
 
+        public List<TransactionModel> expenses = new List<TransactionModel>();
+        public List<TransactionModel> revenues = new List<TransactionModel>();
+
         public UserMainPage()
         {
             this.InitializeComponent();
-            getChartData();
         }
 
         protected async override void OnNavigatedTo(NavigationEventArgs e)
@@ -43,10 +46,14 @@ namespace temalab
 
             await app.UpdateUserBalance();
             balanceValue.Text = Convert.ToString(app.user.GetBalance());
-            latestTransactions = JsonSerializer.Deserialize<ObservableCollection<TransactionModel>>(await app.GeHttpContent(new Uri("http://localhost:60133/transactions/latest")));
+            latestTransactions = JsonSerializer.Deserialize<ObservableCollection<TransactionModel>>(await app.GetHttpContent(new Uri("http://localhost:60133/transactions/latest")));
             latestTransactionsDataGrid.ItemsSource = latestTransactions;
-            upcomingTransactions = JsonSerializer.Deserialize<ObservableCollection<TransactionModel>>(await app.GeHttpContent(new Uri("http://localhost:60133/transactions/pending")));
+            upcomingTransactions = JsonSerializer.Deserialize<ObservableCollection<TransactionModel>>(await app.GetHttpContent(new Uri("http://localhost:60133/transactions/pending")));
             upcomingTransactionsDataGrid.ItemsSource = upcomingTransactions;
+
+            expenses = JsonSerializer.Deserialize<List<TransactionModel>>(await app.GetHttpContent(new Uri("http://localhost:60133/transactions/expenses")));
+            revenues = JsonSerializer.Deserialize<List<TransactionModel>>(await app.GetHttpContent(new Uri("http://localhost:60133/transactions/revenues")));
+            UpdateChartData();
         }
 
         private void PlusButton_Click(object sender, RoutedEventArgs e)
@@ -110,38 +117,29 @@ namespace temalab
         }
 
 
-        //piechart test datas:
-
-        public class Value
+        public class ChartData
         {
-            public string name { get; set; }
-            public int number { get; set; }
+            public string Label { get; set; }
+            public double Value { get; set; }
         }
 
-        public void getChartData()
+        public void UpdateChartData()
         {
-            List<Value> values = new List<Value>();
-            values.Add(new Value()
+            List<ChartData> values = new List<ChartData>();
+            values.Add(new ChartData()
             {
-                name = "elso",
-                number = 50
+                Label = "Expenses",
+                Value = expenses.Sum(e => Math.Abs(e.amount))
             });
-            values.Add(new Value()
+            values.Add(new ChartData()
             {   
-                name = "masodik",
-                number = 75
-            });
-            values.Add(new Value()
-            {
-                name = "harmadik",
-                number = 25
+                Label = "Revenues",
+                Value = revenues.Sum(r => r.amount)
             });
 
             (pieCh.Series[0] as PieSeries).ItemsSource = values;
-
+            
         }
-
-
 
     }
 }
