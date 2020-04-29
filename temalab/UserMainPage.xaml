@@ -6,6 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:Charting="using:WinRTXamlToolkit.Controls.DataVisualization.Charting"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
@@ -21,7 +22,12 @@
             </Button>
         </StackPanel>
         <StackPanel Orientation="Horizontal" Spacing="20">
-            <Rectangle Width="500" Height="500" Fill="Gray"/>
+
+            
+            <Charting:Chart x:Name="pieCh" Width="500" Height="500">
+                <Charting:PieSeries IndependentValuePath="name" DependentValuePath="number"/>
+            </Charting:Chart>
+
             <StackPanel Orientation="Vertical" Spacing="10">
                 <TextBlock Style="{ThemeResource SubtitleTextBlockStyle}" Text="Latest transactions:"/>
                 <controls:DataGrid x:Name="latestTransactionsDataGrid" IsReadOnly="True" CanUserReorderColumns="False" AutoGenerateColumns="False" Height="200" CanUserSortColumns="True" Sorting="latestTransactionsDataGrid_Sorting">

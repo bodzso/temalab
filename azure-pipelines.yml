@@ -12,7 +12,7 @@ pool:
 
 variables:
   solution: 'temalab.sln'
-  buildPlatform: 'x86|x64|ARM'
+  buildPlatform: 'x86'
   buildConfiguration: 'Release'
   #appxPackageDir: '$(build.artifactStagingDirectory)\AppxPackages\\'
 
@@ -34,6 +34,7 @@ steps:
 
 - task: VSBuild@1
   inputs:
+    platform: 'x86'
     solution: '$(solution)'
     configuration: '$(buildConfiguration)'
     msbuildArgs: '/p:AppxBundlePlatforms="$(buildPlatform)" 
@@ -50,10 +51,12 @@ steps:
 #    configuration: '$(buildConfiguration)'
 
 - task: CopyFiles@2
+  displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
   inputs:
-    targetFolder: '$(Build.ArtifactStagingDirectory)'    
+    TargetFolder: '$(build.artifactstagingdirectory)'
 
-- task: PublishBuildArtifacts@1    
+
+- task: PublishBuildArtifacts@1
   displayName: 'Publish Artifact: drop'
   inputs:
     PathtoPublish: '$(build.artifactstagingdirectory)'
