@@ -9,6 +9,7 @@ using WebApi.Entities;
 using WebApi.Helpers;
 using WebApi.Models.Transactions;
 using AutoMapper;
+using System.Collections;
 
 namespace WebApi.Controllers
 {
@@ -89,6 +90,16 @@ namespace WebApi.Controllers
                 .OrderByDescending(t => t.Date)
                 .Take(10)
                 .Select(d => MapTransaction(d, d.Category.CategoryName))
+                .ToListAsync();
+        }
+
+        [HttpGet("expenses/categorized")]
+        public async Task<IEnumerable> GetCategorizedExpenses()
+        {
+            return await _context.Transactions
+                .Where(t => t.UserId == Convert.ToInt32(User.Identity.Name) && t.Amount < 0)
+                .GroupBy(t => new { t.CategoryId, t.Category.CategoryName })
+                .Select(g => new { categoryName = g.Key.CategoryName, amount = g.Sum(i => Math.Abs(i.Amount))})
                 .ToListAsync();
         }
 
