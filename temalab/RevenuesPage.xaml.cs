@@ -39,7 +39,6 @@ namespace temalab
         {
             base.OnNavigatedTo(e);
 
-            var app = (App)Application.Current;
             transactions = JsonSerializer.Deserialize<ObservableCollection<EditableTransactionModel>>(await app.GeHttpContent(new Uri("http://localhost:60133/transactions/revenues")));
             revenuesGrid.ItemsSource = transactions;
         }
@@ -49,7 +48,6 @@ namespace temalab
             if (string.IsNullOrEmpty(name.Text) || string.IsNullOrEmpty(amount.Text))
                 return;
 
-            var app = (App)Application.Current;
             var dateTime = DateTime.Now;
 
             if (dueDate.Date.HasValue && time.SelectedTime.HasValue)

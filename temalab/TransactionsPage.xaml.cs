@@ -29,7 +29,7 @@ namespace temalab
     {
 
         public ObservableCollection<TransactionModel> transactions = new ObservableCollection<TransactionModel>();
-        App app = (App)Application.Current;
+        App app = Application.Current as App;
 
         public TransactionsPage()
         {

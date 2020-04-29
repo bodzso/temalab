@@ -29,7 +29,7 @@ namespace temalab
     {
         public ObservableCollection<TransactionModel> latestTransactions = new ObservableCollection<TransactionModel>();
         public ObservableCollection<TransactionModel> upcomingTransactions = new ObservableCollection<TransactionModel>();
-        App app = (App)Application.Current;
+        App app = Application.Current as App;
 
         public UserMainPage()
         {
