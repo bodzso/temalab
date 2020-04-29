@@ -117,35 +117,17 @@ namespace temalab
         {
             try
             {
-                Uri uri = new Uri("http://localhost:60133/users/authenticate");
+                var loginUser = new LoginUserModel { username = username, password = password };
+                var res = await PostJson(new Uri("http://localhost:60133/users/authenticate"), JsonSerializer.Serialize(loginUser));
 
-                string json;
-                using (var stream = new MemoryStream())
+                if (!string.IsNullOrEmpty(res))
                 {
-                    using (var writer = new Utf8JsonWriter(stream))
-                    {
-                        writer.WriteStartObject();
-                        writer.WriteString("username", username);
-                        writer.WriteString("password", password);
-                        writer.WriteEndObject();
-                    }
-
-                    json = Encoding.UTF8.GetString(stream.ToArray());
+                    user = JsonSerializer.Deserialize<UserModel>(res);
+                    httpClient.DefaultRequestHeaders.Authorization = new HttpCredentialsHeaderValue("Bearer", user.GetToken());
+                    return true;
                 }
 
-                HttpStringContent content = new HttpStringContent(json, Windows.Storage.Streams.UnicodeEncoding.Utf8, "application/json");
-
-                HttpResponseMessage httpResponseMessage = await httpClient.PostAsync(uri, content);
-                httpResponseMessage.EnsureSuccessStatusCode();
-                var httpResponseBody = await httpResponseMessage.Content.ReadAsStringAsync();
-                Debug.WriteLine(httpResponseBody);
-
-                user = JsonSerializer.Deserialize<UserModel>(httpResponseBody);
-                httpClient.DefaultRequestHeaders.Authorization = new HttpCredentialsHeaderValue("Bearer", user.GetToken());
-
-                Debug.WriteLine(user.GetToken());
-                
-                return true;
+                return false;
             }
             catch (Exception ex)
             {
