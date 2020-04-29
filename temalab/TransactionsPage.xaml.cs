@@ -40,7 +40,7 @@ namespace temalab
         {
             base.OnNavigatedTo(e);
 
-            transactions = JsonSerializer.Deserialize<ObservableCollection<TransactionModel>>(await app.GetHttpContent(new Uri("http://localhost:60133/transactions")));
+            transactions = JsonSerializer.Deserialize<ObservableCollection<TransactionModel>>(await app.GetHttpContent(new Uri($"{app.baseuri}/transactions")));
             TransactionsGrid.ItemsSource = transactions;
         }
 

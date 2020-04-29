@@ -46,13 +46,13 @@ namespace temalab
 
             await app.UpdateUserBalance();
             balanceValue.Text = Convert.ToString(app.user.GetBalance());
-            latestTransactions = JsonSerializer.Deserialize<ObservableCollection<TransactionModel>>(await app.GetHttpContent(new Uri("http://localhost:60133/transactions/latest")));
+            latestTransactions = JsonSerializer.Deserialize<ObservableCollection<TransactionModel>>(await app.GetHttpContent(new Uri($"{app.baseuri}/transactions/latest")));
             latestTransactionsDataGrid.ItemsSource = latestTransactions;
-            upcomingTransactions = JsonSerializer.Deserialize<ObservableCollection<TransactionModel>>(await app.GetHttpContent(new Uri("http://localhost:60133/transactions/pending")));
+            upcomingTransactions = JsonSerializer.Deserialize<ObservableCollection<TransactionModel>>(await app.GetHttpContent(new Uri($"{app.baseuri}/transactions/pending")));
             upcomingTransactionsDataGrid.ItemsSource = upcomingTransactions;
 
-            expenses = JsonSerializer.Deserialize<List<TransactionModel>>(await app.GetHttpContent(new Uri("http://localhost:60133/transactions/expenses")));
-            revenues = JsonSerializer.Deserialize<List<TransactionModel>>(await app.GetHttpContent(new Uri("http://localhost:60133/transactions/revenues")));
+            expenses = JsonSerializer.Deserialize<List<TransactionModel>>(await app.GetHttpContent(new Uri($"{app.baseuri}/transactions/expenses")));
+            revenues = JsonSerializer.Deserialize<List<TransactionModel>>(await app.GetHttpContent(new Uri($"{app.baseuri}/transactions/revenues")));
             UpdateChartData();
         }
 

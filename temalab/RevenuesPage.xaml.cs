@@ -40,7 +40,7 @@ namespace temalab
             base.OnNavigatedTo(e);
 
             var app = (App)Application.Current;
-            transactions = JsonSerializer.Deserialize<ObservableCollection<EditableTransactionModel>>(await app.GetHttpContent(new Uri("http://localhost:60133/transactions/revenues")));
+            transactions = JsonSerializer.Deserialize<ObservableCollection<EditableTransactionModel>>(await app.GetHttpContent(new Uri($"{app.baseuri}/transactions/revenues")));
             revenuesGrid.ItemsSource = transactions;
         }
 
@@ -68,7 +68,7 @@ namespace temalab
             };
 
             var json = JsonSerializer.Serialize(transaction, options);
-            var res = await app.PostJson(new Uri("http://localhost:60133/transactions"), json);
+            var res = await app.PostJson(new Uri($"{app.baseuri}/transactions"), json);
             
             if(!string.IsNullOrEmpty(res))
             {
@@ -112,7 +112,7 @@ namespace temalab
             {
                 var transaction = e.Row.DataContext as EditableTransactionModel;
                 
-                if (!await app.PutJson(new Uri("http://localhost:60133/transactions/" + transaction.id), JsonSerializer.Serialize(transaction)))
+                if (!await app.PutJson(new Uri($"{app.baseuri}/transactions/" + transaction.id), JsonSerializer.Serialize(transaction)))
                     e.Cancel = true;
             }
         }

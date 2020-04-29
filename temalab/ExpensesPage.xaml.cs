@@ -39,9 +39,9 @@ namespace temalab
         {
             base.OnNavigatedTo(e);
 
-            expenses = JsonSerializer.Deserialize<ObservableCollection<EditableTransactionModel>>(await app.GetHttpContent(new Uri("http://localhost:60133/transactions/expenses")));
+            expenses = JsonSerializer.Deserialize<ObservableCollection<EditableTransactionModel>>(await app.GetHttpContent(new Uri($"{app.baseuri}/transactions/expenses")));
             expensesGrid.ItemsSource = expenses;
-            categories = JsonSerializer.Deserialize<ObservableCollection<CategoryModel>>(await app.GetHttpContent(new Uri("http://localhost:60133/categories")));
+            categories = JsonSerializer.Deserialize<ObservableCollection<CategoryModel>>(await app.GetHttpContent(new Uri($"{app.baseuri}/categories")));
             categComboBox.ItemsSource = categories;
             categoryColumn.ItemsSource = categories;
         }
@@ -70,7 +70,7 @@ namespace temalab
 
             var expense = new EditableTransactionModel() { name = name.Text, amount = cost.Value * -1, categoryId = category?.categoryId, description = description.Text, date = dateTime };
             var json = JsonSerializer.Serialize(expense);
-            var res = await app.PostJson(new Uri("http://localhost:60133/transactions"), json);
+            var res = await app.PostJson(new Uri($"{app.baseuri}/transactions"), json);
 
             if(!string.IsNullOrEmpty(res))
             {
@@ -102,7 +102,7 @@ namespace temalab
             {
                 var category = new CategoryModel() { categoryName = input.Text };
                 var json = JsonSerializer.Serialize<CategoryModel>(category);
-                category = JsonSerializer.Deserialize<CategoryModel>(await app.PostJson(new Uri("http://localhost:60133/categories"), json));
+                category = JsonSerializer.Deserialize<CategoryModel>(await app.PostJson(new Uri($"{app.baseuri}/categories"), json));
                 categories.Add(category);
             }
         }
@@ -138,7 +138,7 @@ namespace temalab
             {
                 var transaction = e.Row.DataContext as EditableTransactionModel;
 
-                if (!await app.PutJson(new Uri("http://localhost:60133/transactions/" + transaction.id), JsonSerializer.Serialize(transaction)))
+                if (!await app.PutJson(new Uri($"{app.baseuri}/transactions/" + transaction.id), JsonSerializer.Serialize(transaction)))
                     e.Cancel = true;
             }
         }

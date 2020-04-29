@@ -31,6 +31,7 @@ namespace temalab
     {
         public UserModel user { get; private set; }
         private HttpClient httpClient = new HttpClient();
+        public string baseuri = "http://localhost:60133";
 
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
@@ -117,7 +118,7 @@ namespace temalab
         {
             try
             {
-                Uri uri = new Uri("http://localhost:60133/users/authenticate");
+                Uri uri = new Uri($"{baseuri}/users/authenticate");
 
                 string json;
                 using (var stream = new MemoryStream())
@@ -187,7 +188,7 @@ namespace temalab
 
         public async Task UpdateUserBalance()
         {
-            var res = await GetHttpContent(new Uri("http://localhost:60133/users/balance"));
+            var res = await GetHttpContent(new Uri($"{baseuri}/users/balance"));
             user.balance = Convert.ToDouble(res);
         }
 
