@@ -7,6 +7,11 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Page.Resources>
+        <Style x:Key="PrimaryButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="Red"/>
+        </Style>
+    </Page.Resources>
 
     <StackPanel Margin="10" Spacing="10">
         <TextBlock Style="{ThemeResource SubtitleTextBlockStyle}" Text="User data"/>
@@ -15,7 +20,20 @@
         <TextBox x:Name="lastName" Header="Last Name" Text="{x:Bind app.user.lastName}" Width="200" HorizontalAlignment="Left"/>
         <TextBox x:Name="email" Header="E-mail Address" Text="{x:Bind app.user.email}" Width="200" HorizontalAlignment="Left"/>
         <PasswordBox x:Name="password" Header="Password" PlaceholderText="Enter new password" Width="200" HorizontalAlignment="Left"/>
-        <Button x:Name="updateButton" Content="Update" Click="updateButton_Click"/>
+        <StackPanel Orientation="Horizontal">
+            <Button x:Name="updateButton" Content="Update" Click="updateButton_Click" Margin="0 0 25 0"/>
+            <Button x:Name="deleteButton" Content="Delete account" Click="deleteButton_Click"/>
+        </StackPanel>
         <HyperlinkButton x:Name="logoutButton" Content="Logout from the application" Click="logoutButton_Click"/>
+
+        <ContentDialog
+            x:Name="deleteDialog"
+            Title="Delete account?"
+            Content="This will delete all user data including every transaction and category you created. Are you sure?"
+            CloseButtonText="Cancel"
+            PrimaryButtonText="Delete"
+            PrimaryButtonStyle="{StaticResource PrimaryButtonStyle}">
+
+        </ContentDialog>
     </StackPanel>
 </Page>

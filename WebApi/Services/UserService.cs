@@ -124,6 +124,8 @@ namespace WebApi.Services
             var user = _context.Users.Find(id);
             if (user != null)
             {
+                _context.Transactions.RemoveRange(_context.Transactions.Where(t => t.UserId == user.Id));
+                _context.Categories.RemoveRange(_context.Categories.Where(c => c.UserId == user.Id));
                 _context.Users.Remove(user);
                 _context.SaveChanges();
             }

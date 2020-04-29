@@ -54,5 +54,16 @@ namespace temalab
                 app.user.email = updatedUser.email;
             }
         }
+
+        private async void deleteButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (await deleteDialog.ShowAsync() == ContentDialogResult.Primary)
+            {
+                if (await app.SendDeleteHttp(new Uri($"{app.baseuri}/users/{app.user.id}")))
+                {
+                    app.Logout();
+                }
+            }
+        }
     }
 }
