@@ -24,8 +24,8 @@
         <StackPanel Orientation="Horizontal" Spacing="20">
 
 
-            <Charting:Chart x:Name="pieCh" Width="500" Height="500" Title="Total expenses and revenues">
-                <Charting:PieSeries IndependentValuePath="Label" DependentValuePath="Value"/>
+            <Charting:Chart x:Name="pieCh" Width="500" Height="500" Title="Expenses by category">
+                <Charting:PieSeries IndependentValuePath="categoryName" DependentValuePath="amount"/>
             </Charting:Chart>
 
             <StackPanel Orientation="Vertical" Spacing="10">

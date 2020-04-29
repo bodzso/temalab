@@ -117,29 +117,22 @@ namespace temalab
         }
 
 
-        public class ChartData
+        class ChartData
         {
-            public string Label { get; set; }
-            public double Value { get; set; }
+            public string categoryName { get; set; }
+            public double amount { get; set; }
         }
 
-        public void UpdateChartData()
+        private async void UpdateChartData()
         {
-            List<ChartData> values = new List<ChartData>();
-            values.Add(new ChartData()
+            var res = await app.GetHttpContent(new Uri($"{app.baseuri}/transactions/expenses/categorized"));
+
+            if(!string.IsNullOrEmpty(res))
             {
-                Label = "Expenses",
-                Value = expenses.Sum(e => Math.Abs(e.amount))
-            });
-            values.Add(new ChartData()
-            {   
-                Label = "Revenues",
-                Value = revenues.Sum(r => r.amount)
-            });
+                var values = JsonSerializer.Deserialize<List<ChartData>>(res);
 
-            (pieCh.Series[0] as PieSeries).ItemsSource = values;
-            
+                (pieCh.Series[0] as PieSeries).ItemsSource = values;
+            }   
         }
-
     }
 }
