@@ -31,6 +31,7 @@ namespace temalab
     {
         public UserModel user { get; private set; }
         private HttpClient httpClient = new HttpClient();
+        public string baseuri = "http://localhost:60133";
 
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
@@ -118,7 +119,7 @@ namespace temalab
             try
             {
                 var loginUser = new LoginUserModel { username = username, password = password };
-                var res = await PostJson(new Uri("http://localhost:60133/users/authenticate"), JsonSerializer.Serialize(loginUser));
+                var res = await PostJson(new Uri($"{baseuri}/users/authenticate"), JsonSerializer.Serialize(loginUser));
 
                 if (!string.IsNullOrEmpty(res))
                 {
@@ -136,7 +137,7 @@ namespace temalab
             }
         }
 
-        public async Task<String> GeHttpContent(Uri uri)
+        public async Task<String> GetHttpContent(Uri uri)
         {
             try
             {
@@ -169,7 +170,7 @@ namespace temalab
 
         public async Task UpdateUserBalance()
         {
-            var res = await GeHttpContent(new Uri("http://localhost:60133/users/balance"));
+            var res = await GetHttpContent(new Uri($"{baseuri}/users/balance"));
             user.balance = Convert.ToDouble(res);
         }
 

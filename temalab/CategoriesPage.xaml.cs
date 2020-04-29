@@ -41,13 +41,13 @@ namespace temalab
         {
             base.OnNavigatedTo(e);
 
-            categories = JsonSerializer.Deserialize<ObservableCollection<Category>>(await app.GeHttpContent(new Uri("http://localhost:60133/categories")));
+            categories = JsonSerializer.Deserialize<ObservableCollection<Category>>(await app.GetHttpContent(new Uri($"{app.baseuri}/categories")));
             categoriesListView.ItemsSource = categories;
         }
 
         private async void addButton_Click(object sender, RoutedEventArgs e)
         {
-            var res = await app.PostJson(new Uri("http://localhost:60133/categories"), JsonSerializer.Serialize(new CategoryModel { categoryName = categoryName.Text }));
+            var res = await app.PostJson(new Uri($"{app.baseuri}/categories"), JsonSerializer.Serialize(new CategoryModel { categoryName = categoryName.Text }));
 
             if (!string.IsNullOrEmpty(res))
                 categories.Add(JsonSerializer.Deserialize<Category>(res));
@@ -60,7 +60,7 @@ namespace temalab
 
             if (res == ContentDialogResult.Primary)
             {
-                var httpRes = await app.PutJson(new Uri("http://localhost:60133/categories/" + currentCategory.categoryId), JsonSerializer.Serialize(new Category { categoryId = currentCategory.categoryId, categoryName = categoryNameDialogInput.Text }));
+                var httpRes = await app.PutJson(new Uri($"{app.baseuri}/categories/" + currentCategory.categoryId), JsonSerializer.Serialize(new Category { categoryId = currentCategory.categoryId, categoryName = categoryNameDialogInput.Text }));
 
                 if (httpRes)
                 {
@@ -74,7 +74,7 @@ namespace temalab
 
         private async void remove_Click(object sender, RoutedEventArgs e)
         {
-            var result = await app.SendDeleteHttp(new Uri("http://localhost:60133/categories/" + currentCategory.categoryId));
+            var result = await app.SendDeleteHttp(new Uri($"{app.baseuri}/categories/" + currentCategory.categoryId));
 
             if (result)
                 categories.Remove(currentCategory);

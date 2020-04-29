@@ -45,13 +45,24 @@ namespace temalab
             };
 
             var updatedUser = new UserModel { id = app.user.id, firstName = firstName.Text, lastName = lastName.Text, email = email.Text, password = password.Password };
-            var res = await app.PutJson(new Uri("http://localhost:60133/users/" + app.user.id), JsonSerializer.Serialize(updatedUser, options));
+            var res = await app.PutJson(new Uri($"{app.baseuri}/users/{app.user.id}"), JsonSerializer.Serialize(updatedUser, options));
             
             if(res)
             {
                 app.user.firstName = updatedUser.firstName;
                 app.user.lastName = updatedUser.lastName;
                 app.user.email = updatedUser.email;
+            }
+        }
+
+        private async void deleteButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (await deleteDialog.ShowAsync() == ContentDialogResult.Primary)
+            {
+                if (await app.SendDeleteHttp(new Uri($"{app.baseuri}/users/{app.user.id}")))
+                {
+                    app.Logout();
+                }
             }
         }
     }

@@ -29,6 +29,7 @@ namespace temalab
     public sealed partial class RegisterPage : Page
     {
         private Type prevPage;
+        App app = (App)Application.Current;
 
         public RegisterPage()
         {
@@ -40,7 +41,7 @@ namespace temalab
             try
             {
                 HttpClient httpClient = new HttpClient();
-                Uri uri = new Uri("http://localhost:60133/users/register");
+                Uri uri = new Uri($"{app.baseuri}/users/register");
 
                 string json;
                 using (var stream = new MemoryStream())
