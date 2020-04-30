@@ -21,8 +21,8 @@
         <TextBox x:Name="email" Header="E-mail Address" Text="{x:Bind app.user.email}" Width="200" HorizontalAlignment="Left"/>
         <PasswordBox x:Name="password" Header="Password" PlaceholderText="Enter new password" Width="200" HorizontalAlignment="Left"/>
         <StackPanel Orientation="Horizontal">
-            <Button x:Name="updateButton" Content="Update" Click="updateButton_Click" Margin="0 0 25 0"/>
-            <Button x:Name="deleteButton" Content="Delete account" Click="deleteButton_Click"/>
+            <Button Style="{ThemeResource AccentButtonStyle}" x:Name="updateButton" Content="Update" Click="updateButton_Click" Margin="0 0 25 0"/>
+            <Button Background="Red" x:Name="deleteButton" Content="Delete account" Click="deleteButton_Click"/>
         </StackPanel>
         <HyperlinkButton x:Name="logoutButton" Content="Logout from the application" Click="logoutButton_Click"/>
 
