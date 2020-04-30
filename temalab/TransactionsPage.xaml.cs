@@ -29,6 +29,7 @@ namespace temalab
     {
 
         public ObservableCollection<TransactionModel> transactions = new ObservableCollection<TransactionModel>();
+        public ObservableCollection<CategoryModel> categories = new ObservableCollection<CategoryModel>();
         App app = Application.Current as App;
 
         public TransactionsPage()
@@ -42,6 +43,9 @@ namespace temalab
 
             transactions = JsonSerializer.Deserialize<ObservableCollection<TransactionModel>>(await app.GetHttpContent(new Uri($"{app.baseuri}/transactions")));
             TransactionsGrid.ItemsSource = transactions;
+            
+            categories = JsonSerializer.Deserialize<ObservableCollection<CategoryModel>>(await app.GetHttpContent(new Uri($"{app.baseuri}/categories")));
+            CategoryColumn.ItemsSource = categories;
         }
 
         private void TransactionsGrid_Sorting(object sender, Microsoft.Toolkit.Uwp.UI.Controls.DataGridColumnEventArgs e)

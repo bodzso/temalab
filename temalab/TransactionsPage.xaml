@@ -13,7 +13,9 @@
         <controls:DataGrid.Columns>
             <controls:DataGridTextColumn Header="Name" Binding="{Binding name}"/>
             <controls:DataGridTextColumn Header="Amount" Binding="{Binding amount}"/>
-            <controls:DataGridTextColumn Header="Category" Binding="{Binding categoryName}"/>
+            <controls:DataGridComboBoxColumn x:Name="CategoryColumn" Header="Category"
+                                                     Binding="{Binding categoryId}"
+                                                     DisplayMemberPath="categoryName"/>
             <controls:DataGridTextColumn Header="Description" Binding="{Binding description}"/>
             <controls:DataGridTextColumn Header="Date" Binding="{Binding date}"/>
         </controls:DataGrid.Columns>
