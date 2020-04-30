@@ -1,6 +1,5 @@
 dotnet tool install --global dotnet-ef
 
 SqlServer:
-$Env:ASPNETCORE_ENVIRONMENT = "Production"
-dotnet ef migrations add InitialCreate --context DataContext --output-dir Migrations/SqlServerMigrations
+dotnet ef migrations add InitialCreate --context DataContext --output-dir Migrations
 dotnet ef database update --context DataContext
