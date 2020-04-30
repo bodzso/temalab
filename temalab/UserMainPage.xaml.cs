@@ -1,4 +1,4 @@
-﻿using Microsoft.Toolkit.Uwp.UI.Controls;
+using Microsoft.Toolkit.Uwp.UI.Controls;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -30,6 +30,7 @@ namespace temalab
     {
         public ObservableCollection<TransactionModel> latestTransactions = new ObservableCollection<TransactionModel>();
         public ObservableCollection<TransactionModel> upcomingTransactions = new ObservableCollection<TransactionModel>();
+        public ObservableCollection<CategoryModel> categories = new ObservableCollection<CategoryModel>();
         App app = Application.Current as App;
 
         public List<TransactionModel> expenses = new List<TransactionModel>();
@@ -53,6 +54,10 @@ namespace temalab
 
             expenses = JsonSerializer.Deserialize<List<TransactionModel>>(await app.GetHttpContent(new Uri($"{app.baseuri}/transactions/expenses")));
             revenues = JsonSerializer.Deserialize<List<TransactionModel>>(await app.GetHttpContent(new Uri($"{app.baseuri}/transactions/revenues")));
+            categories = JsonSerializer.Deserialize<ObservableCollection<CategoryModel>>(await app.GetHttpContent(new Uri($"{app.baseuri}/categories")));
+
+            UpcomingCategoryColumn.ItemsSource = LatestCategoryColumn.ItemsSource = categories;
+            
             UpdateChartData();
         }
 

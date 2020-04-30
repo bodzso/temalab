@@ -34,7 +34,9 @@
                     <controls:DataGrid.Columns>
                         <controls:DataGridTextColumn Header="Name" Binding="{Binding name}"/>
                         <controls:DataGridTextColumn Header="Amount" Binding="{Binding amount}"/>
-                        <controls:DataGridTextColumn Header="Category" Binding="{Binding categoryName}"/>
+                        <controls:DataGridComboBoxColumn x:Name="LatestCategoryColumn" Header="Category"
+                                                     Binding="{Binding categoryId}"
+                                                     DisplayMemberPath="categoryName"/>
                         <controls:DataGridTextColumn Header="Date" Binding="{Binding date}" SortDirection="Descending"/>
                     </controls:DataGrid.Columns>
                 </controls:DataGrid>
@@ -43,7 +45,9 @@
                     <controls:DataGrid.Columns>
                         <controls:DataGridTextColumn Header="Name" Binding="{Binding name}"/>
                         <controls:DataGridTextColumn Header="Amount" Binding="{Binding amount}"/>
-                        <controls:DataGridTextColumn Header="Category" Binding="{Binding categoryName}"/>
+                        <controls:DataGridComboBoxColumn x:Name="UpcomingCategoryColumn" Header="Category"
+                                                     Binding="{Binding categoryId}"
+                                                     DisplayMemberPath="categoryName"/>
                         <controls:DataGridTextColumn Header="Date" Binding="{Binding date}" SortDirection="Ascending"/>
                     </controls:DataGrid.Columns>
                 </controls:DataGrid>

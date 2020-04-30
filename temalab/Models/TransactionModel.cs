@@ -14,6 +14,5 @@ namespace temalab.Models
         public DateTime date { get; set; }
         public virtual string description { get; set; }
         public virtual int? categoryId { get; set; } = null;
-        public string categoryName { get; set; }
     }
 }
