@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace WebApi.Entities
@@ -15,7 +15,7 @@ namespace WebApi.Entities
         public int UserId { get; set; }
         public int? CategoryId { get; set; }
 
-        public virtual User User { get; set; }
-        public virtual Category Category { get; set; }
+        public User User { get; set; }
+        public Category Category { get; set; }
     }
 }

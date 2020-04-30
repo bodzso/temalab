@@ -16,9 +16,7 @@ namespace WebApi.Helpers
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
             // connect to sql server database
-            options
-                .UseSqlServer(Configuration.GetConnectionString("WebApiDatabase"))
-                .UseLazyLoadingProxies();
+            options.UseSqlServer(Configuration.GetConnectionString("WebApiDatabase"));
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

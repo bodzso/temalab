@@ -10,7 +10,7 @@ namespace WebApi.Entities
         public string CategoryName { get; set; }
         public int UserId { get; set; }
 
-        public virtual User User { get; set; }
-        public virtual ICollection<Transaction> Transactions { get; set; }
+        public User User { get; set; }
+        public ICollection<Transaction> Transactions { get; set; }
     }
 }

@@ -20,7 +20,7 @@ namespace WebApi.Entities
         public byte[] PasswordSalt { get; set; }
         public double Balance { get; set; }
 
-        public virtual ICollection<Transaction> Transactions { get; set; }
-        public virtual ICollection<Category> Categories { get; set; }
+        public ICollection<Transaction> Transactions { get; set; }
+        public ICollection<Category> Categories { get; set; }
     }
 }
