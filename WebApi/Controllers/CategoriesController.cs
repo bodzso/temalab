@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -23,14 +24,14 @@ namespace WebApi.Controllers
 
         // GET: Categories
         [HttpGet]
-        public async Task<IActionResult> GetCategories()
+        public async Task<ActionResult<IEnumerable<Category>>> GetCategories()
         {
-            return Ok(await _context.Categories.Where(c => c.UserId == Convert.ToInt32(User.Identity.Name)).Select(d => new { d.CategoryId, d.CategoryName }).ToListAsync());
+            return await _context.Categories.Where(c => c.UserId == Convert.ToInt32(User.Identity.Name)).ToListAsync();
         }
 
         // GET: Categories/5
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetCategory(int id)
+        public async Task<ActionResult<Category>> GetCategory(int id)
         {
             var category = await _context.Categories.FindAsync(id);
 
@@ -42,7 +43,8 @@ namespace WebApi.Controllers
             {
                 return Unauthorized();
             }
-            return Ok(new { category.CategoryId, category.CategoryName });
+            
+            return category;
         }
 
         [HttpPost]
@@ -51,21 +53,31 @@ namespace WebApi.Controllers
             category.UserId = Convert.ToInt32(User.Identity.Name);
             _context.Categories.Add(category);
             await _context.SaveChangesAsync();
-            return Ok(new { category.CategoryId, category.CategoryName });
+
+            return CreatedAtAction(nameof(GetCategory), new { id = category.CategoryId }, category);
         }
 
-        // PUT: Categories/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
-        // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateCategory(int id, Category category)
+        public async Task<IActionResult> UpdateCategory(int id, Category categoryParam)
         {
-            if (id != category.CategoryId)
+            if (id != categoryParam.CategoryId)
             {
                 return BadRequest();
             }
 
-            category.UserId = Convert.ToInt32(User.Identity.Name);
+            var category = await _context.Categories.FindAsync(id);
+            if(category == null)
+            {
+                return NotFound();
+            }
+            else if (Convert.ToInt32(User.Identity.Name) != category.UserId)
+            {
+                return Unauthorized();
+            }
+
+            if (!string.IsNullOrWhiteSpace(categoryParam.CategoryName))
+                category.CategoryName = categoryParam.CategoryName;
+
             _context.Entry(category).State = EntityState.Modified;
 
             try
@@ -104,7 +116,7 @@ namespace WebApi.Controllers
             _context.Categories.Remove(category);
             await _context.SaveChangesAsync();
 
-            return Ok(new { category.CategoryId, category.CategoryName });
+            return category;
         }
 
         private bool CategoryExists(int id)

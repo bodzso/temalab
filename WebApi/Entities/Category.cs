@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace WebApi.Entities
 {
@@ -8,9 +9,12 @@ namespace WebApi.Entities
         public int CategoryId { get; set; }
         [Required]
         public string CategoryName { get; set; }
+        [JsonIgnore]
         public int UserId { get; set; }
 
+        [JsonIgnore]
         public User User { get; set; }
+        [JsonIgnore]
         public ICollection<Transaction> Transactions { get; set; }
     }
 }
