@@ -1,9 +1,5 @@
 dotnet tool install --global dotnet-ef
 
-Sqlite:
-dotnet ef migrations add InitialCreate --context SqliteDataContext --output-dir Migrations/SqliteMigrations
-dotnet ef database update --context SqliteDataContext
-
 SqlServer:
 $Env:ASPNETCORE_ENVIRONMENT = "Production"
 dotnet ef migrations add InitialCreate --context DataContext --output-dir Migrations/SqlServerMigrations
