@@ -47,7 +47,7 @@ namespace temalab
 
         private async void addButton_Click(object sender, RoutedEventArgs e)
         {
-            var res = await app.PostJson(new Uri($"{app.baseuri}/categories"), JsonSerializer.Serialize(new { categoryName = categoryName.Text }));
+            var res = await app.PostJson(new Uri($"{app.baseuri}/categories"), JsonSerializer.Serialize(new { categoryName = categoryNameTextBox.Text }));
 
             if (!string.IsNullOrEmpty(res))
                 categories.Add(JsonSerializer.Deserialize<Category>(res));
