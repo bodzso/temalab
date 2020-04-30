@@ -166,7 +166,9 @@ namespace WebApi.Services
 
         public bool isNew(int id)
         {
-            return GetById(id).Transactions.Count == 0;
+            var user = GetById(id);
+            _context.Entry(user).Collection(u => u.Transactions).Load();
+            return user.Transactions.Count == 0;
         }
 
         public User GetByUsername(string username)
