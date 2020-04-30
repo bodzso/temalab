@@ -77,10 +77,7 @@ namespace temalab
             var res = await app.PostJson(new Uri($"{app.baseuri}/transactions"), json);
 
             if(!string.IsNullOrEmpty(res))
-            {
-                expense.id = Convert.ToInt32(res);
-                expenses.Add(expense);
-            }
+                expenses.Add(JsonSerializer.Deserialize<EditableTransactionModel>(res));
 
             name.Text = "";
             cost.Text = "";

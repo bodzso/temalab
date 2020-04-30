@@ -69,11 +69,7 @@ namespace temalab
             var res = await app.PostJson(new Uri($"{app.baseuri}/transactions"), json);
             
             if(!string.IsNullOrEmpty(res))
-            {
-                transaction.id = Convert.ToInt32(res);
-                transactions.Add(transaction);
-            }
-               
+                transactions.Add(JsonSerializer.Deserialize<EditableTransactionModel>(res));
 
             if (app.user.GetIsNew())
                 app.user.isNew = false;
