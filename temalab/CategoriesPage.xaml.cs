@@ -47,7 +47,7 @@ namespace temalab
 
         private async void addButton_Click(object sender, RoutedEventArgs e)
         {
-            var res = await app.PostJson(new Uri($"{app.baseuri}/categories"), JsonSerializer.Serialize(new CategoryModel { categoryName = categoryName.Text }));
+            var res = await app.PostJson(new Uri($"{app.baseuri}/categories"), JsonSerializer.Serialize(new { categoryName = categoryName.Text }));
 
             if (!string.IsNullOrEmpty(res))
                 categories.Add(JsonSerializer.Deserialize<Category>(res));
@@ -60,7 +60,7 @@ namespace temalab
 
             if (res == ContentDialogResult.Primary)
             {
-                var httpRes = await app.PutJson(new Uri($"{app.baseuri}/categories/" + currentCategory.categoryId), JsonSerializer.Serialize(new Category { categoryId = currentCategory.categoryId, categoryName = categoryNameDialogInput.Text }));
+                var httpRes = await app.PutJson(new Uri($"{app.baseuri}/categories/" + currentCategory.categoryId), JsonSerializer.Serialize(new CategoryModel { categoryId = currentCategory.categoryId, categoryName = categoryNameDialogInput.Text }));
 
                 if (httpRes)
                 {

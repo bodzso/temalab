@@ -104,9 +104,8 @@ namespace temalab
 
             if (await dialog.ShowAsync() == ContentDialogResult.Primary && !String.IsNullOrEmpty(input.Text))
             {
-                var category = new CategoryModel() { categoryName = input.Text };
-                var json = JsonSerializer.Serialize<CategoryModel>(category);
-                category = JsonSerializer.Deserialize<CategoryModel>(await app.PostJson(new Uri($"{app.baseuri}/categories"), json));
+                var json = JsonSerializer.Serialize(new { categoryName = input.Text });
+                var category = JsonSerializer.Deserialize<CategoryModel>(await app.PostJson(new Uri($"{app.baseuri}/categories"), json));
                 categories.Add(category);
             }
         }
