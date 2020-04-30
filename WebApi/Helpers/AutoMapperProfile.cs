@@ -11,7 +11,7 @@ namespace WebApi.Helpers
         {
             CreateMap<User, UserModel>();
             CreateMap<RegisterModel, User>();
-            CreateMap<UpdateModel, User>();
+            CreateMap<Models.Users.UpdateModel, User>();
             CreateMap<CreateModel, Transaction>();
         }
     }

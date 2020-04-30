@@ -29,17 +29,17 @@ namespace WebApi.Controllers
 
         // GET: Transactions
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<TransactionModel>>> GetTransactions()
+        public async Task<ActionResult<IEnumerable<Transaction>>> GetTransactions()
         {
-            return Ok(await _context.Transactions.Where(t => t.UserId == Convert.ToInt32(User.Identity.Name)).Select(d => MapTransaction(d, d.Category.CategoryName)).ToListAsync());
+            return await _context.Transactions.Where(t => t.UserId == Convert.ToInt32(User.Identity.Name)).ToListAsync();
         }
 
         // GET: Transactions/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<TransactionModel>> GetTransaction(int id)
+        public async Task<ActionResult<Transaction>> GetTransaction(int id)
         {
-            var transactions = _context.Transactions.Include("Category");
-            var transaction = await transactions.SingleAsync(t => t.Id == id);
+            var transaction = await _context.Transactions.FindAsync(id);
+
             if (transaction == null)
             {
                 return NotFound();
@@ -49,52 +49,48 @@ namespace WebApi.Controllers
                 return Unauthorized();
             }
 
-            return Ok(MapTransaction(transaction, transaction.Category?.CategoryName));
+            return transaction;
         }
 
         [HttpGet("revenues")]
-        public async Task<ActionResult<IEnumerable<TransactionModel>>> GetRevenues()
+        public async Task<ActionResult<IEnumerable<Transaction>>> GetRevenues()
         {
             return await _context.Transactions
                 .Where(t => t.UserId == Convert.ToInt32(User.Identity.Name) && t.Amount > 0)
                 .OrderByDescending(t => t.Date)
-                .Select(d => MapTransaction(d, d.Category.CategoryName))
                 .ToListAsync();
         }
 
         [HttpGet("expenses")]
-        public async Task<ActionResult<IEnumerable<TransactionModel>>> GetExpenses()
+        public async Task<ActionResult<IEnumerable<Transaction>>> GetExpenses()
         {
             return await _context.Transactions
                 .Where(t => t.UserId == Convert.ToInt32(User.Identity.Name) && t.Amount < 0)
                 .OrderByDescending(t => t.Date)
-                .Select(d => MapTransaction(d, d.Category.CategoryName))
                 .ToListAsync();
         }
 
         [HttpGet("pending")]
-        public async Task<ActionResult<IEnumerable<TransactionModel>>> GetPendingTransactions()
+        public async Task<ActionResult<IEnumerable<Transaction>>> GetPendingTransactions()
         {
             return await _context.Transactions
                 .Where(t => t.UserId == Convert.ToInt32(User.Identity.Name) && t.Date.CompareTo(DateTime.Now) > 0)
                 .OrderBy(t => t.Date)
-                .Select(d => MapTransaction(d, d.Category.CategoryName))
                 .ToListAsync();
         }
 
         [HttpGet("latest")]
-        public async Task<ActionResult<IEnumerable<TransactionModel>>> GetLatestTransactions()
+        public async Task<ActionResult<IEnumerable<Transaction>>> GetLatestTransactions()
         {
             return await _context.Transactions
                 .Where(t => t.UserId == Convert.ToInt32(User.Identity.Name) && t.Date.CompareTo(DateTime.Now) < 0)
                 .OrderByDescending(t => t.Date)
                 .Take(10)
-                .Select(d => MapTransaction(d, d.Category.CategoryName))
                 .ToListAsync();
         }
 
         [HttpGet("expenses/categorized")]
-        public async Task<IEnumerable> GetCategorizedExpenses()
+        public async Task<ActionResult<IEnumerable>> GetCategorizedExpenses()
         {
             return await _context.Transactions
                 .Where(t => t.UserId == Convert.ToInt32(User.Identity.Name) && t.Amount < 0)
@@ -103,18 +99,30 @@ namespace WebApi.Controllers
                 .ToListAsync();
         }
 
-        // PUT: Transactions/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
-        // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateTransaction(int id, Transaction transaction)
+        public async Task<IActionResult> UpdateTransaction(int id, UpdateModel transactionParam)
         {
-            if (id != transaction.Id)
+            if (id != transactionParam.Id)
             {
                 return BadRequest();
             }
 
-            transaction.UserId = Convert.ToInt32(User.Identity.Name);
+            var transaction = await _context.Transactions.FindAsync(id);
+            if(transaction == null)
+            {
+                return NotFound();
+            }
+            else if (Convert.ToInt32(User.Identity.Name) != transaction.UserId)
+            {
+                return Unauthorized();
+            }
+
+            if (!string.IsNullOrWhiteSpace(transactionParam.Name))
+                transaction.Name = transactionParam.Name;
+
+            transaction.Description = transactionParam.Description;
+            transaction.CategoryId = transactionParam.CategoryId;
+
             _context.Entry(transaction).State = EntityState.Modified;
 
             try
@@ -136,9 +144,6 @@ namespace WebApi.Controllers
             return NoContent();
         }
 
-        // POST: Transactions
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
-        // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPost]
         public async Task<ActionResult<Transaction>> AddTransaction(CreateModel model)
         {
@@ -147,13 +152,10 @@ namespace WebApi.Controllers
             _context.Transactions.Add(transaction);
             
             if(transaction.Date.CompareTo(DateTime.Now) <= 0)
-            {
-                var user = _context.Users.Find(transaction.UserId);
-                user.Balance += transaction.Amount;
-            }
+                transaction.User.Balance += transaction.Amount;
 
             await _context.SaveChangesAsync();
-            return Ok(transaction.Id);
+            return CreatedAtAction(nameof(GetTransaction), new { id = transaction.Id }, transaction);
         }
 
         // DELETE: Transactions/5
@@ -161,6 +163,7 @@ namespace WebApi.Controllers
         public async Task<ActionResult<Transaction>> DeleteTransaction(int id)
         {
             var transaction = await _context.Transactions.FindAsync(id);
+
             if (transaction == null)
             {
                 return NotFound();
@@ -173,26 +176,12 @@ namespace WebApi.Controllers
             _context.Transactions.Remove(transaction);
             await _context.SaveChangesAsync();
 
-            return Ok(transaction.Id);
+            return transaction;
         }
 
         private bool TransactionExists(int id)
         {
             return _context.Transactions.Any(e => e.Id == id);
-        }
-
-        private static TransactionModel MapTransaction(Transaction transaction, string categoryname)
-        {
-            return new TransactionModel()
-            {
-                Id = transaction.Id,
-                Name = transaction.Name,
-                Amount = transaction.Amount,
-                Date = transaction.Date,
-                Description = transaction.Description,
-                CategoryId = transaction.CategoryId,
-                CategoryName = categoryname
-            };
         }
     }
 }
