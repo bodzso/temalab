@@ -74,7 +74,7 @@ namespace WebApi.Controllers
         public async Task<ActionResult<IEnumerable<Transaction>>> GetPendingTransactions()
         {
             return await _context.Transactions
-                .Where(t => t.UserId == Convert.ToInt32(User.Identity.Name) && t.Date.CompareTo(DateTime.Now) > 0)
+                .Where(t => t.UserId == Convert.ToInt32(User.Identity.Name) && t.Finished == false)
                 .OrderBy(t => t.Date)
                 .ToListAsync();
         }
@@ -83,7 +83,7 @@ namespace WebApi.Controllers
         public async Task<ActionResult<IEnumerable<Transaction>>> GetLatestTransactions()
         {
             return await _context.Transactions
-                .Where(t => t.UserId == Convert.ToInt32(User.Identity.Name) && t.Date.CompareTo(DateTime.Now) < 0)
+                .Where(t => t.UserId == Convert.ToInt32(User.Identity.Name) && t.Finished == true)
                 .OrderByDescending(t => t.Date)
                 .Take(10)
                 .ToListAsync();
@@ -93,7 +93,7 @@ namespace WebApi.Controllers
         public async Task<ActionResult<IEnumerable>> GetCategorizedExpenses()
         {
             return await _context.Transactions
-                .Where(t => t.UserId == Convert.ToInt32(User.Identity.Name) && t.Amount < 0)
+                .Where(t => t.UserId == Convert.ToInt32(User.Identity.Name) && t.Amount < 0 && t.Finished == true)
                 .GroupBy(t => new { t.CategoryId, t.Category.CategoryName })
                 .Select(g => new { categoryName = g.Key.CategoryName, amount = g.Sum(i => Math.Abs(i.Amount))})
                 .ToListAsync();
@@ -152,7 +152,10 @@ namespace WebApi.Controllers
             _context.Transactions.Add(transaction);
             
             if(transaction.Date.CompareTo(DateTime.Now) <= 0)
+            {
                 transaction.User.Balance += transaction.Amount;
+                transaction.Finished = true;
+            }
 
             await _context.SaveChangesAsync();
             return CreatedAtAction(nameof(GetTransaction), new { id = transaction.Id }, transaction);
