@@ -135,6 +135,12 @@ namespace temalab
                     e.Cancel = true;
             }
         }
+
+        private void input_KeyDown(object sender, KeyRoutedEventArgs e)
+        {
+            if (e.Key == Windows.System.VirtualKey.Enter)
+                addButton_Click(sender, e);
+        }
     }
 
     public class NegateConverter : IValueConverter

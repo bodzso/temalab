@@ -12,7 +12,7 @@
         <TextBlock Style="{ThemeResource SubtitleTextBlockStyle}" Text="Manage categories"/>
         <StackPanel Spacing="4">
             <TextBlock>Name<Run Foreground="Red">*</Run></TextBlock>
-            <TextBox x:Name="categoryNameTextBox" Width="200" HorizontalAlignment="Left"/>
+            <TextBox x:Name="categoryNameTextBox" Width="200" HorizontalAlignment="Left" KeyDown="categoryNameTextBox_KeyDown"/>
         </StackPanel>
         <Button x:Name="addButton" Style="{ThemeResource AccentButtonStyle}" Content="Add" Width="100" Click="addButton_Click"/>
         <TextBlock Text="Categories:" FontSize="20"/>
@@ -47,7 +47,7 @@
             PrimaryButtonText="Update"
             CloseButtonText="Cancel">
             <StackPanel>
-                <TextBox x:Name="categoryNameDialogInput" Header="Name"/>
+                <TextBox x:Name="categoryNameDialogInput" Header="Name" KeyDown="categoryNameDialogInput_KeyDown"/>
             </StackPanel>
         </ContentDialog>
     </StackPanel>

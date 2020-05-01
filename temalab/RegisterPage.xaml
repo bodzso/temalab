@@ -21,7 +21,7 @@
             <TextBox Header="First Name" x:Name="firstName" PlaceholderText="First name"/>
             <TextBox Header="Last Name" x:Name="lastName" PlaceholderText="Last name"/>
             <TextBox Header="E-mail Address" x:Name="email" PlaceholderText="Email address"/>
-            <PasswordBox Header="Create a password" x:Name="password" PlaceholderText="Enter password"/>
+            <PasswordBox Header="Create a password" x:Name="password" PlaceholderText="Enter password" KeyDown="password_KeyDown"/>
             <Button Style="{ThemeResource AccentButtonStyle}" Content="Register" x:Name="registerbutton" HorizontalAlignment="Center" Click="registerclick" Width="100"/>
         </StackPanel>
     </Grid>

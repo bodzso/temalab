@@ -68,7 +68,7 @@
             PrimaryButtonText="Add"
             CloseButtonText="Cancel">
             <StackPanel>
-                <TextBox x:Name="input" Header="Category name"/>
+                <TextBox x:Name="input" Header="Category name" KeyDown="input_KeyDown"/>
             </StackPanel>
         </ContentDialog>
     </StackPanel>

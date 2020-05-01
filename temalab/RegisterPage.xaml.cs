@@ -85,5 +85,11 @@ namespace temalab
         {
             this.Frame.Navigate(prevPage);
         }
+
+        private void password_KeyDown(object sender, KeyRoutedEventArgs e)
+        {
+            if (e.Key == Windows.System.VirtualKey.Enter)
+                registerclick(sender, e);
+        }
     }
 }
