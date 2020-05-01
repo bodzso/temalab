@@ -31,6 +31,7 @@ namespace temalab
             ("expenses", typeof(ExpensesPage)),
             ("transactions", typeof(TransactionsPage)),
             ("categories", typeof(CategoriesPage)),
+            ("statistics", typeof(StatisticsPage)),
         };
 
         public MainPage()

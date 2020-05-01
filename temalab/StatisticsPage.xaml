@@ -1,0 +1,44 @@
+﻿<Page
+    x:Class="temalab.StatisticsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:temalab"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:Charting="using:WinRTXamlToolkit.Controls.DataVisualization.Charting"
+    xmlns:datavis="using:WinRTXamlToolkit.Controls.DataVisualization"
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <ScrollViewer>
+        <StackPanel Orientation="Vertical">
+            <StackPanel Orientation="Horizontal" >
+                <TextBlock Text="Show:" VerticalAlignment="Center" Margin="15 0 15 0" FontSize="15"/>
+                <ComboBox Width="100" x:Name="typeComboBox" Margin="0 4 0 0" SelectionChanged="typeComboBox_SelectionChanged">
+                    <ComboBoxItem x:Name="monthly" Content="Monthly"/>
+                    <ComboBoxItem x:Name="yearly" Content="Yearly"/>
+                </ComboBox>
+                <TextBlock Text="Limit to last" VerticalAlignment="Center" Margin="20 0 10 0"/>
+                <muxc:NumberBox Minimum="1" x:Name="limitNum" ValueChanged="limitNum_ValueChanged"/>
+                <TextBlock Text="months" VerticalAlignment="Center" Margin="10 0 0 0" x:Name="monthYearText"/>
+            </StackPanel>
+            
+            <Charting:Chart x:Name="revenuesColumnChart" Title="Revenues" Height="300" VerticalAlignment="Top">
+                <Charting:ColumnSeries IndependentValueBinding="{Binding date}" DependentValueBinding="{Binding amount}" ItemsSource="{Binding revenues}"/>
+                <Charting:Chart.LegendStyle>
+                    <Style TargetType="datavis:Legend">
+                        <Setter Property="Width" Value="0"/>
+                    </Style>
+                </Charting:Chart.LegendStyle>
+            </Charting:Chart>
+            <Charting:Chart x:Name="expensesColumnChart" Title="Expenses" Height="300" VerticalAlignment="Top">
+                <Charting:ColumnSeries IndependentValueBinding="{Binding date}" DependentValueBinding="{Binding amount}" ItemsSource="{Binding expenses}"/>
+                <Charting:Chart.LegendStyle>
+                    <Style TargetType="datavis:Legend">
+                        <Setter Property="Width" Value="0"/>
+                    </Style>
+                </Charting:Chart.LegendStyle>
+            </Charting:Chart>
+        </StackPanel>
+    </ScrollViewer>
+</Page>
