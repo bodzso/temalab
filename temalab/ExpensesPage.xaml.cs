@@ -104,6 +104,7 @@ namespace temalab
                 var json = JsonSerializer.Serialize(new { categoryName = input.Text });
                 var category = JsonSerializer.Deserialize<CategoryModel>(await app.PostJson(new Uri($"{app.baseuri}/categories"), json));
                 categories.Add(category);
+                categComboBox.SelectedItem = category;
             }
         }
 
