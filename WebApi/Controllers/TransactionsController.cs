@@ -99,6 +99,45 @@ namespace WebApi.Controllers
                 .ToListAsync();
         }
 
+        [HttpGet("revenues/monthly")]
+        public async Task<ActionResult<IEnumerable>> GetMonthlyRevenues([FromQuery] int limit=0)
+        {
+
+            var transactions = _context.Transactions
+                .Where(t => t.UserId == Convert.ToInt32(User.Identity.Name) && t.Amount > 0 && t.Finished == true)
+                .GroupBy(t => new { t.Date.Year, t.Date.Month })
+                .OrderBy(g => g.Key.Year).ThenBy(g => g.Key.Month)
+                .Select(g => new { date = g.Key.ToString(), amount = g.Sum(h => Math.Abs(h.Amount)) });
+
+            if (limit != 0)
+            {
+                return transactions.AsEnumerable().TakeLast(limit).ToList();
+            } else
+            {
+                return await transactions.ToListAsync();
+            }
+        }
+
+        [HttpGet("revenues/yearly")]
+        public async Task<ActionResult<IEnumerable>> GetYearlyRevenues([FromQuery] int limit = 0)
+        {
+
+            var transactions = _context.Transactions
+                .Where(t => t.UserId == Convert.ToInt32(User.Identity.Name) && t.Amount > 0 && t.Finished == true)
+                .GroupBy(t => new { t.Date.Year })
+                .OrderBy(g => g.Key.Year)
+                .Select(g => new { date = g.Key.ToString(), amount = g.Sum(h => Math.Abs(h.Amount)) });
+
+            if (limit != 0)
+            {
+                return transactions.AsEnumerable().TakeLast(limit).ToList();
+            }
+            else
+            {
+                return await transactions.ToListAsync();
+            }
+        }
+
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateTransaction(int id, UpdateModel transactionParam)
         {
