@@ -107,7 +107,7 @@ namespace WebApi.Controllers
                 .Where(t => t.UserId == Convert.ToInt32(User.Identity.Name) && t.Amount > 0 && t.Finished == true)
                 .GroupBy(t => new { t.Date.Year, t.Date.Month })
                 .OrderBy(g => g.Key.Year).ThenBy(g => g.Key.Month)
-                .Select(g => new { date = g.Key.ToString(), amount = g.Sum(h => Math.Abs(h.Amount)) });
+                .Select(g => new { date = g.Key.ToString(), amount = g.Sum(h => h.Amount) });
 
             if (limit != 0)
             {
@@ -124,6 +124,46 @@ namespace WebApi.Controllers
 
             var transactions = _context.Transactions
                 .Where(t => t.UserId == Convert.ToInt32(User.Identity.Name) && t.Amount > 0 && t.Finished == true)
+                .GroupBy(t => new { t.Date.Year })
+                .OrderBy(g => g.Key.Year)
+                .Select(g => new { date = g.Key.ToString(), amount = g.Sum(h => h.Amount) });
+
+            if (limit != 0)
+            {
+                return transactions.AsEnumerable().TakeLast(limit).ToList();
+            }
+            else
+            {
+                return await transactions.ToListAsync();
+            }
+        }
+
+        [HttpGet("expenses/monthly")]
+        public async Task<ActionResult<IEnumerable>> GetMonthlyExpenses([FromQuery] int limit = 0)
+        {
+
+            var transactions = _context.Transactions
+                .Where(t => t.UserId == Convert.ToInt32(User.Identity.Name) && t.Amount < 0 && t.Finished == true)
+                .GroupBy(t => new { t.Date.Year, t.Date.Month })
+                .OrderBy(g => g.Key.Year).ThenBy(g => g.Key.Month)
+                .Select(g => new { date = g.Key.ToString(), amount = g.Sum(h => Math.Abs(h.Amount)) });
+
+            if (limit != 0)
+            {
+                return transactions.AsEnumerable().TakeLast(limit).ToList();
+            }
+            else
+            {
+                return await transactions.ToListAsync();
+            }
+        }
+
+        [HttpGet("expenses/yearly")]
+        public async Task<ActionResult<IEnumerable>> GetYearlyExpenses([FromQuery] int limit = 0)
+        {
+
+            var transactions = _context.Transactions
+                .Where(t => t.UserId == Convert.ToInt32(User.Identity.Name) && t.Amount < 0 && t.Finished == true)
                 .GroupBy(t => new { t.Date.Year })
                 .OrderBy(g => g.Key.Year)
                 .Select(g => new { date = g.Key.ToString(), amount = g.Sum(h => Math.Abs(h.Amount)) });
