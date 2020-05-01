@@ -18,6 +18,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using System.Text;
+using temalab.Models;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -29,7 +30,7 @@ namespace temalab
     public sealed partial class RegisterPage : Page
     {
         private Type prevPage;
-        App app = (App)Application.Current;
+        App app = Application.Current as App;
 
         public RegisterPage()
         {
@@ -38,42 +39,20 @@ namespace temalab
 
         private async void registerclick(object sender, RoutedEventArgs e)
         {
-            try
+            var user = new UserModel
             {
-                HttpClient httpClient = new HttpClient();
-                Uri uri = new Uri($"{app.baseuri}/users/register");
+                username = username.Text,
+                firstName = firstName.Text,
+                lastName = lastName.Text,
+                email = email.Text,
+                password = password.Password
+            };
+            
+            var res = await app.PostJson(new Uri($"{app.baseuri}/users/register"), JsonSerializer.Serialize(user));
+            Debug.WriteLine(res);
 
-                string json;
-                using (var stream = new MemoryStream())
-                {
-                    using (var writer = new Utf8JsonWriter(stream))
-                    {
-                        writer.WriteStartObject();
-                        writer.WriteString("username", username.Text);
-                        writer.WriteString("firstName", firstName.Text);
-                        writer.WriteString("lastName", lastName.Text);
-                        writer.WriteString("email", email.Text);
-                        writer.WriteString("password", password.Password);
-                        writer.WriteEndObject();
-                    }
-
-                    json = Encoding.UTF8.GetString(stream.ToArray());
-                    Console.WriteLine(json);
-                }
-
-                HttpStringContent content = new HttpStringContent(json, Windows.Storage.Streams.UnicodeEncoding.Utf8, "application/json");
-
-                HttpResponseMessage httpResponseMessage = await httpClient.PostAsync(uri, content);
-                httpResponseMessage.EnsureSuccessStatusCode();
-                var httpResponseBody = await httpResponseMessage.Content.ReadAsStringAsync();
-
+            if (!string.IsNullOrEmpty(res))
                 this.Frame.Navigate(typeof(LoginPage));
-                Debug.WriteLine(httpResponseBody);
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex);
-            }
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
