@@ -27,8 +27,8 @@ namespace temalab
     /// </summary>
     public sealed partial class ExpensesPage : Page
     {
-        public ObservableCollection<EditableTransactionModel> expenses = new ObservableCollection<EditableTransactionModel>();
-        public ObservableCollection<CategoryModel> categories = new ObservableCollection<CategoryModel>();
+        ObservableCollection<EditableTransactionModel> expenses = new ObservableCollection<EditableTransactionModel>();
+        ObservableCollection<CategoryModel> categories = new ObservableCollection<CategoryModel>();
         App app = (App)Application.Current;
         public ExpensesPage()
         {

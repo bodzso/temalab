@@ -28,8 +28,8 @@ namespace temalab
     public sealed partial class TransactionsPage : Page
     {
 
-        public ObservableCollection<TransactionModel> transactions = new ObservableCollection<TransactionModel>();
-        public ObservableCollection<CategoryModel> categories = new ObservableCollection<CategoryModel>();
+        ObservableCollection<TransactionModel> transactions = new ObservableCollection<TransactionModel>();
+        ObservableCollection<CategoryModel> categories = new ObservableCollection<CategoryModel>();
         App app = Application.Current as App;
 
         public TransactionsPage()

@@ -28,13 +28,13 @@ namespace temalab
     /// </summary>
     public sealed partial class UserMainPage : Page
     {
-        public ObservableCollection<TransactionModel> latestTransactions = new ObservableCollection<TransactionModel>();
-        public ObservableCollection<TransactionModel> upcomingTransactions = new ObservableCollection<TransactionModel>();
-        public ObservableCollection<CategoryModel> categories = new ObservableCollection<CategoryModel>();
+        ObservableCollection<TransactionModel> latestTransactions = new ObservableCollection<TransactionModel>();
+        ObservableCollection<TransactionModel> upcomingTransactions = new ObservableCollection<TransactionModel>();
+        ObservableCollection<CategoryModel> categories = new ObservableCollection<CategoryModel>();
         App app = Application.Current as App;
 
-        public List<TransactionModel> expenses = new List<TransactionModel>();
-        public List<TransactionModel> revenues = new List<TransactionModel>();
+        List<TransactionModel> expenses = new List<TransactionModel>();
+        List<TransactionModel> revenues = new List<TransactionModel>();
 
         public UserMainPage()
         {

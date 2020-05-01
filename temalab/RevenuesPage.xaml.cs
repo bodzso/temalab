@@ -27,7 +27,7 @@ namespace temalab
     /// </summary>
     public sealed partial class RevenuesPage : Page
     {
-        public ObservableCollection<EditableTransactionModel> transactions = new ObservableCollection<EditableTransactionModel>();
+        ObservableCollection<EditableTransactionModel> transactions = new ObservableCollection<EditableTransactionModel>();
         App app = Application.Current as App;
 
         public RevenuesPage()
