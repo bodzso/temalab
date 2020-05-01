@@ -62,5 +62,14 @@
                 </controls:DataGrid.Columns>
             </controls:DataGrid>
         </ScrollViewer>
+        <ContentDialog
+            x:Name="dialog"
+            Title="Add new category"
+            PrimaryButtonText="Add"
+            CloseButtonText="Cancel">
+            <StackPanel>
+                <TextBox x:Name="input" Header="Category name"/>
+            </StackPanel>
+        </ContentDialog>
     </StackPanel>
 </Page>

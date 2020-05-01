@@ -89,16 +89,6 @@ namespace temalab
 
         private async void addCategory_Click(object sender, RoutedEventArgs e)
         {
-            TextBox input = new TextBox();
-            input.PlaceholderText = "Category name";
-            ContentDialog dialog = new ContentDialog
-            {
-                Title = "Add new category",
-                Content = input,
-                CloseButtonText = "Cancel",
-                PrimaryButtonText = "Add"
-            };
-
             if (await dialog.ShowAsync() == ContentDialogResult.Primary && !String.IsNullOrEmpty(input.Text))
             {
                 var json = JsonSerializer.Serialize(new { categoryName = input.Text });
