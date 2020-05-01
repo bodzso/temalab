@@ -73,7 +73,7 @@ namespace WebApi.Controllers
 
         [AllowAnonymous]
         [HttpPost("register")]
-        public IActionResult Register([FromBody]RegisterModel model)
+        public ActionResult<User> Register([FromBody]RegisterModel model)
         {
             // map model to entity
             var user = _mapper.Map<User>(model);
@@ -82,7 +82,7 @@ namespace WebApi.Controllers
             {
                 // create user
                 _userService.Create(user, model.Password);
-                return Ok();
+                return CreatedAtAction(nameof(GetById), new { id = user.Id }, user);
             }
             catch (AppException ex)
             {
