@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
@@ -16,6 +16,7 @@ namespace WebApi.Entities
         [JsonIgnore]
         public int UserId { get; set; }
         public int? CategoryId { get; set; }
+        public bool Finished { get; set; }
 
         [JsonIgnore]
         public User User { get; set; }
