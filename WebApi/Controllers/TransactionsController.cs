@@ -100,82 +100,49 @@ namespace WebApi.Controllers
         }
 
         [HttpGet("revenues/monthly")]
-        public async Task<ActionResult<IEnumerable>> GetMonthlyRevenues([FromQuery] int limit=0)
+        public async Task<ActionResult<IEnumerable>> GetMonthlyRevenues()
         {
 
-            var transactions = _context.Transactions
+            return await _context.Transactions
                 .Where(t => t.UserId == Convert.ToInt32(User.Identity.Name) && t.Amount > 0 && t.Finished == true)
                 .GroupBy(t => new { t.Date.Year, t.Date.Month })
                 .OrderBy(g => g.Key.Year).ThenBy(g => g.Key.Month)
-                .Select(g => new { date = $"{g.Key.Year}/{g.Key.Month}", amount = g.Sum(h => h.Amount) });
-
-            if (limit != 0)
-            {
-                return transactions.AsEnumerable().TakeLast(limit).ToList();
-            } else
-            {
-                return await transactions.ToListAsync();
-            }
+                .Select(g => new { date = $"{g.Key.Year}/{g.Key.Month}", amount = g.Sum(h => h.Amount) }).ToListAsync();
         }
 
         [HttpGet("revenues/yearly")]
-        public async Task<ActionResult<IEnumerable>> GetYearlyRevenues([FromQuery] int limit = 0)
+        public async Task<ActionResult<IEnumerable>> GetYearlyRevenues()
         {
 
-            var transactions = _context.Transactions
+            return await _context.Transactions
                 .Where(t => t.UserId == Convert.ToInt32(User.Identity.Name) && t.Amount > 0 && t.Finished == true)
                 .GroupBy(t => new { t.Date.Year })
                 .OrderBy(g => g.Key.Year)
-                .Select(g => new { date = g.Key.Year.ToString(), amount = g.Sum(h => h.Amount) });
-
-            if (limit != 0)
-            {
-                return transactions.AsEnumerable().TakeLast(limit).ToList();
-            }
-            else
-            {
-                return await transactions.ToListAsync();
-            }
+                .Select(g => new { date = g.Key.Year.ToString(), amount = g.Sum(h => h.Amount) }).ToListAsync();
         }
 
         [HttpGet("expenses/monthly")]
-        public async Task<ActionResult<IEnumerable>> GetMonthlyExpenses([FromQuery] int limit = 0)
+        public async Task<ActionResult<IEnumerable>> GetMonthlyExpenses()
         {
 
-            var transactions = _context.Transactions
+            return await _context.Transactions
                 .Where(t => t.UserId == Convert.ToInt32(User.Identity.Name) && t.Amount < 0 && t.Finished == true)
                 .GroupBy(t => new { t.Date.Year, t.Date.Month })
                 .OrderBy(g => g.Key.Year).ThenBy(g => g.Key.Month)
-                .Select(g => new { date = $"{g.Key.Year}/{g.Key.Month}", amount = g.Sum(h => Math.Abs(h.Amount)) });
+                .Select(g => new { date = $"{g.Key.Year}/{g.Key.Month}", amount = g.Sum(h => Math.Abs(h.Amount)) }).ToListAsync();
 
-            if (limit != 0)
-            {
-                return transactions.AsEnumerable().TakeLast(limit).ToList();
-            }
-            else
-            {
-                return await transactions.ToListAsync();
-            }
         }
 
         [HttpGet("expenses/yearly")]
         public async Task<ActionResult<IEnumerable>> GetYearlyExpenses([FromQuery] int limit = 0)
         {
 
-            var transactions = _context.Transactions
+            return await _context.Transactions
                 .Where(t => t.UserId == Convert.ToInt32(User.Identity.Name) && t.Amount < 0 && t.Finished == true)
                 .GroupBy(t => new { t.Date.Year })
                 .OrderBy(g => g.Key.Year)
-                .Select(g => new { date = g.Key.Year.ToString(), amount = g.Sum(h => Math.Abs(h.Amount)) });
+                .Select(g => new { date = g.Key.Year.ToString(), amount = g.Sum(h => Math.Abs(h.Amount)) }).ToListAsync();
 
-            if (limit != 0)
-            {
-                return transactions.AsEnumerable().TakeLast(limit).ToList();
-            }
-            else
-            {
-                return await transactions.ToListAsync();
-            }
         }
 
         [HttpPut("{id}")]

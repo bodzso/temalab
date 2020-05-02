@@ -6,6 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:Charting="using:WinRTXamlToolkit.Controls.DataVisualization.Charting"
     xmlns:datavis="using:WinRTXamlToolkit.Controls.DataVisualization"
+    xmlns:vis="using:WinRTXamlToolkit"
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
@@ -24,21 +25,38 @@
             </StackPanel>
             
             <Charting:Chart x:Name="revenuesColumnChart" Title="Revenues" Height="300" VerticalAlignment="Top">
-                <Charting:ColumnSeries IndependentValueBinding="{Binding date}" DependentValueBinding="{Binding amount}" ItemsSource="{Binding revenues}"/>
+                <Charting:ColumnSeries IndependentValueBinding="{Binding date}" DependentValueBinding="{Binding amount}" ItemsSource="{Binding revenuesSource}"/>
                 <Charting:Chart.LegendStyle>
                     <Style TargetType="datavis:Legend">
                         <Setter Property="Width" Value="0"/>
                     </Style>
                 </Charting:Chart.LegendStyle>
+                <Charting:Chart.TitleStyle>
+                    <Style TargetType="datavis:Title">
+                        <Setter Property="FontSize" Value="20"/>
+                        <Setter Property="HorizontalAlignment" Value="Center"/>
+                    </Style>
+                </Charting:Chart.TitleStyle>
             </Charting:Chart>
-            <Charting:Chart x:Name="expensesColumnChart" Title="Expenses" Height="300" VerticalAlignment="Top">
-                <Charting:ColumnSeries IndependentValueBinding="{Binding date}" DependentValueBinding="{Binding amount}" ItemsSource="{Binding expenses}"/>
+            
+            <TextBlock x:Name="noRevenues" Text="No revenue data" HorizontalAlignment="Center" FontSize="15" Padding="0 0 0 200" Visibility="Collapsed"/>
+            
+            <Charting:Chart x:Name="expensesColumnChart" Title="Expenses" Height="300" VerticalAlignment="Top" >
+                <Charting:ColumnSeries IndependentValueBinding="{Binding date}" DependentValueBinding="{Binding amount}" ItemsSource="{Binding expensesSource}"/>
                 <Charting:Chart.LegendStyle>
                     <Style TargetType="datavis:Legend">
                         <Setter Property="Width" Value="0"/>
                     </Style>
                 </Charting:Chart.LegendStyle>
+                <Charting:Chart.TitleStyle>
+                    <Style TargetType="datavis:Title">
+                        <Setter Property="FontSize" Value="20"/>
+                        <Setter Property="HorizontalAlignment" Value="Center"/>
+                    </Style>
+                </Charting:Chart.TitleStyle>
             </Charting:Chart>
+            
+            <TextBlock x:Name="noExpenses" Text="No expense data" HorizontalAlignment="Center" FontSize="15" Visibility="Collapsed"/>
         </StackPanel>
     </ScrollViewer>
 </Page>
